@@ -1,0 +1,14 @@
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="chat_ico_sent_fail">
+<g id="Frame" clip-path="url(#clip0_232_9000)">
+<path id="Vector" d="M7.00033 10.3327C7.92079 10.3327 8.75413 9.95958 9.35734 9.35637C9.96056 8.75315 10.3337 7.91982 10.3337 6.99935C10.3337 6.07888 9.96056 5.24555 9.35734 4.64233C8.75413 4.03911 7.92079 3.66602 7.00033 3.66602C6.07986 3.66602 5.24653 4.03911 4.6433 4.64233C4.04009 5.24555 3.66699 6.07888 3.66699 6.99935C3.66699 7.91982 4.04009 8.75315 4.6433 9.35637C5.24653 9.95958 6.07986 10.3327 7.00033 10.3327Z" stroke="#DE473E" stroke-width="0.8" stroke-linejoin="round"/>
+<path id="Vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M6.99967 9.16732C7.22979 9.16732 7.41634 8.98077 7.41634 8.75065C7.41634 8.52053 7.22979 8.33398 6.99967 8.33398C6.76956 8.33398 6.58301 8.52053 6.58301 8.75065C6.58301 8.98077 6.76956 9.16732 6.99967 9.16732Z" fill="#DE473E"/>
+<path id="Vector_3" d="M7 5V7.66667" stroke="#DE473E" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_232_9000">
+<rect width="8" height="8" fill="white" transform="translate(3 3)"/>
+</clipPath>
+</defs>
+</svg>

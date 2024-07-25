@@ -1,0 +1,11 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="chat_ico_shield" clip-path="url(#clip0_252_10933)">
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M14.6663 7.99935C14.6663 4.31745 11.6816 1.33268 7.99967 1.33268C4.31777 1.33268 1.33301 4.31745 1.33301 7.99935C1.33301 11.6812 4.31777 14.666 7.99967 14.666C11.6816 14.666 14.6663 11.6812 14.6663 7.99935Z" stroke="#DE473E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M5 11L11 5" stroke="#DE473E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_252_10933">
+<rect width="16" height="16" fill="white" transform="matrix(0 -1 1 0 0 16)"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,11 @@
+<svg width="16" height="16" stroke="currentColor"  viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="common_ico_copy" clip-path="url(#clip0_67_6390)">
+<path id="Vector" d="M4.33301 4.14419V2.60449C4.33301 2.08673 4.75274 1.66699 5.27051 1.66699H13.3955C13.9133 1.66699 14.333 2.08673 14.333 2.60449V10.7295C14.333 11.2473 13.9133 11.667 13.3955 11.667H11.8384" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M10.7295 4.33301H2.60449C2.08673 4.33301 1.66699 4.75274 1.66699 5.27051V13.3955C1.66699 13.9133 2.08673 14.333 2.60449 14.333H10.7295C11.2473 14.333 11.667 13.9133 11.667 13.3955V5.27051C11.667 4.75274 11.2473 4.33301 10.7295 4.33301Z" stroke-width="1.5" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_67_6390">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>
