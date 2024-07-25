@@ -1,0 +1,35 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - OpenIMSDKCore (3.5.1)
+  - owl_im_sdk (0.0.1):
+    - Flutter
+    - OpenIMSDKCore (= 3.5.1)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - owl_im_sdk (from `.symlinks/plugins/owl_im_sdk/ios`)
+
+SPEC REPOS:
+  trunk:
+    - OpenIMSDKCore
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  owl_im_sdk:
+    :path: ".symlinks/plugins/owl_im_sdk/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  OpenIMSDKCore: 002ccd940d261619d117eedcb8e6236aae718aaa
+  owl_im_sdk: ee13d671efffe02e502830e93e47aee17e0ddef2
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.15.2

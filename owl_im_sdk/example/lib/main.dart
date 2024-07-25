@@ -17,11 +17,15 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     OwlIM.iMManager.initSDK(
-        platformID: 1,
-        apiAddr: '',
-        wsAddr: '',
+        platformID: 2,
+        apiAddr: '127.0.0.1:10002',
+        wsAddr: '127.0.0.1:10001',
         dataDir: '/',
-        listener: OnConnectListener());
+        listener: OnConnectListener(onConnecting: () {
+          print("onConnecting");
+        }, onConnectSuccess: () {
+          print("onConnectSuccess");
+        }));
   }
 
   @override
