@@ -31,10 +31,12 @@ class SearchResult {
     final data = <String, dynamic>{};
     data['totalCount'] = totalCount;
     if (searchResultItems != null) {
-      data['searchResultItems'] = searchResultItems!.map((v) => v.toJson()).toList();
+      data['searchResultItems'] =
+          searchResultItems!.map((v) => v.toJson()).toList();
     }
     if (findResultItems != null) {
-      data['findResultItems'] = findResultItems!.map((v) => v.toJson()).toList();
+      data['findResultItems'] =
+          findResultItems!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -121,9 +123,10 @@ class SearchFriendsInfo extends FriendInfo {
     relationship = json['relationship'];
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final data = super.toJson();
     data['relationship'] = relationship;
-    return data ?? {};
+    return data;
   }
 }

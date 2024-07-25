@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 class Utils {
-  static List<T> toList<T>(String value, T Function(Map<String, dynamic> map) f) =>
+  static List<T> toList<T>(
+          String value, T Function(Map<String, dynamic> map) f) =>
       (formatJson(value) as List).map((e) => f(e)).toList();
 
-  static T toObj<T>(String value, T f(Map<String, dynamic> map)) =>
+  static T toObj<T>(String value, T Function(Map<String, dynamic> map) f) =>
       f(formatJson(value));
 
   static List<dynamic> toListMap(String value) => formatJson(value);

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:owl_im_sdk/owl_im_sdk.dart';
-
+import 'package:owl_im_sdk/src/logger.dart';
 
 class ConversationInfo {
   // Unique identifier for the conversation
@@ -88,7 +88,8 @@ class ConversationInfo {
     this.msgDestructTime,
   });
 
-  ConversationInfo.fromJson(Map<String, dynamic> json) : conversationID = json['conversationID'] {
+  ConversationInfo.fromJson(Map<String, dynamic> json)
+      : conversationID = json['conversationID'] {
     conversationType = json['conversationType'];
     userID = json['userID'];
     groupID = json['groupID'];
@@ -102,7 +103,9 @@ class ConversationInfo {
       } else if (json['latestMsg'] is Map) {
         latestMsg = Message.fromJson(json['latestMsg']);
       }
-    } catch (e) {}
+    } catch (e) {
+      Logger.print("ConversationInfo.fromJson error: ${e.toString()}");
+    }
     latestMsgSendTime = json['latestMsgSendTime'];
     draftText = json['draftText'];
     draftTextTime = json['draftTextTime'];
@@ -146,14 +149,19 @@ class ConversationInfo {
   bool get isSingleChat => conversationType == ConversationType.single;
 
   // Check if it's a group chat
-  bool get isGroupChat => conversationType == ConversationType.group || conversationType == ConversationType.superGroup;
+  bool get isGroupChat =>
+      conversationType == ConversationType.superGroup ||
+      conversationType == ConversationType.superGroup;
 
   // Check if it's a valid conversation (not in a group if isNotInGroup is true)
   bool get isValid => isSingleChat || (isGroupChat && !isNotInGroup!);
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is ConversationInfo && runtimeType == other.runtimeType && conversationID == other.conversationID;
+      identical(this, other) ||
+      other is ConversationInfo &&
+          runtimeType == other.runtimeType &&
+          conversationID == other.conversationID;
 
   @override
   int get hashCode => conversationID.hashCode;

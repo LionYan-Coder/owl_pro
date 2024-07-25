@@ -32,8 +32,8 @@ class IMManager {
     _addNativeCallback(_channel);
   }
 
-  void _addNativeCallback(MethodChannel _channel) {
-    _channel.setMethodCallHandler((call) {
+  void _addNativeCallback(MethodChannel channel) {
+    channel.setMethodCallHandler((call) {
       try {
         Logger.print('Flutter : $call');
         if (call.method == ListenerType.connectListener) {
@@ -384,9 +384,7 @@ class IMManager {
     String? operationID,
   }) {
     _connectListener = listener;
-    if (config.logFilePath == null) {
-      config.logFilePath = config.dataDir;
-    }
+    config.logFilePath ??= config.dataDir;
     return _channel.invokeMethod(
       'initSDK',
       _buildParam(
