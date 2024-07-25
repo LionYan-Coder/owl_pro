@@ -1,32 +1,32 @@
-group = "com.example.owl_im_sdk"
+group = "com.lion.owl_im_sdk"
 version = "1.0-SNAPSHOT"
 
+
 buildscript {
-    ext.kotlin_version = "1.7.10"
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath 'com.android.tools.build:gradle:3.5.4'
     }
 }
 
-allprojects {
+rootProject.allprojects {
     repositories {
+        maven { url 'https://open-im-online.rentsoft.cn:51000/repository/maven2/' }
         google()
         mavenCentral()
     }
 }
 
+
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace = "com.example.owl_im_sdk"
+        namespace = "com.lion.owl_im_sdk"
     }
 
     compileSdk = 34
@@ -36,33 +36,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    sourceSets {
-        main.java.srcDirs += "src/main/kotlin"
-        test.java.srcDirs += "src/test/kotlin"
-    }
-
     defaultConfig {
         minSdk = 21
     }
+}
 
     dependencies {
-        testImplementation("org.jetbrains.kotlin:kotlin-test")
-        testImplementation("org.mockito:mockito-core:5.0.0")
+        implementation 'io.openim:core-sdk:3.5.1@aar'
     }
-
-    testOptions {
-        unitTests.all {
-            useJUnitPlatform()
-
-            testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
-            }
-        }
-    }
-}
