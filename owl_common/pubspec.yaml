@@ -16,14 +16,14 @@ dependencies:
   common_utils: ^2.1.0
   crypto: ^3.0.3
   dart_date: ^1.3.3
-  device_info_plus: ^9.1.2
+  device_info_plus: ^10.1.0
   dio: ^5.5.0+1
   emoji_picker_flutter: ^2.1.1
-  file_picker: ^7.0.2
+  file_picker: ^8.0.0+1
   flutter_app_badger: ^1.5.0
   flutter_cache_manager: ^3.3.1
   flutter_easyloading: ^3.0.5
-  flutter_image_compress: ^1.1.3
+  flutter_image_compress: ^2.3.0
   flutter_local_notifications: ^17.2.1+2
   flutter_screen_lock: ^9.1.0
   flutter_screenutil: ^5.9.3
@@ -44,7 +44,7 @@ dependencies:
   percent_indicator: ^4.2.3
   permission_handler: ^11.3.1
   record: ^5.1.2
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
   scan: ^1.6.0
   scroll_to_index: ^3.0.1
   shared_preferences: ^2.2.3
@@ -58,9 +58,6 @@ dependencies:
   video_player: ^2.9.1
   visibility_detector: ^0.4.0+2
   wechat_assets_picker: ^8.6.3
-
-  owl_im_sdk:
-    path: ../owl_im_sdk
   collection: ^1.18.0
   lpinyin: ^2.0.3
   sprintf: ^7.0.0
@@ -69,6 +66,10 @@ dependencies:
   lottie: ^3.1.2
   flutter_keyboard_visibility: ^6.0.0
   chewie: ^1.8.0
+  owl_im_sdk:
+    path: ../owl_im_sdk
+  provider: ^6.1.2
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:

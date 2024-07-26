@@ -43,15 +43,15 @@ class CallRecords {
         duration = json['duration'];
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['userID'] = this.userID;
-    data['nickname'] = this.nickname;
-    data['faceURL'] = this.faceURL;
-    data['type'] = this.type;
-    data['success'] = this.success;
-    data['incomingCall'] = this.incomingCall;
-    data['date'] = this.date;
-    data['duration'] = this.duration;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userID'] = userID;
+    data['nickname'] = nickname;
+    data['faceURL'] = faceURL;
+    data['type'] = type;
+    data['success'] = success;
+    data['incomingCall'] = incomingCall;
+    data['date'] = date;
+    data['duration'] = duration;
     return data;
   }
 }

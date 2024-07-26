@@ -12,6 +12,7 @@ class DataSp {
   static const _language = "language";
   static const _groupApplication = "%s_groupApplication";
   static const _friendApplication = "%s_friendApplication";
+  static const _ignoreUpdate = 'ignoreUpdate';
   // static const _enabledVibration = 'enabledVibration';
   // static const _enabledRing = 'enabledRing';
   static const _screenPassword = '%s_screenPassword';
@@ -152,5 +153,13 @@ class DataSp {
 
   static Future<bool>? clearChatBackground() {
     return SpUtil().remove(getKey(_chatBackground));
+  }
+
+  static Future<bool>? putIgnoreVersion(String version) {
+    return SpUtil().putString(_ignoreUpdate, version);
+  }
+
+  static String? getIgnoreVersion() {
+    return SpUtil().getString(_ignoreUpdate);
   }
 }
