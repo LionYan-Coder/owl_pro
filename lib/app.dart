@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/core/controller/permission_controller.dart';
+import 'package:owlpro_app/routes/app_pages.dart';
+import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:owlpro_app/widgets/app_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -28,9 +30,13 @@ class OwlApp extends StatelessWidget {
                 return locale;
               },
               locale: locale,
+              theme: Styles.lightTheme,
+              darkTheme: Styles.darkTheme,
+              themeMode: ThemeMode.system,
               supportedLocales: const [Locale('zh', 'CN'), Locale('en', 'US')],
-              // getPages: AppPages.routes,
+              getPages: AppPages.routes,
               initialBinding: InitBinding(),
+              initialRoute: AppRoutes.splash,
             ));
   }
 }

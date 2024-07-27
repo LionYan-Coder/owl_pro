@@ -4,6 +4,7 @@ import 'package:sprintf/sprintf.dart';
 import 'package:uuid/uuid.dart';
 
 class DataSp {
+  static const _isInit = 'isInit';
   static const _loginCertificate = 'loginCertificate';
   static const _loginAccount = 'loginAccount';
   static const _server = "server";
@@ -36,12 +37,22 @@ class DataSp {
 
   static String? get userID => getLoginCertificate()?.userID;
 
+  static bool? get isInit => getIsInit();
+
+  static Future<bool>? putIsInit() {
+    return SpUtil().putBool(_isInit, true);
+  }
+
   static Future<bool>? putLoginCertificate(LoginCertificate lc) {
     return SpUtil().putObject(_loginCertificate, lc);
   }
 
   static Future<bool>? putLoginAccount(Map map) {
     return SpUtil().putObject(_loginAccount, map);
+  }
+
+  static bool? getIsInit() {
+    return SpUtil().getBool(_isInit);
   }
 
   static LoginCertificate? getLoginCertificate() {

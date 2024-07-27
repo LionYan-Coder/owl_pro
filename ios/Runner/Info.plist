@@ -45,5 +45,36 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法给好友发送或者上传本地相册图片及视频内容。</string>
+	<key>NSCameraUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法使用拍照、录制视频、扫一扫等功能。</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法使用聊天时发送定位等功能。</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法使用聊天时发送定位等功能。</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法使用聊天时发送定位等功能。</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法使用视频通话、发送语音消息或录制视频等功能。</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法给好友发送或者上传本地相册图片及视频内容。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>请点击“好”以允许访问。若不允许，你将无法给好友发送或者上传本地相册图片及视频内容。</string>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>

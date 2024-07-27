@@ -4,17 +4,22 @@ import 'package:get/get.dart';
 
 import 'lang/en_US.dart';
 import 'lang/zh_CN.dart';
+import 'lang/ko_KR.dart';
+
+// extension Asset on String {
+
+// }
 
 class TranslationService extends Translations {
   static Locale? get locale => Get.deviceLocale;
   static const fallbackLocale = Locale('en', 'US');
 
   @override
-  Map<String, Map<String, String>> get keys => {
-        'en_US': en_US,
-        'zh_CN': zh_CN,
-      };
+  Map<String, Map<String, String>> get keys =>
+      {'en_US': en_US, 'zh_CN': zh_CN, 'ko_KR': ko_KR};
 }
+
+const trMap =  {'en_US': 'English', 'zh_CN': '中文简体', 'ko_KR': "한국어"};
 
 class StrRes {
   StrRes._();

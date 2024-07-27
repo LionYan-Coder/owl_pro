@@ -380,7 +380,7 @@ mixin OpenIMLive {
 
   void _playSound() async {
     if (!_audioPlayer.playerState.playing) {
-      _audioPlayer.setAsset(_ring, package: 'openim_common');
+      _audioPlayer.setAsset(_ring, package: 'owl_common');
       _audioPlayer.setLoopMode(LoopMode.one);
       _audioPlayer.setVolume(1.0);
       _audioPlayer.play();

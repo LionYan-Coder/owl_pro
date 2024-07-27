@@ -1,0 +1,85 @@
+{
+  // 使用 IntelliSense 了解相关属性。
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "owlpro_app",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "owlpro_app (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "owlpro_app (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "owl_common",
+      "cwd": "owl_common",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "owl_common (profile mode)",
+      "cwd": "owl_common",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "owl_common (release mode)",
+      "cwd": "owl_common",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "owl_im_sdk",
+      "cwd": "owl_im_sdk",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "owl_im_sdk (profile mode)",
+      "cwd": "owl_im_sdk",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "owl_im_sdk (release mode)",
+      "cwd": "owl_im_sdk",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "owl_live",
+      "cwd": "owl_live",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "owl_live (profile mode)",
+      "cwd": "owl_live",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "owl_live (release mode)",
+      "cwd": "owl_live",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}

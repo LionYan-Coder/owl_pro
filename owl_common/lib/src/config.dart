@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -75,6 +76,7 @@ class Config {
 
   static Future init(Function() runApp) async {
     WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
     try {
       final path = (await getApplicationDocumentsDirectory()).path;
       cachePath = '$path/';

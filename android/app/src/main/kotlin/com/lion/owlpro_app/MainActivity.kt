@@ -1,4 +1,4 @@
-package com.example.owlpro_app
+package com.lion.owlpro_app
 
 import io.flutter.embedding.android.FlutterActivity
 

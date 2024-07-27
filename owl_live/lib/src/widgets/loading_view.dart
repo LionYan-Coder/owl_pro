@@ -7,7 +7,7 @@ class LiveLoadingView extends StatelessWidget {
   const LiveLoadingView({
     super.key,
     this.assetsName = 'assets/anim/live_loading.json',
-    this.package = 'openim_common',
+    this.package = 'owl_common',
     this.status = false,
   });
   final bool status;

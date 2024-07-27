@@ -24,16 +24,16 @@ class AppController extends GetxController with UpgradeManger {
       const AndroidInitializationSettings('@mipmap/ic_launcher');
   final _ring = 'assets/audio/message_ring.wav';
 
-  RTCBridge? rtcBridge = PackageBridge.rtcBridge;
-
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
   final _audioPlayer = AudioPlayer(
       // Handle audio_session events ourselves for the purpose of this demo.
       // handleInterruptions: false,
       // androidApplyAudioAttributes: false,
       // handleAudioSessionActivation: false,
       );
+
+  RTCBridge? rtcBridge = PackageBridge.rtcBridge;
+
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   final DarwinInitializationSettings initializationSettingsDarwin =
       DarwinInitializationSettings(
@@ -235,7 +235,7 @@ class AppController extends GetxController with UpgradeManger {
         isAllowBeep &&
         (ringerStatus == RingerModeStatus.normal ||
             ringerStatus == RingerModeStatus.unknown)) {
-      _audioPlayer.setAsset(_ring, package: 'openim_common');
+      _audioPlayer.setAsset(_ring, package: 'owl_common');
       _audioPlayer.setLoopMode(LoopMode.off);
       _audioPlayer.setVolume(1.0);
       _audioPlayer.play();

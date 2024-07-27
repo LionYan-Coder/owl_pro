@@ -23,6 +23,7 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AppController>(
+        init: AppController(),
         builder: (ctrl) => FocusDetector(
             onForegroundGained: () => ctrl.runningBackground(false),
             onForegroundLost: () => ctrl.runningBackground(true),

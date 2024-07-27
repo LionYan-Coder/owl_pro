@@ -1,7 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:owl_common/owl_common.dart';
 import 'package:rxdart/rxdart.dart';
 
 extension SubjectExt<T> on Subject<T> {
@@ -41,19 +46,67 @@ extension StrExt on String {
     return LottieView(name: this);
   }
 
+  SvgView get toSvg {
+    return SvgView(assetName: this);
+  }
+
+  Button get toButton {
+    return Button(
+      text: this,
+    );
+  }
+
+  Button get toOutlineButton {
+    return Button(
+      text: this,
+      variants: ButtonVariants.outline,
+    );
+  }
+
   String fixAutoLines() {
     return Characters(this).join('\u{200B}');
+  }
+
+  Color get color => Color(int.parse(replaceFirst("#", "0xFF")));
+
+  String get svg => "assets/svg/$this.svg";
+  String get png => "assets/image/$this.png";
+  String get lang => this == 'zh_CN' ? '简体中文' : "EngLish";
+}
+
+extension NumExt on num {
+  SizedBox get gaph => SizedBox(
+        width: w,
+        height: 0,
+      );
+  SizedBox get gapv => SizedBox(
+        width: 0,
+        height: h,
+      );
+
+  Color get color => Color(int.parse("0xFF$this"));
+}
+
+extension ColorExt on Color {
+  Color adapterDark(Color dark) {
+    return Get.isDarkMode ? dark : this;
+  }
+}
+
+extension TextStyleExt on TextStyle {
+  TextStyle adapterDark(TextStyle dark) {
+    return Get.isDarkMode ? dark : this;
   }
 }
 
 class LottieView extends StatelessWidget {
   LottieView({
-    Key? key,
+    super.key,
     required this.name,
     this.width,
     this.height,
     this.fit,
-  }) : super(key: key);
+  });
   final String name;
   double? width;
   double? height;
@@ -65,23 +118,23 @@ class LottieView extends StatelessWidget {
       name,
       height: height,
       width: width,
-      package: 'openim_common',
+      package: 'owl_common',
       fit: fit,
     );
   }
 }
 
 class TextView extends StatelessWidget {
-  TextView({
-    Key? key,
-    required this.data,
-    this.style,
-    this.textAlign,
-    this.overflow,
-    this.textScaleFactor,
-    this.maxLines,
-    this.onTap,
-  }) : super(key: key);
+  TextView(
+      {super.key,
+      required this.data,
+      this.style,
+      this.textAlign,
+      this.overflow,
+      this.textScaleFactor,
+      this.maxLines,
+      this.onTap,
+      this.darkColor});
   final String data;
   TextStyle? style;
   TextAlign? textAlign;
@@ -89,58 +142,104 @@ class TextView extends StatelessWidget {
   double? textScaleFactor;
   int? maxLines;
   Function()? onTap;
+  Color? darkColor;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.translucent,
-        child: Text(
-          data,
-          style: style,
-          textAlign: textAlign,
-          overflow: overflow,
-          textScaleFactor: textScaleFactor,
-          maxLines: maxLines,
-        ),
-      );
+  Widget build(BuildContext context) {
+    if (darkColor != null && Get.isDarkMode && style != null) {
+      style?.copyWith(color: darkColor);
+    }
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.translucent,
+      child: Text(
+        data,
+        style: style,
+        textAlign: textAlign,
+        overflow: overflow,
+        textScaler: TextScaler.linear(textScaleFactor ?? 1),
+        maxLines: maxLines,
+      ),
+    );
+  }
+}
+
+class SvgView extends StatelessWidget {
+  SvgView(
+      {super.key,
+      required this.assetName,
+      this.width,
+      this.height,
+      this.color,
+      this.fit = BoxFit.contain,
+      this.alignment = Alignment.center});
+
+  final String assetName;
+  double? width;
+  double? height;
+  BoxFit? fit;
+  Color? color;
+  AlignmentGeometry? alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.asset(
+      assetName,
+      package: "owl_common",
+      width: width,
+      height: height,
+      fit: fit ?? BoxFit.contain,
+      alignment: alignment ?? Alignment.center,
+      theme: SvgTheme(
+          currentColor: color ?? Styles.c_333333.adapterDark(Styles.c_999999)),
+    );
+  }
 }
 
 class ImageView extends StatelessWidget {
-  ImageView({
-    Key? key,
-    required this.name,
-    this.width,
-    this.height,
-    this.color,
-    this.opacity = 1,
-    this.fit,
-    this.onTap,
-    this.onDoubleTap,
-  }) : super(key: key);
+  ImageView(
+      {super.key,
+      required this.name,
+      this.width,
+      this.height,
+      this.color,
+      this.opacity = 1,
+      this.fit,
+      this.onTap,
+      this.onDoubleTap,
+      this.adpaterDark = false});
   final String name;
   double? width;
   double? height;
   Color? color;
   double opacity;
   BoxFit? fit;
+  bool adpaterDark;
   Function()? onTap;
   Function()? onDoubleTap;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: onTap,
-        onDoubleTap: onDoubleTap,
-        child: Opacity(
-          opacity: opacity,
-          child: Image.asset(
-            name,
-            package: 'openim_common',
-            width: width,
-            height: height,
-            color: color,
-            fit: fit,
-          ),
+  Widget build(BuildContext context) {
+    var imgPath = name;
+    if (adpaterDark && Get.isDarkMode) {
+      final l = name.split(".");
+      imgPath = '${l[0]}_dark${l[1]}';
+    }
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: onTap,
+      onDoubleTap: onDoubleTap,
+      child: Opacity(
+        opacity: opacity,
+        child: Image.asset(
+          imgPath,
+          package: 'owl_common',
+          width: width,
+          height: height,
+          color: color,
+          fit: fit,
         ),
-      );
+      ),
+    );
+  }
 }

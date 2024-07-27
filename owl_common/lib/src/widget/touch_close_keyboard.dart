@@ -26,7 +26,7 @@ class TouchCloseSoftKeyboard extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Styles.c_0C8CE9_opacity_5,
+                    Styles.c_0C8CE9.withOpacity(0.05),
                     Styles.c_FFFFFF.withOpacity(0),
                   ],
                   begin: Alignment.topCenter,
