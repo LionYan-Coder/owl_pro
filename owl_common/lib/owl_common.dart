@@ -44,7 +44,6 @@ export 'src/widget/avatar_view.dart';
 export 'src/widget/custom_cupertino_controls.dart';
 export 'src/widget/button.dart';
 export 'src/widget/title_bar.dart';
-export 'src/widget/loading_switcher.dart';
 
 export 'src/widget/chat/chat_picture_preview.dart';
 export 'src/widget/chat/chat_item_view.dart';
@@ -65,5 +64,6 @@ export 'src/widget/chat/chat_timeline_view.dart';
 export 'src/bridge/package_bridge.dart';
 export 'src/controller/cache_controller.dart';
 export 'src/controller/download_controller.dart';
+export 'src/controller/theme_controller.dart';
 export 'src/apis.dart';
 export 'src/urls.dart';

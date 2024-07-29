@@ -27,11 +27,10 @@ class SplashPage extends StatelessWidget {
             16.gapv,
             "sign_guide_title".tr.toText
               ..style = Styles.ts_666666_20_medium
-              ..darkColor = Styles.c_999999,
+                  .adapterDark(Styles.ts_999999_20_medium),
             3.gapv,
             "sign_guide_desc".tr.toText
-              ..style = Styles.ts_999999_10
-              ..darkColor = Styles.c_555555
+              ..style = Styles.ts_999999_10.adapterDark(Styles.ts_555555_10)
           ],
         ),
       ),

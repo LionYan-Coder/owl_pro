@@ -35,32 +35,24 @@ class Apis {
 
   static Future<LoginCertificate> register({
     required String nickname,
-    required String password,
-    String? faceURL,
-    String? areaCode,
-    String? phoneNumber,
-    String? email,
-    int birth = 0,
-    int gender = 1,
-    required String verificationCode,
-    String? invitationCode,
+    required String account,
+    required String address,
+    required String publicKey,
+    required String faceURL,
+    String? about,
   }) async {
     try {
       var data = await HttpUtil.post(Urls.register, data: {
         'deviceID': DataSp.getDeviceID(),
-        'verifyCode': verificationCode,
         'platform': IMUtils.getPlatform(),
-        'invitationCode': invitationCode,
         'autoLogin': true,
         'user': {
           "nickname": nickname,
+          "account": account,
+          "about": about,
+          "address": address,
+          "publicKey": publicKey,
           "faceURL": faceURL,
-          'birth': birth,
-          'gender': gender,
-          'email': email,
-          "areaCode": areaCode,
-          'phoneNumber': phoneNumber,
-          'password': IMUtils.generateMD5(password),
         },
       });
       return LoginCertificate.fromJson(data!);

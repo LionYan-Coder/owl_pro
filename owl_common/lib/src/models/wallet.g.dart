@@ -46,6 +46,55 @@ class WalletAdapter extends TypeAdapter<Wallet> {
           typeId == other.typeId;
 }
 
+class WallteAccountAdapter extends TypeAdapter<WallteAccount> {
+  @override
+  final int typeId = 3;
+
+  @override
+  WallteAccount read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return WallteAccount(
+      address: fields[1] as String,
+      nickname: fields[2] as String,
+      account: fields[3] as String,
+      about: fields[4] as String?,
+      coverURL: fields[6] as String?,
+      faceURL: fields[5] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, WallteAccount obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(1)
+      ..write(obj.address)
+      ..writeByte(2)
+      ..write(obj.nickname)
+      ..writeByte(3)
+      ..write(obj.account)
+      ..writeByte(4)
+      ..write(obj.about)
+      ..writeByte(5)
+      ..write(obj.faceURL)
+      ..writeByte(6)
+      ..write(obj.coverURL);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is WallteAccountAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
@@ -60,4 +109,24 @@ Map<String, dynamic> _$WalletToJson(Wallet instance) => <String, dynamic>{
       'address': instance.address,
       'privKey': instance.privKey,
       'mnemonic': instance.mnemonic,
+    };
+
+WallteAccount _$WallteAccountFromJson(Map<String, dynamic> json) =>
+    WallteAccount(
+      address: json['address'] as String,
+      nickname: json['nickname'] as String,
+      account: json['account'] as String,
+      about: json['about'] as String?,
+      coverURL: json['coverURL'] as String?,
+      faceURL: json['faceURL'] as String?,
+    );
+
+Map<String, dynamic> _$WallteAccountToJson(WallteAccount instance) =>
+    <String, dynamic>{
+      'address': instance.address,
+      'nickname': instance.nickname,
+      'account': instance.account,
+      'about': instance.about,
+      'faceURL': instance.faceURL,
+      'coverURL': instance.coverURL,
     };

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:sprintf/sprintf.dart';
@@ -11,6 +12,7 @@ class DataSp {
   static const _ip = 'ip';
   static const _deviceID = 'deviceID';
   static const _language = "language";
+  static const _appTheme = 'appTheme';
   static const _groupApplication = "%s_groupApplication";
   static const _friendApplication = "%s_friendApplication";
   static const _ignoreUpdate = 'ignoreUpdate';
@@ -99,6 +101,14 @@ class DataSp {
 
   static int? getLanguage() {
     return SpUtil().getInt(_language);
+  }
+
+  static Future<bool>? putTheme(ThemeMode theme) {
+    return SpUtil().putString(_appTheme, theme.name);
+  }
+
+  static String? getTheme() {
+    return SpUtil().getString(_appTheme);
   }
 
   static Future<bool>? putHaveReadUnHandleGroupApplication(

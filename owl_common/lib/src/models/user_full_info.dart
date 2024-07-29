@@ -1,20 +1,12 @@
 class UserFullInfo {
   String? userID;
-  String? password;
   String? account;
-  String? phoneNumber;
-  String? areaCode;
+  String? address;
   String? nickname;
   String? remark;
-  String? englishName;
+  String? about;
   String? faceURL;
-  int? gender;
-  String? mobileAreaCode;
-  String? mobile;
-  String? telephone;
-  int? level;
-  int? birth;
-  String? email;
+  String? coverURL;
   int? order;
   int? status;
   int? allowAddFriend;
@@ -28,27 +20,19 @@ class UserFullInfo {
   bool isBlacklist = false;
   List<DepartmentInfo>? departmentList;
 
-  bool get isMale => gender == 1;
-
-  String get showName => remark?.isNotEmpty == true ? remark! : (nickname?.isNotEmpty == true ? nickname! : userID!);
+  String get showName => remark?.isNotEmpty == true
+      ? remark!
+      : (nickname?.isNotEmpty == true ? nickname! : account!);
 
   UserFullInfo({
     this.userID,
-    this.password,
     this.account,
-    this.phoneNumber,
-    this.areaCode,
+    this.address,
     this.nickname,
-    this.remark,
-    this.englishName,
+    this.about,
     this.faceURL,
-    this.gender,
-    this.mobileAreaCode,
-    this.mobile,
-    this.telephone,
-    this.level,
-    this.birth,
-    this.email,
+    this.coverURL,
+    this.remark,
     this.order,
     this.status,
     this.allowAddFriend,
@@ -65,21 +49,11 @@ class UserFullInfo {
 
   UserFullInfo.fromJson(Map<String, dynamic> json) {
     userID = json['userID'];
-    password = json['password'];
     account = json['account'];
-    phoneNumber = json['phoneNumber'];
-    areaCode = json['areaCode'];
     nickname = json['nickname'];
-    remark = json['remark'];
-    englishName = json['englishName'];
+    about = json['remark'];
     faceURL = json['faceURL'];
-    gender = json['gender'];
-    mobileAreaCode = json['mobileAreaCode'];
-    mobile = json['mobile'];
-    telephone = json['telephone'];
-    level = json['level'];
-    birth = json['birth'];
-    email = json['email'];
+    coverURL = json['coverURL'];
     order = json['order'];
     status = json['status'];
     allowAddFriend = json['allowAddFriend'];
@@ -91,26 +65,23 @@ class UserFullInfo {
     globalRecvMsgOpt = json['globalRecvMsgOpt'];
     isFriendship = json['isFriendship'] ?? true;
     isBlacklist = json['isBlacklist'] ?? false;
-    departmentList = json['departmentList'] == null ? null : (json['departmentList'] as List).map((e) => DepartmentInfo.fromJson(e)).toList();
+    departmentList = json['departmentList'] == null
+        ? null
+        : (json['departmentList'] as List)
+            .map((e) => DepartmentInfo.fromJson(e))
+            .toList();
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['userID'] = userID;
-    data['password'] = password;
+    data['address'] = address;
     data['account'] = account;
-    data['phoneNumber'] = phoneNumber;
-    data['areaCode'] = areaCode;
     data['nickname'] = nickname;
+    data['about'] = about;
     data['remark'] = remark;
-    data['englishName'] = englishName;
     data['faceURL'] = faceURL;
-    data['gender'] = gender;
-    data['mobileAreaCode'] = mobileAreaCode;
-    data['telephone'] = telephone;
-    data['level'] = level;
-    data['birth'] = birth;
-    data['email'] = email;
+    data['coverURL'] = coverURL;
     data['order'] = order;
     data['status'] = status;
     data['allowAddFriend'] = allowAddFriend;

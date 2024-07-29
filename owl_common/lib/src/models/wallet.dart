@@ -9,6 +9,7 @@ import 'package:bip39/bip39.dart' as bip39;
 import 'package:json_annotation/json_annotation.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:pointycastle/digests/ripemd160.dart';
+import 'package:web3dart/crypto.dart';
 
 part 'wallet.g.dart';
 
@@ -78,25 +79,93 @@ class Wallet {
     return null;
   }
 
-  Future<void> saveWalletToHive(String address, Box box) {
+  Future<void> saveWalletToHive(Box box) async {
     String encstr = EncryptionHelper.encrypted64(jsonEncode(toJson()));
-    return box.put(address, encstr);
+    box.put(address, encstr);
   }
 
-  static Wallet loadWalletFromHive(String address, Box box) {
+  static Wallet loadWalletFromHive(
+    Box box,
+    String address,
+  ) {
     String decstr = EncryptionHelper.decrypt64(box.get(address));
-    box.close();
     return Wallet.fromJson(jsonDecode(decstr));
   }
 
-  static Future<void> deleteWallet(String address, Box box) async {
+  static Future<void> deleteWallet(
+    Box box,
+    String address,
+  ) async {
     await box.delete(address);
-    box.close();
   }
+
+  String get publicKey => bytesToHex(
+      ECPair.fromPrivateKey(Uint8List.fromList(hex.decode(privKey))).publicKey,
+      include0x: true);
 
   bool get isFromMnemonic => mnemonic != null && mnemonic!.isNotEmpty;
 
   factory Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
 
   Map<String, dynamic> toJson() => _$WalletToJson(this);
+}
+
+@HiveType(typeId: 3)
+@JsonSerializable()
+class WallteAccount {
+  @HiveField(1)
+  String address;
+  @HiveField(2)
+  String nickname;
+  @HiveField(3)
+  String account;
+  @HiveField(4)
+  String? about;
+  @HiveField(5)
+  String? faceURL;
+  @HiveField(6)
+  String? coverURL;
+
+  WallteAccount(
+      {required this.address,
+      required this.nickname,
+      required this.account,
+      this.about,
+      this.coverURL,
+      this.faceURL});
+
+  Future<void> addAccountToHive(Box box) async {
+    final users = WallteAccount.loadAccountsFromHive(box);
+    users.add(this);
+
+    box.put("accounts", users);
+  }
+
+  static List<WallteAccount> loadAccountsFromHive(Box box) {
+    final s = box.get('accounts');
+    Logger.print("s = ${s.toString()}");
+    final users = box.get('accounts')?.cast<WallteAccount>() ?? [];
+    return users;
+  }
+
+  static Future<void> deleteAccount(Box box, String account) async {
+    final users = WallteAccount.loadAccountsFromHive(box);
+    users.removeWhere((item) => item.account == account);
+    box.put("accounts", users);
+  }
+
+  Future<void> saveCurrentAccount(Box box) async {
+    box.put("currentAccount", this);
+  }
+
+  static WallteAccount loadCurrentAccount(
+      Box box, WallteAccount walletAccountunt) {
+    final account = box.get("currentAccount") as WallteAccount;
+    return account;
+  }
+
+  factory WallteAccount.fromJson(Map<String, dynamic> json) =>
+      _$WallteAccountFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WallteAccountToJson(this);
 }

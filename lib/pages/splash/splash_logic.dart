@@ -14,25 +14,28 @@ class SplashLogic extends GetxController {
 
   bool? get isInit => DataSp.isInit;
 
-  late StreamSubscription initializedSub;
+  StreamSubscription? initializedSub;
 
   @override
   void onInit() {
-    initializedSub = imLogic.initializedSubject.listen((value) {
-      Logger.print('---------------------initialized---------------------');
-      if (null != userID && null != token) {
-        _login();
-      } else {
-        if (isInit == true) {
-          AppNavigator.startLoginReady();
-        } else {
-          Future.delayed(const Duration(milliseconds: 1000), () {
-            AppNavigator.startGuide();
-          });
-        }
-        // AppNavigator.startLogin();
-      }
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      AppNavigator.startSplashToMain(isAutoLogin: true);
     });
+    // initializedSub = imLogic.initializedSubject.listen((value) {
+    //   Logger.print('---------------------initialized---------------------');
+    //   if (null != userID && null != token) {
+    //     _login();
+    //   } else {
+    //     if (isInit == true) {
+    //       AppNavigator.startLoginReady();
+    //     } else {
+    //       Future.delayed(const Duration(milliseconds: 1000), () {
+    //         AppNavigator.startGuide();
+    //       });
+    //     }
+    //     // AppNavigator.startLogin();
+    //   }
+    // });
     super.onInit();
   }
 
@@ -52,7 +55,7 @@ class SplashLogic extends GetxController {
 
   @override
   void onClose() {
-    initializedSub.cancel();
+    initializedSub?.cancel();
     super.onClose();
   }
 }

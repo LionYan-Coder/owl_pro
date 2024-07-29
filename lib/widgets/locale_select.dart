@@ -55,7 +55,7 @@ class LocaleSelect extends StatelessWidget {
                       trMap["${locale.languageCode}_${locale.countryCode ?? ''}"]!
                           .toText
                         ..style = Styles.ts_333333_12
-                        ..darkColor = Styles.c_CCCCCC,
+                            .adapterDark(Styles.ts_CCCCCC_12),
                       4.gaph,
                       "arrow_down".svg.toSvg
                         ..width = 10.w

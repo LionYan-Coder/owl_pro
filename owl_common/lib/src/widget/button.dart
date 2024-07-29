@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owl_common/src/utils/toast.dart';
 
 enum ButtonVariants { primary, secondary, outline, custom }
 
@@ -193,5 +195,40 @@ class _ButtonViewState extends State<Button>
 
   void _onTapCancel() {
     _controller?.reverse.call();
+  }
+}
+
+class ButtonCopy extends StatelessWidget {
+  final String data;
+  bool? single;
+  ButtonCopy({super.key, required this.data, this.single = true});
+
+  void _copy(BuildContext context) {
+    Clipboard.setData(ClipboardData(text: data));
+    ToastHelper.showToast(context, "copy_success".tr);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final copySvg = "copy".svg.toSvg
+      ..width = 16.w
+      ..fit = BoxFit.cover
+      ..color = Styles.c_999999.adapterDark(Styles.c_666666);
+
+    return GestureDetector(
+        onTap: () {
+          _copy(context);
+        },
+        child: single == true
+            ? copySvg
+            : Container(
+                padding: const EdgeInsets.all(5).w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.r),
+                    color: Styles.c_333333
+                        .withOpacity(0.05)
+                        .adapterDark(Styles.c_CCCCCC.withOpacity(0.05))),
+                child: copySvg,
+              ));
   }
 }

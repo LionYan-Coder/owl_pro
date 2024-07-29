@@ -186,10 +186,10 @@ class IMController extends GetxController with IMCallback {
         val?.allowVibration = data.allowVibration;
         val?.nickname = data.nickname;
         val?.faceURL = data.faceURL;
-        val?.phoneNumber = data.phoneNumber;
-        val?.email = data.email;
-        val?.birth = data.birth;
-        val?.gender = data.gender;
+        // val?.phoneNumber = data.phoneNumber;
+        // val?.email = data.email;
+        // val?.birth = data.birth;
+        // val?.gender = data.gender;
       });
     }
   }

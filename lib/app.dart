@@ -13,10 +13,12 @@ class OwlApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = DataSp.getTheme();
     return AppView(
         builder: (locale, builder) => GetMaterialApp(
               debugShowCheckedModeBanner: true,
               enableLog: true,
+              builder: builder,
               logWriterCallback: Logger.print,
               translations: TranslationService(),
               localizationsDelegates: const [
@@ -32,7 +34,8 @@ class OwlApp extends StatelessWidget {
               locale: locale,
               theme: Styles.lightTheme,
               darkTheme: Styles.darkTheme,
-              themeMode: ThemeMode.system,
+              themeMode: ThemeMode.values.firstWhere((e) => e.name == theme,
+                  orElse: () => ThemeMode.system),
               supportedLocales: const [Locale('zh', 'CN'), Locale('en', 'US')],
               getPages: AppPages.routes,
               initialBinding: InitBinding(),

@@ -125,16 +125,16 @@ class LottieView extends StatelessWidget {
 }
 
 class TextView extends StatelessWidget {
-  TextView(
-      {super.key,
-      required this.data,
-      this.style,
-      this.textAlign,
-      this.overflow,
-      this.textScaleFactor,
-      this.maxLines,
-      this.onTap,
-      this.darkColor});
+  TextView({
+    super.key,
+    required this.data,
+    this.style,
+    this.textAlign,
+    this.overflow,
+    this.textScaleFactor,
+    this.maxLines,
+    this.onTap,
+  });
   final String data;
   TextStyle? style;
   TextAlign? textAlign;
@@ -142,13 +142,9 @@ class TextView extends StatelessWidget {
   double? textScaleFactor;
   int? maxLines;
   Function()? onTap;
-  Color? darkColor;
 
   @override
   Widget build(BuildContext context) {
-    if (darkColor != null && Get.isDarkMode && style != null) {
-      style?.copyWith(color: darkColor);
-    }
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.translucent,

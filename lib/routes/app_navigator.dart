@@ -17,9 +17,11 @@ class AppNavigator {
     Get.toNamed(AppRoutes.loginCreate);
   }
 
-  static void startLogin(Wallet wallet) {
-    Get.toNamed(AppRoutes.login, arguments: wallet);
+  static void startLogin() {
+    Get.toNamed(AppRoutes.login);
   }
+
+
 
   static void startMain({bool isAutoLogin = false}) {
     Get.offAllNamed(

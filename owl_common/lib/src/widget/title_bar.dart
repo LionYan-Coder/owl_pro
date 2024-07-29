@@ -38,6 +38,8 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               if (null != left) left!,
               if (null != center) center!,
+              if (null != left && null != center && null == right)
+                SizedBox(width: 24.w),
               if (null != right) right!,
             ],
           ),
@@ -74,7 +76,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              "arrow_down".svg.toSvg
+              "nvbar_ico_back".svg.toSvg
                 ..width = 24.w
                 ..height = 24.h
                 ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
