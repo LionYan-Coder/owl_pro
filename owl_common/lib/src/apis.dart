@@ -39,12 +39,16 @@ class Apis {
     required String address,
     required String publicKey,
     required String faceURL,
+    required String nonce,
+    required String sign,
     String? about,
   }) async {
     try {
       var data = await HttpUtil.post(Urls.register, data: {
         'deviceID': DataSp.getDeviceID(),
         'platform': IMUtils.getPlatform(),
+        "nonce": nonce,
+        "signature": sign,
         'autoLogin': true,
         'user': {
           "nickname": nickname,
@@ -56,6 +60,18 @@ class Apis {
         },
       });
       return LoginCertificate.fromJson(data!);
+    } catch (e, s) {
+      Logger.print('e:$e s:$s');
+      return Future.error(e);
+    }
+  }
+
+  static Future<ChallengeNonce> challenge({required String publicKey}) async {
+    try {
+      var data =
+          await HttpUtil.post(Urls.challenge, data: {"publicKey": publicKey});
+
+      return ChallengeNonce.fromJson(data!);
     } catch (e, s) {
       Logger.print('e:$e s:$s');
       return Future.error(e);

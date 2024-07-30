@@ -1,15 +1,21 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:convert/convert.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/routes/app_navigator.dart';
+import 'package:web3dart/crypto.dart';
 
 const accountStrs =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 class LoginLogic extends GetxController {
+  final imLogic = Get.find<IMController>();
   final loading = false.obs;
   final checked = false.obs;
   final wallet = Rx<Wallet?>(null);
@@ -30,7 +36,7 @@ class LoginLogic extends GetxController {
     });
   }
 
-  login() async {
+  create() async {
     String account = randString(6);
     String nickname = randString(6);
     String faceUrl = generateRandomHexColor();
@@ -38,27 +44,34 @@ class LoginLogic extends GetxController {
     String address = wallet.value!.address;
 
     final WallteAccount wallteAccount = WallteAccount(
+        publicKey: publicKey,
         address: address,
         nickname: nickname,
         account: account,
         faceURL: faceUrl);
-    var walletAccountsBox = await Hive.openBox('WallteAccounts');
-    var walletAccountBox = await Hive.openBox<WallteAccount>('WallteAccount');
-    var walletBox = await Hive.openBox<String>('Wallte');
+    var walletBox = await Hive.openBox('Wallet');
 
-    await wallteAccount.saveCurrentAccount(walletAccountBox);
-    await wallteAccount.addAccountToHive(walletAccountsBox);
+    await wallteAccount.saveCurrentAccount(walletBox);
+    await wallteAccount.addAccountToHive(walletBox);
     await wallet.value?.saveWalletToHive(walletBox);
 
-    walletAccountsBox.close();
-    walletAccountBox.close();
     walletBox.close();
-    Apis.register(
+
+    final nonce = generateRandomHex(32);
+    final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
+    final signature = wallet.value?.sign(nonceHash);
+    final data = await Apis.register(
+        nonce: bytesToHex(nonceHash, include0x: true),
+        sign: signature ?? '',
         nickname: nickname,
         account: account,
         address: address,
         publicKey: publicKey,
         faceURL: faceUrl);
+
+    await DataSp.putLoginCertificate(data);
+    await DataSp.putLoginAccount(wallteAccount.toJson());
+    await imLogic.login(data.userID, data.imToken);
     AppNavigator.startMain();
   }
 
@@ -75,5 +88,11 @@ class LoginLogic extends GetxController {
     var g = Random().nextInt(256);
     var b = Random().nextInt(256);
     return '0x${Color.fromRGBO(r, g, b, 1).value.toRadixString(16)}';
+  }
+
+  String generateRandomHex(int length) {
+    final random = Random.secure();
+    final bytes = List<int>.generate(length, (_) => random.nextInt(256));
+    return hex.encode(bytes);
   }
 }

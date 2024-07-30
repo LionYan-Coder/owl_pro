@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owlpro_app/core/controller/theme_controller.dart';
 import 'mine_logic.dart';
 
 class MinePage extends StatelessWidget {
@@ -18,16 +19,36 @@ class MinePage extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                  left: 24.w, top: context.mediaQueryPadding.top, bottom: 10.w),
-              child: Stack(
-                children: [
-                  Row(
-                    children: [identityButton(context)],
-                  ),
-                  Positioned(right: 16, top: -10.w, child: themeButton(context))
-                ],
+                  left: 24.w,
+                  right: 24.w,
+                  bottom: 24.w,
+                  top: context.mediaQueryPadding.top + 12.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [identityButton(context), themeButton(context)],
               ),
             ),
+            // Padding(
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 24, vertical: 12).w,
+            //     child: const UserBaseInfo()),
+            // Padding(
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 24, vertical: 12).w,
+            //     child: const UserAssetPanel()),
+            // Padding(
+            //   padding:
+            //       const EdgeInsets.symmetric(horizontal: 24, vertical: 12).w,
+            //   child: const UserListMenu(),
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(top: 36, bottom: 20).w,
+              child: Align(
+                  alignment: Alignment.center,
+                  child: "system_version".tr.toText
+                    ..style =
+                        Styles.ts_999999_10.adapterDark(Styles.ts_555555_10)),
+            )
           ],
         ),
       ),
@@ -66,17 +87,14 @@ class MinePage extends StatelessWidget {
   }
 
   Widget themeButton(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        final theme = Get.isDarkMode ? ThemeMode.light : ThemeMode.dark;
-        Get.changeThemeMode(theme);
-        DataSp.putTheme(theme);
-        Get.forceAppUpdate();
+    return GestureDetector(
+      onTap: () {
+        ThemeController.to.toggleTheme();
       },
-      icon: AnimatedCrossFade(
-        duration: const Duration(milliseconds: 250),
-        firstCurve: Curves.bounceInOut,
-        secondCurve: Curves.bounceInOut,
+      child: AnimatedCrossFade(
+        duration: const Duration(milliseconds: 150),
+        firstCurve: Curves.fastOutSlowIn,
+        secondCurve: Curves.fastOutSlowIn,
         crossFadeState: Get.isDarkMode
             ? CrossFadeState.showSecond
             : CrossFadeState.showFirst,

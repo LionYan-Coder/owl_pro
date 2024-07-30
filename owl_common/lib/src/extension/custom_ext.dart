@@ -219,7 +219,7 @@ class ImageView extends StatelessWidget {
     var imgPath = name;
     if (adpaterDark && Get.isDarkMode) {
       final l = name.split(".");
-      imgPath = '${l[0]}_dark${l[1]}';
+      imgPath = '${l[0]}_dark.${l[1]}';
     }
     return GestureDetector(
       behavior: HitTestBehavior.translucent,

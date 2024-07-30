@@ -54,8 +54,9 @@ class HttpUtil {
 
     // 配置dio实例
     dio.options.baseUrl = Config.imApiUrl;
-    dio.options.connectTimeout = const Duration(seconds: 30); //30s
-    dio.options.receiveTimeout = const Duration(seconds: 30);
+    dio.options.connectTimeout = const Duration(seconds: 600); //30s
+    dio.options.receiveTimeout = const Duration(seconds: 600);
+    dio.options.sendTimeout = const Duration(seconds: 600);
   }
 
   static String get operationID =>

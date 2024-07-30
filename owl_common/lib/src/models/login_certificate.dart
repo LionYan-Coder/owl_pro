@@ -23,3 +23,21 @@ class LoginCertificate {
     return jsonEncode(this);
   }
 }
+
+class ChallengeNonce {
+  String nonce;
+
+  ChallengeNonce.fromJson(Map<String, dynamic> map)
+      : nonce = map["nonce"] ?? '';
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['nonce'] = nonce;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return nonce;
+  }
+}

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/core/controller/permission_controller.dart';
+import 'package:owlpro_app/core/controller/theme_controller.dart';
 import 'package:owlpro_app/routes/app_pages.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:owlpro_app/widgets/app_view.dart';
@@ -13,7 +14,8 @@ class OwlApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = DataSp.getTheme();
+    final theme = DataSp.appTheme;
+    Logger.print("theme: ${theme?.name}");
     return AppView(
         builder: (locale, builder) => GetMaterialApp(
               debugShowCheckedModeBanner: true,
@@ -34,8 +36,7 @@ class OwlApp extends StatelessWidget {
               locale: locale,
               theme: Styles.lightTheme,
               darkTheme: Styles.darkTheme,
-              themeMode: ThemeMode.values.firstWhere((e) => e.name == theme,
-                  orElse: () => ThemeMode.system),
+              themeMode: theme ?? ThemeMode.system,
               supportedLocales: const [Locale('zh', 'CN'), Locale('en', 'US')],
               getPages: AppPages.routes,
               initialBinding: InitBinding(),
@@ -47,6 +48,7 @@ class OwlApp extends StatelessWidget {
 class InitBinding extends Bindings {
   @override
   void dependencies() {
+    Get.put<ThemeController>(ThemeController());
     Get.put<PermissionController>(PermissionController());
     Get.put<IMController>(IMController());
     // Get.put<PushController>(PushController());

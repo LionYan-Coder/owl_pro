@@ -41,8 +41,11 @@ class DataSp {
 
   static bool? get isInit => getIsInit();
 
+  static ThemeMode? get appTheme => ThemeMode.values
+      .firstWhere((e) => e.name == getTheme(), orElse: () => ThemeMode.system);
+
   static Future<bool>? putIsInit() {
-    return SpUtil().putBool(_isInit, true);
+    return SpUtil().putBool(_isInit, false);
   }
 
   static Future<bool>? putLoginCertificate(LoginCertificate lc) {

@@ -153,27 +153,32 @@ class _ButtonViewState extends State<Button>
           onTapCancel: _onTapCancel,
           child: Transform.scale(
             scale: _scale,
-            child: AnimatedContainer(
+            child: AnimatedOpacity(
               duration: const Duration(milliseconds: 200),
-              curve: Curves.fastOutSlowIn,
-              width: widget.width?.w ??
-                  (widget.block == true ? double.infinity : null),
-              height: widget.height?.w,
-              margin: widget.margin,
-              decoration: BoxDecoration(
-                  color: _getBgColor(isTapDown),
-                  border: Border.all(color: _getBorderColor(isTapDown)),
-                  borderRadius: BorderRadius.circular(widget.borderRadius!.r)),
-              child: widget.child ??
-                  Container(
-                    alignment: Alignment.center,
-                    padding: widget.padding,
-                    child: Text(
-                      widget.text ?? '',
-                      style: widget.textStyle ?? _getTextStyle(),
-                      maxLines: 1,
+              opacity: widget.onPressed != null ? 1 : 0.4,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.fastOutSlowIn,
+                width: widget.width?.w ??
+                    (widget.block == true ? double.infinity : null),
+                height: widget.height?.w,
+                margin: widget.margin,
+                decoration: BoxDecoration(
+                    color: _getBgColor(isTapDown),
+                    border: Border.all(color: _getBorderColor(isTapDown)),
+                    borderRadius:
+                        BorderRadius.circular(widget.borderRadius!.r)),
+                child: widget.child ??
+                    Container(
+                      alignment: Alignment.center,
+                      padding: widget.padding,
+                      child: Text(
+                        widget.text ?? '',
+                        style: widget.textStyle ?? _getTextStyle(),
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
+              ),
             ),
           )),
     );

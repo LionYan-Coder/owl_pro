@@ -47,7 +47,8 @@ class LoginReadyPage extends StatelessWidget {
                               .copyWith(letterSpacing: 5),
                         4.gapv,
                         "sign_guide_desc".tr.toText
-                          ..style = Styles.ts_999999_10.adapterDark(Styles.ts_555555_10)
+                          ..style = Styles.ts_999999_10
+                              .adapterDark(Styles.ts_555555_10)
                       ],
                     ),
                   ),
@@ -93,7 +94,8 @@ class LoginReadyPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           "sign_guide_restore_title".tr.toText
-                            ..style = Styles.ts_333333_18_medium.adapterDark(Styles.ts_CCCCCC_18_medium),
+                            ..style = Styles.ts_333333_18_medium
+                                .adapterDark(Styles.ts_CCCCCC_18_medium),
                           "sign_guide_restore_text".tr.toText
                             ..style = Styles.ts_CCCCCC_10_medium.copyWith(
                                 color: Styles.c_999999.withOpacity(0.7))

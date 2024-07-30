@@ -64,6 +64,5 @@ export 'src/widget/chat/chat_timeline_view.dart';
 export 'src/bridge/package_bridge.dart';
 export 'src/controller/cache_controller.dart';
 export 'src/controller/download_controller.dart';
-export 'src/controller/theme_controller.dart';
 export 'src/apis.dart';
 export 'src/urls.dart';

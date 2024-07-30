@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                     Button(
-                      onPressed: logic.checked.value ? logic.login : null,
+                      onPressed: logic.checked.value ? logic.create : null,
                       text: "sign_backup_button".tr,
                     )
                   ],

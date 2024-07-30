@@ -58,6 +58,7 @@ class WallteAccountAdapter extends TypeAdapter<WallteAccount> {
     };
     return WallteAccount(
       address: fields[1] as String,
+      publicKey: fields[7] as String,
       nickname: fields[2] as String,
       account: fields[3] as String,
       about: fields[4] as String?,
@@ -69,7 +70,7 @@ class WallteAccountAdapter extends TypeAdapter<WallteAccount> {
   @override
   void write(BinaryWriter writer, WallteAccount obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(1)
       ..write(obj.address)
       ..writeByte(2)
@@ -81,7 +82,9 @@ class WallteAccountAdapter extends TypeAdapter<WallteAccount> {
       ..writeByte(5)
       ..write(obj.faceURL)
       ..writeByte(6)
-      ..write(obj.coverURL);
+      ..write(obj.coverURL)
+      ..writeByte(7)
+      ..write(obj.publicKey);
   }
 
   @override
@@ -114,6 +117,7 @@ Map<String, dynamic> _$WalletToJson(Wallet instance) => <String, dynamic>{
 WallteAccount _$WallteAccountFromJson(Map<String, dynamic> json) =>
     WallteAccount(
       address: json['address'] as String,
+      publicKey: json['publicKey'] as String,
       nickname: json['nickname'] as String,
       account: json['account'] as String,
       about: json['about'] as String?,
@@ -129,4 +133,5 @@ Map<String, dynamic> _$WallteAccountToJson(WallteAccount instance) =>
       'about': instance.about,
       'faceURL': instance.faceURL,
       'coverURL': instance.coverURL,
+      'publicKey': instance.publicKey,
     };

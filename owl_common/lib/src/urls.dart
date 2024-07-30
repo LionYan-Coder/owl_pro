@@ -9,6 +9,7 @@ class Urls {
   static final getVerificationCode = "${Config.appAuthUrl}/account/code/send";
   static final checkVerificationCode = "${Config.appAuthUrl}/account/code/verify";
   static final register = "${Config.appAuthUrl}/account/register";
+    static final challenge = "${Config.appAuthUrl}/account/challenge";
   static final resetPwd = "${Config.appAuthUrl}/account/password/reset";
   static final changePwd = "${Config.appAuthUrl}/account/password/change";
   static final login = "${Config.appAuthUrl}/account/login";

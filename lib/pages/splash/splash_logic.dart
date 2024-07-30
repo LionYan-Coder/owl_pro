@@ -14,28 +14,23 @@ class SplashLogic extends GetxController {
 
   bool? get isInit => DataSp.isInit;
 
-  StreamSubscription? initializedSub;
+  late StreamSubscription? initializedSub;
 
   @override
   void onInit() {
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      AppNavigator.startSplashToMain(isAutoLogin: true);
+    initializedSub = imLogic.initializedSubject.listen((value) {
+      Logger.print('---------------------initialized---------------------');
+      if (null != userID && null != token) {
+        _login();
+      } else {
+        if (isInit == false) {
+          AppNavigator.startGuide();
+        } else {
+          AppNavigator.startLoginReady();
+        }
+        // AppNavigator.startLogin();
+      }
     });
-    // initializedSub = imLogic.initializedSubject.listen((value) {
-    //   Logger.print('---------------------initialized---------------------');
-    //   if (null != userID && null != token) {
-    //     _login();
-    //   } else {
-    //     if (isInit == true) {
-    //       AppNavigator.startLoginReady();
-    //     } else {
-    //       Future.delayed(const Duration(milliseconds: 1000), () {
-    //         AppNavigator.startGuide();
-    //       });
-    //     }
-    //     // AppNavigator.startLogin();
-    //   }
-    // });
     super.onInit();
   }
 

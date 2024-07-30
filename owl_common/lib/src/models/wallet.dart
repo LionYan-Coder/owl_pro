@@ -48,6 +48,14 @@ class Wallet {
     return '0x$ripemd160Hex';
   }
 
+  String sign(Uint8List hash) {
+    final keyPair = ECPair.fromPrivateKey(
+        Uint8List.fromList(hex.decode(privKey)),
+        compressed: false);
+
+    return bytesToHex(keyPair.sign(hash), include0x: true);
+  }
+
   static Future<Wallet> createWallet() async {
     final mnemonic = bip39.generateMnemonic();
     final privKey = Wallet.getPrivateKeyByMnemonic(mnemonic);
@@ -100,7 +108,9 @@ class Wallet {
   }
 
   String get publicKey => bytesToHex(
-      ECPair.fromPrivateKey(Uint8List.fromList(hex.decode(privKey))).publicKey,
+      ECPair.fromPrivateKey(Uint8List.fromList(hex.decode(privKey)),
+              compressed: false)
+          .publicKey,
       include0x: true);
 
   bool get isFromMnemonic => mnemonic != null && mnemonic!.isNotEmpty;
@@ -125,9 +135,12 @@ class WallteAccount {
   String? faceURL;
   @HiveField(6)
   String? coverURL;
+  @HiveField(7)
+  String publicKey;
 
   WallteAccount(
       {required this.address,
+      required this.publicKey,
       required this.nickname,
       required this.account,
       this.about,
@@ -141,10 +154,8 @@ class WallteAccount {
     box.put("accounts", users);
   }
 
-  static List<WallteAccount> loadAccountsFromHive(Box box) {
-    final s = box.get('accounts');
-    Logger.print("s = ${s.toString()}");
-    final users = box.get('accounts')?.cast<WallteAccount>() ?? [];
+  static List<dynamic> loadAccountsFromHive(Box box) {
+    final users = box.get('accounts') ?? [];
     return users;
   }
 

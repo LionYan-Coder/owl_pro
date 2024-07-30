@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AppNavigator {
@@ -20,8 +19,6 @@ class AppNavigator {
   static void startLogin() {
     Get.toNamed(AppRoutes.login);
   }
-
-
 
   static void startMain({bool isAutoLogin = false}) {
     Get.offAllNamed(
