@@ -70,73 +70,76 @@ class AccountListPage extends StatelessWidget {
 class AccountCard extends StatelessWidget {
   final UserFullInfo user;
   final Function(UserFullInfo user) onChanged;
-  const AccountCard({super.key, required this.user, required this.onChanged});
+  AccountCard({super.key, required this.user, required this.onChanged});
+
+  final imLogic = Get.find<IMController>();
 
   @override
   Widget build(BuildContext context) {
-    final isSelected =
-        user.userID == IMController.IMState.userInfo.value.userID;
-    return GestureDetector(
-      onTap: () {
-        onChanged(user);
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        padding:
-            const EdgeInsets.only(left: 16, right: 12, top: 20, bottom: 20).w,
-        margin: const EdgeInsets.only(bottom: 12).w,
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: isSelected
-                  ? Styles.c_0C8CE9
-                  : Styles.c_EDEDED.adapterDark(Styles.c_262626)),
-          color: isSelected
-              ? Styles.c_0C8CE9.withOpacity(0.05)
-              : Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
-          borderRadius: BorderRadius.circular(8.r),
+    return Obx(() {
+      final isSelected = user.userID == imLogic.userInfo.value?.userID;
+      return GestureDetector(
+        onTap: () {
+          onChanged(user);
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          padding:
+              const EdgeInsets.only(left: 16, right: 12, top: 20, bottom: 20).w,
+          margin: const EdgeInsets.only(bottom: 12).w,
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: isSelected
+                    ? Styles.c_0C8CE9
+                    : Styles.c_EDEDED.adapterDark(Styles.c_262626)),
+            color: isSelected
+                ? Styles.c_0C8CE9.withOpacity(0.05)
+                : Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      UserAvatar(
+                        radius: 12.w,
+                        avatar: user.faceURL ?? '',
+                        nickname: user.nickname ?? '',
+                        fontSize: 10.sp,
+                      ),
+                      8.gaph,
+                      AnimatedDefaultTextStyle(
+                        style: isSelected
+                            ? Styles.ts_0481DC_16_medium
+                            : Styles.ts_333333_16_medium
+                                .adapterDark(Styles.ts_CCCCCC_16_medium),
+                        duration: const Duration(milliseconds: 250),
+                        child: user.nickname!.toText,
+                      ),
+                    ],
+                  ),
+                  4.gapv,
+                  AddressCopy(
+                    address: user.address ?? '',
+                    width: 210.w,
+                  )
+                ],
+              ),
+              isSelected
+                  ? ("selected".svg.toSvg
+                    ..width = 24.w
+                    ..height = 24.w)
+                  : const SizedBox.shrink()
+            ],
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    UserAvatar(
-                      radius: 12.w,
-                      avatar: user.faceURL ?? '',
-                      nickname: user.nickname ?? '',
-                      fontSize: 10.sp,
-                    ),
-                    8.gaph,
-                    AnimatedDefaultTextStyle(
-                      style: isSelected
-                          ? Styles.ts_0481DC_16_medium
-                          : Styles.ts_333333_16_medium
-                              .adapterDark(Styles.ts_CCCCCC_16_medium),
-                      duration: const Duration(milliseconds: 250),
-                      child: user.nickname!.toText,
-                    ),
-                  ],
-                ),
-                4.gapv,
-                AddressCopy(
-                  address: user.address ?? '',
-                  width: 210.w,
-                )
-              ],
-            ),
-            isSelected
-                ? ("selected".svg.toSvg
-                  ..width = 24.w
-                  ..height = 24.w)
-                : const SizedBox.shrink()
-          ],
-        ),
-      ),
-    );
+      );
+    });
   }
 }

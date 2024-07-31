@@ -84,15 +84,6 @@ dependencies:
   flutter_cache_manager: ^3.3.3
   sprintf: ^7.0.0
   app_installer: ^1.1.0
-
-  owl_common:
-    path: owl_common
-  owl_im_sdk:
-    path: owl_im_sdk
-  owl_live:
-    path: owl_live
-  flutter_localizations:
-    sdk: flutter
   firebase_core: ^3.2.0
   firebase_messaging: ^15.0.3
   adaptive_theme: ^3.6.0
@@ -105,6 +96,14 @@ dependencies:
   ellipsized_text: ^1.2.0
   flutter_form_builder: ^9.3.0
   form_builder_validators: ^11.0.0
+  owl_common:
+    path: owl_common
+  owl_im_sdk:
+    path: owl_im_sdk
+  owl_live:
+    path: owl_live
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -143,21 +142,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: HarmonyOS_Sans
-      fonts:
-        - asset: assets/fonts/HarmonyOS_Sans_SC_Black.ttf
-          weight: 900
-        - asset: assets/fonts/HarmonyOS_Sans_SC_Bold.ttf
-          weight: 700
-        - asset: assets/fonts/HarmonyOS_Sans_SC_Light.ttf
-          weight: 300
-        - asset: assets/fonts/HarmonyOS_Sans_SC_Medium.ttf
-          weight: 500
-        - asset: assets/fonts/HarmonyOS_Sans_SC_Regular.ttf
-          weight: 400
-        - asset: assets/fonts/HarmonyOS_Sans_SC_Thin.ttf
-          weight: 100
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: HarmonyOS_Sans
+      fonts:
+        - asset: packages/owl_common/fonts/HarmonyOS_Sans_SC_Bold.ttf
+          weight: 700
+        - asset: packages/owl_common/fonts/HarmonyOS_Sans_SC_Medium.ttf
+          weight: 500
+        - asset: packages/owl_common/fonts/HarmonyOS_Sans_SC_Regular.ttf
+          weight: 400

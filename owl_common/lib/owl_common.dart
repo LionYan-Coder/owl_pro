@@ -18,6 +18,7 @@ export 'src/models/upgrade_info.dart';
 export 'src/models/user_full_info.dart';
 export 'src/models/user_info.dart';
 export 'src/models/wallet.dart';
+export 'src/models/google_time.dart';
 export 'src/utils/data_sp.dart';
 export 'src/utils/http_util.dart';
 export 'src/utils/image_util.dart';

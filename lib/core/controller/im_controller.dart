@@ -11,7 +11,7 @@ class IMController extends GetxController with IMCallback {
   // ignore: non_constant_identifier_names
   static IMController get IMState => Get.find<IMController>();
 
-  late Rx<UserFullInfo> userInfo;
+  final userInfo = Rx<UserFullInfo?>(null);
   late String atAllTag;
 
   @override
@@ -47,6 +47,7 @@ class IMController extends GetxController with IMCallback {
     OwlIM.iMManager
       ..userManager.setUserListener(OnUserListener(
         onSelfInfoUpdated: (u) {
+          Logger.print("onSelfInfoUpdated user = ${u.toJson()}");
           userInfo.update((val) {
             val?.nickname = u.nickname;
             val?.faceURL = u.faceURL;
@@ -157,12 +158,17 @@ class IMController extends GetxController with IMCallback {
 
   Future login(String userID, String token) async {
     try {
+      Logger.print(
+          '---------im-login---------- userID: $userID, token: $token');
       var user = await OwlIM.iMManager.login(
         userID: userID,
         token: token,
         defaultValue: () async => UserInfo(userID: userID),
       );
-      userInfo = UserFullInfo.fromJson(user.toJson()).obs;
+      userInfo.value = UserFullInfo.fromJson(user.toJson());
+
+      Logger.print(
+          "-------------logind------------ user = ${userInfo.toJson()}");
       _queryMyFullInfo();
       _queryAtAllTag();
     } catch (e, s) {
@@ -183,6 +189,7 @@ class IMController extends GetxController with IMCallback {
   void _queryMyFullInfo() async {
     final data = await Apis.queryMyFullInfo();
     if (data is UserFullInfo) {
+      Logger.print("_queryMyFullInfo user = ${data.toJson()}");
       userInfo.update((val) {
         val?.allowAddFriend = data.allowAddFriend;
         val?.allowBeep = data.allowBeep;

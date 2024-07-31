@@ -79,7 +79,6 @@ class Config {
       cachePath = '$path/';
       await DataSp.init();
       await Hive.initFlutter(path);
-      Hive.registerAdapter(WalletAdapter());
       HttpUtil.init();
     } catch (_) {}
 

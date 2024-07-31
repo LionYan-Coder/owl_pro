@@ -751,13 +751,17 @@ class Styles {
   static TextStyle ts_F9F9F9_10 =
       TextStyle(color: c_F9F9F9, fontSize: 10.sp, fontWeight: FontWeight.w400);
 
+  static const fontFamily = 'HarmonyOS_Sans';
+
   static ThemeData lightTheme = ThemeData(
-      fontFamily: "HarmonyOS_Sans",
+      // package: 'owl_common',
+      fontFamily: fontFamily,
       scaffoldBackgroundColor: Styles.c_FFFFFF,
       colorScheme: const ColorScheme.light(primary: Styles.c_0C8CE9));
 
   static ThemeData darkTheme = ThemeData(
-      fontFamily: "HarmonyOS_Sans",
+      // package: 'owl_common',
+      fontFamily: fontFamily,
       scaffoldBackgroundColor: Styles.c_0D0D0D,
       colorScheme: const ColorScheme.dark(primary: Styles.c_0C8CE9));
 }

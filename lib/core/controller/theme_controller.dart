@@ -14,8 +14,8 @@ class ThemeController extends GetxController {
     var brightness =
         theme == ThemeMode.dark ? Brightness.dark : Brightness.light;
 
-    Future.delayed(const Duration(milliseconds: 250), () {
-      Get.forceAppUpdate();
+    Future.delayed(const Duration(milliseconds: 250), () async {
+      await Get.forceAppUpdate();
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: brightness,

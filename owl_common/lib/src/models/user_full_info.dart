@@ -1,11 +1,14 @@
+import 'package:owl_common/owl_common.dart';
+import 'package:owl_common/src/models/google_time.dart';
+
 class UserFullInfo {
   String? userID;
-  String? account;
-  String? address;
   String? nickname;
   String? remark;
-  String? about;
   String? faceURL;
+  String? account;
+  String? about;
+  String? address;
   String? coverURL;
   String? publicKey;
   int? order;
@@ -20,6 +23,7 @@ class UserFullInfo {
   bool isFriendship = false;
   bool isBlacklist = false;
   List<DepartmentInfo>? departmentList;
+  dynamic createTime;
 
   String get showName => remark?.isNotEmpty == true
       ? remark!
@@ -27,12 +31,12 @@ class UserFullInfo {
 
   UserFullInfo({
     this.userID,
+    this.nickname,
+    this.faceURL,
     this.account,
     this.address,
     this.publicKey,
-    this.nickname,
     this.about,
-    this.faceURL,
     this.coverURL,
     this.remark,
     this.order,
@@ -43,6 +47,7 @@ class UserFullInfo {
     this.forbidden,
     this.station,
     this.ex,
+    this.createTime,
     this.globalRecvMsgOpt,
     this.isFriendship = false,
     this.isBlacklist = false,
@@ -51,13 +56,16 @@ class UserFullInfo {
 
   UserFullInfo.fromJson(Map<String, dynamic> json) {
     userID = json['userID'];
-    account = json['account'];
     nickname = json['nickname'];
-    about = json['remark'];
-    publicKey = json['publicKey'];
     faceURL = json['faceURL'];
+    account = json['account'];
+    publicKey = json['publicKey'];
+    about = json['remark'];
     coverURL = json['coverURL'];
     address = json['address'];
+    createTime = json['createTime'].runtimeType == int
+        ? json['createTime']
+        : GoogleTime.fromJson(json['createTime']);
     order = json['order'];
     status = json['status'];
     allowAddFriend = json['allowAddFriend'];
@@ -79,16 +87,18 @@ class UserFullInfo {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['userID'] = userID;
+    data['nickname'] = nickname;
+    data['remark'] = remark;
+    data['faceURL'] = faceURL;
     data['address'] = address;
     data['account'] = account;
     data['publicKey'] = publicKey;
-    data['nickname'] = nickname;
     data['about'] = about;
-    data['remark'] = remark;
-    data['faceURL'] = faceURL;
     data['coverURL'] = coverURL;
     data['order'] = order;
     data['status'] = status;
+    data['createTime'] =
+        createTime.runtimeType == int ? createTime : createTime?.toJson();
     data['allowAddFriend'] = allowAddFriend;
     data['allowBeep'] = allowBeep;
     data['allowVibration'] = allowVibration;

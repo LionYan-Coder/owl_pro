@@ -35,7 +35,7 @@ class Button extends StatefulWidget {
       this.textStyle,
       this.onPressed,
       this.height = 48,
-      this.vibrationEnabled = true,
+      this.vibrationEnabled = false,
       this.borderRadius = 8.0,
       this.color = Styles.c_0C8CE9,
       this.pressColor = Styles.c_0481DC,
@@ -217,7 +217,14 @@ class _ButtonViewState extends State<Button>
 class ButtonCopy extends StatelessWidget {
   final String data;
   bool? single;
-  ButtonCopy({super.key, required this.data, this.single = true});
+  double? width;
+  double? height;
+  ButtonCopy(
+      {super.key,
+      required this.data,
+      this.width,
+      this.height,
+      this.single = true});
 
   void _copy(BuildContext context) {
     Clipboard.setData(ClipboardData(text: data));
@@ -227,7 +234,8 @@ class ButtonCopy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final copySvg = "copy".svg.toSvg
-      ..width = 16.w
+      ..width = width ?? 16.w
+      ..height = height
       ..fit = BoxFit.cover
       ..color = Styles.c_999999.adapterDark(Styles.c_666666);
 
@@ -244,7 +252,8 @@ class ButtonCopy extends StatelessWidget {
                     color: Styles.c_333333
                         .withOpacity(0.05)
                         .adapterDark(Styles.c_CCCCCC.withOpacity(0.05))),
-                child: copySvg,
+                child: copySvg
+                  ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
               ));
   }
 }

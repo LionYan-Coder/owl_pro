@@ -13,14 +13,10 @@ import 'package:web3dart/crypto.dart';
 
 part 'wallet.g.dart';
 
-@HiveType(typeId: 2)
 @JsonSerializable()
 class Wallet {
-  @HiveField(1)
   String address;
-  @HiveField(2)
   String privKey;
-  @HiveField(3)
   String? mnemonic;
 
   Wallet({required this.address, required this.privKey, this.mnemonic});
@@ -87,16 +83,16 @@ class Wallet {
     return null;
   }
 
-  Future<void> saveWalletToHive(Box box) async {
+  Future<void> saveWalletToHive() async {
     String encstr = EncryptionHelper.encrypted64(jsonEncode(toJson()));
-    box.put(address, encstr);
+    SpUtil().putString(address, encstr);
   }
 
   static Wallet loadWalletFromHive(
-    Box box,
     String address,
   ) {
-    String decstr = EncryptionHelper.decrypt64(box.get(address));
+    String encstr = SpUtil().getString(address) ?? '';
+    String decstr = EncryptionHelper.decrypt64(encstr);
     return Wallet.fromJson(jsonDecode(decstr));
   }
 
@@ -119,7 +115,6 @@ class Wallet {
 
   Map<String, dynamic> toJson() => _$WalletToJson(this);
 }
-
 
 @JsonSerializable()
 class Balance {

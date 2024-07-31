@@ -38,11 +38,10 @@ class LoginCreatePage extends StatelessWidget {
               Stack(
                 children: [
                   "sign_create_button".tr.toButton
-                    ..onPressed = () {
-                      logic.createWallet();
-                      if (logic.wallet.value != null) {
-                        AppNavigator.startLogin();
-                      }
+                    ..loading = logic.loading.value
+                    ..onPressed = () async {
+                      await logic.createWallet();
+                      AppNavigator.startLogin();
                     }
                     ..margin = EdgeInsets.symmetric(
                         horizontal: 64.w,

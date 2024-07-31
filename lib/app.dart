@@ -17,9 +17,9 @@ class OwlApp extends StatelessWidget {
     return AppView(
         builder: (locale, theme, builder) => GetMaterialApp(
               debugShowCheckedModeBanner: true,
-              enableLog: true,
+              // enableLog: true,
               builder: builder,
-              logWriterCallback: Logger.print,
+              // logWriterCallback: Logger.print,
               translations: TranslationService(),
               localizationsDelegates: const [
                 GlobalMaterialLocalizations.delegate,

@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui';
 
-import 'package:convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -72,10 +70,7 @@ class LoginLogic extends GetxController {
       String publicKey = registerWallet.publicKey;
       String address = registerWallet.address;
 
-      var walletBox = await Hive.openBox('Wallet');
-      await registerWallet.saveWalletToHive(walletBox);
-      walletBox.close();
-
+      await registerWallet.saveWalletToHive();
       final nonce = WalletUtil.generateRandomHex(32);
       final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
       final signature = registerWallet.sign(nonceHash);
@@ -90,6 +85,7 @@ class LoginLogic extends GetxController {
 
       await DataSp.addAccounts(data.userID);
       await DataSp.putLoginCertificate(data);
+      await imLogic.logout();
       await imLogic.login(data.userID, data.imToken);
       AppNavigator.startMain();
     } catch (e) {
@@ -112,8 +108,10 @@ class LoginLogic extends GetxController {
           sign: signature);
       // ignore: unnecessary_null_comparison
       if (data.userID != null && data.userID.isNotEmpty) {
+        await restoreWallet.saveWalletToHive();
         await DataSp.addAccounts(data.userID);
         await DataSp.putLoginCertificate(data);
+        await imLogic.logout();
         await imLogic.login(data.userID, data.imToken);
         AppNavigator.startMain();
       } else {

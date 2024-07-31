@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,6 +88,16 @@ extension NumExt on num {
       );
 
   Color get color => Color(int.parse("0xFF$this"));
+}
+
+extension IntExt on int {
+  DateTime get dateTime =>
+      DateTime.fromMillisecondsSinceEpoch(this, isUtc: true);
+
+  String formatTimestamp({String? format}) {
+    final dateTime = this.dateTime;
+    return dateTime.format(format ?? 'yyyy-MM-dd HH:mm:ss');
+  }
 }
 
 extension ColorExt on Color {

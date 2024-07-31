@@ -8,6 +8,12 @@ class UserInfo {
   /// Profile picture
   String? faceURL;
 
+  String? account;
+  String? about;
+  String? address;
+  String? coverURL;
+  String? publicKey;
+
   /// Additional information
   String? ex;
 
@@ -29,6 +35,11 @@ class UserInfo {
     this.userID,
     this.nickname,
     this.faceURL,
+    this.account,
+    this.address,
+    this.publicKey,
+    this.about,
+    this.coverURL,
     this.appMangerLevel,
     this.ex,
     this.createTime,
@@ -40,6 +51,11 @@ class UserInfo {
     userID = json['userID'] ?? userID;
     nickname = json['nickname'] ?? nickname;
     faceURL = json['faceURL'] ?? faceURL;
+    account = json['account'];
+    publicKey = json['publicKey'];
+    about = json['remark'];
+    coverURL = json['coverURL'];
+    address = json['address'];
     remark = json['remark'] ?? remark;
     ex = json['ex'] ?? ex;
     createTime = json['createTime'];
@@ -53,6 +69,13 @@ class UserInfo {
     data['userID'] = userID;
     data['nickname'] = nickname;
     data['faceURL'] = faceURL;
+    data['address'] = address;
+    data['account'] = account;
+    data['publicKey'] = publicKey;
+
+    data['about'] = about;
+
+    data['coverURL'] = coverURL;
     data['ex'] = ex;
     data['createTime'] = createTime;
     data['remark'] = remark;
@@ -142,6 +165,12 @@ class PublicUserInfo {
   /// Profile picture
   String? faceURL;
 
+  String? account;
+  String? about;
+  String? address;
+  String? coverURL;
+  String? publicKey;
+
   /// App Manager Level:
   /// 1: AppOrdinaryUsers
   /// 2: AppAdmin
@@ -154,6 +183,11 @@ class PublicUserInfo {
     this.userID,
     this.nickname,
     this.faceURL,
+    this.account,
+    this.address,
+    this.publicKey,
+    this.about,
+    this.coverURL,
     this.appManagerLevel,
     this.ex,
   });
@@ -162,6 +196,11 @@ class PublicUserInfo {
     userID = json['userID'];
     nickname = json['nickname'];
     faceURL = json['faceURL'];
+    account = json['account'];
+    publicKey = json['publicKey'];
+    about = json['remark'];
+    coverURL = json['coverURL'];
+    address = json['address'];
     appManagerLevel = json['appManagerLevel'];
     ex = json['ex'];
   }
@@ -171,6 +210,11 @@ class PublicUserInfo {
     data['userID'] = userID;
     data['nickname'] = nickname;
     data['faceURL'] = faceURL;
+    data['address'] = address;
+    data['account'] = account;
+    data['publicKey'] = publicKey;
+    data['about'] = about;
+    data['coverURL'] = coverURL;
     data['appMangerLevel'] = appManagerLevel;
     data['ex'] = ex;
     return data;
@@ -189,6 +233,12 @@ class FriendInfo {
 
   /// Profile picture
   String? faceURL;
+
+  String? account;
+  String? about;
+  String? address;
+  String? coverURL;
+  String? publicKey;
 
   /// friend User ID
   String? friendUserID;
@@ -213,6 +263,11 @@ class FriendInfo {
     this.userID,
     this.nickname,
     this.faceURL,
+    this.account,
+    this.address,
+    this.publicKey,
+    this.about,
+    this.coverURL,
     this.friendUserID,
     this.remark,
     this.ex,
@@ -230,6 +285,11 @@ class FriendInfo {
     operatorUserID = json['operatorUserID'];
     nickname = json['nickname'];
     faceURL = json['faceURL'];
+    account = json['account'];
+    publicKey = json['publicKey'];
+    about = json['remark'];
+    coverURL = json['coverURL'];
+    address = json['address'];
     friendUserID = json['friendUserID'];
     ex = json['ex'];
   }
@@ -244,6 +304,11 @@ class FriendInfo {
     data['operatorUserID'] = operatorUserID;
     data['nickname'] = nickname;
     data['faceURL'] = faceURL;
+    data['address'] = address;
+    data['account'] = account;
+    data['publicKey'] = publicKey;
+    data['about'] = about;
+    data['coverURL'] = coverURL;
     data['friendUserID'] = friendUserID;
     data['ex'] = ex;
     return data;

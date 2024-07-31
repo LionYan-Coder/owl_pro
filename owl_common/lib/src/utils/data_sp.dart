@@ -114,7 +114,7 @@ class DataSp {
   static Future<bool>? addAccounts(String userID) {
     var list = List<String>.from(getAccounts() ?? []);
     if (!list.contains(userID)) {
-      list.insert(0, userID);
+      list.add(userID);
     }
     return SpUtil().putStringList(_accounts, list);
   }

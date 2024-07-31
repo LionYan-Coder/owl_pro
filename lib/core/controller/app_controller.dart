@@ -167,7 +167,7 @@ class AppController extends GetxController with UpgradeManger {
     bool isRegistered = Get.isRegistered<IMController>();
     if (isRegistered) {
       var logic = Get.find<IMController>();
-      return logic.userInfo.value.globalRecvMsgOpt == 2;
+      return logic.userInfo.value?.globalRecvMsgOpt == 2;
     }
     return false;
   }
@@ -225,8 +225,8 @@ class AppController extends GetxController with UpgradeManger {
     bool isAllowBeep = true;
     if (isRegistered) {
       var logic = Get.find<IMController>();
-      isAllowVibration = logic.userInfo.value.allowVibration == 1;
-      isAllowBeep = logic.userInfo.value.allowBeep == 1;
+      isAllowVibration = logic.userInfo.value?.allowVibration == 1;
+      isAllowBeep = logic.userInfo.value?.allowBeep == 1;
     }
 
     RingerModeStatus ringerStatus = await SoundMode.ringerModeStatus;

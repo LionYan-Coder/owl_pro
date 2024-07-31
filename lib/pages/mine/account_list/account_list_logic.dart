@@ -18,7 +18,11 @@ class AccountListLogic extends GetxController {
       loading.value = true;
       final userIDList = DataSp.getAccounts() ?? [];
       final users = await Apis.getUserFullInfo(userIDList: userIDList);
+      users?.sort(
+          (a, b) => b.createTime!.dateTime.compareTo(a.createTime!.dateTime));
       accounts.value = users ?? [];
+
+      Logger.print("imLogic user: ${imLogic.userInfo.value?.toJson()}");
     } catch (e) {
       Logger.print("AccountListLogic _init error = ${e.toString()}");
     } finally {
@@ -28,9 +32,7 @@ class AccountListLogic extends GetxController {
 
   void onChangeUser(UserFullInfo user) async {
     try {
-      var walletBox = await Hive.openBox('Wallet');
-      final wallet = Wallet.loadWalletFromHive(walletBox, user.address ?? '');
-
+      final wallet = Wallet.loadWalletFromHive(user.address ?? '');
       final nonce = WalletUtil.generateRandomHex(32);
       final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
       final signature = wallet.sign(nonceHash);
@@ -38,11 +40,11 @@ class AccountListLogic extends GetxController {
           address: wallet.address,
           nonce: bytesToHex(nonceHash, include0x: true),
           sign: signature);
-      walletBox.close();
       // ignore: unnecessary_null_comparison
       if (data.userID != null && data.userID.isNotEmpty) {
         await DataSp.addAccounts(data.userID);
         await DataSp.putLoginCertificate(data);
+        await imLogic.logout();
         await imLogic.login(data.userID, data.imToken);
       }
     } catch (e) {

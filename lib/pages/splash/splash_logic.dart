@@ -36,7 +36,6 @@ class SplashLogic extends GetxController {
 
   _login() async {
     try {
-      Logger.print('---------login---------- userID: $userID, token: $token');
       await imLogic.login(userID!, token!);
       Logger.print('---------im login success-------');
       // Logger.print('---------push login success----');

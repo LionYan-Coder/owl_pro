@@ -45,20 +45,22 @@ class AppPages {
     ),
     _pageBuilder(
       name: AppRoutes.loginReady,
-      page: () => LoginReadyPage(),
-      binding: LoginBinding(),
+      page: () => const LoginReadyPage(),
     ),
     _pageBuilder(
       name: AppRoutes.loginCreate,
       page: () => LoginCreatePage(),
+      binding: LoginBinding(),
     ),
     _pageBuilder(
       name: AppRoutes.login,
       page: () => LoginPage(),
+      binding: LoginBinding(),
     ),
     _pageBuilder(
       name: AppRoutes.loginRestore,
       page: () => LoginRestorePage(),
+      binding: LoginBinding(),
     ),
     _pageBuilder(
       name: AppRoutes.home,

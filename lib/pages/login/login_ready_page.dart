@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owlpro_app/pages/login/login_logic.dart';
 import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:owlpro_app/widgets/five_corners_clipper.dart';
 import 'package:owlpro_app/widgets/locale_select.dart';
 
 class LoginReadyPage extends StatelessWidget {
-  LoginReadyPage({super.key});
-
-  final logic = Get.find<LoginLogic>();
+  const LoginReadyPage({super.key});
 
   @override
   Widget build(BuildContext context) {

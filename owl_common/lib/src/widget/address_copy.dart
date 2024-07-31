@@ -15,20 +15,21 @@ class AddressCopy extends StatelessWidget {
         Container(
           width: width ?? 178.w,
           padding:
-              const EdgeInsets.only(top: 3, bottom: 3, left: 4, right: 4).w,
+              const EdgeInsets.only(top: 2, bottom: 2, left: 4, right: 8).w,
           decoration: BoxDecoration(
               color: Styles.c_0C8CE9.withOpacity(0.05),
               borderRadius: BorderRadius.circular(4.r)),
           child: EllipsizedText(
             address.toOc,
             type: EllipsisType.middle,
-            style: Styles.ts_0C8CE9_14,
+            style: Styles.ts_0C8CE9_12,
           ),
         ),
         4.gaph,
         ButtonCopy(
           data: address.toOc,
           single: false,
+          width: 10.w,
         )
       ],
     );
