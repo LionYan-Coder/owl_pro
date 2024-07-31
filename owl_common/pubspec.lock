@@ -361,6 +361,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  ellipsized_text:
+    dependency: "direct main"
+    description:
+      name: ellipsized_text
+      sha256: d4d372c2baf8d4adfb2ca3728c1e5955d1683e75fae774b311d557ad13317105
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   emoji_picker_flutter:
     dependency: "direct main"
     description:
@@ -534,6 +542,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.5"
+  flutter_form_builder:
+    dependency: "direct main"
+    description:
+      name: flutter_form_builder
+      sha256: "447f8808f68070f7df968e8063aada3c9d2e90e789b5b70f3b44e4b315212656"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.3.0"
   flutter_image_compress:
     dependency: "direct main"
     description:

@@ -78,6 +78,8 @@ dependencies:
   encrypt: ^5.0.3
   flutter_animate: ^4.5.0
   web3dart: ^2.7.3
+  ellipsized_text: ^1.2.0
+  flutter_form_builder: ^9.3.0
 
 dev_dependencies:
   flutter_test:

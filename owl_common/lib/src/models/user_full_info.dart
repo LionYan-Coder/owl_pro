@@ -7,6 +7,7 @@ class UserFullInfo {
   String? about;
   String? faceURL;
   String? coverURL;
+  String? publicKey;
   int? order;
   int? status;
   int? allowAddFriend;
@@ -28,6 +29,7 @@ class UserFullInfo {
     this.userID,
     this.account,
     this.address,
+    this.publicKey,
     this.nickname,
     this.about,
     this.faceURL,
@@ -52,8 +54,10 @@ class UserFullInfo {
     account = json['account'];
     nickname = json['nickname'];
     about = json['remark'];
+    publicKey = json['publicKey'];
     faceURL = json['faceURL'];
     coverURL = json['coverURL'];
+    address = json['address'];
     order = json['order'];
     status = json['status'];
     allowAddFriend = json['allowAddFriend'];
@@ -77,6 +81,7 @@ class UserFullInfo {
     data['userID'] = userID;
     data['address'] = address;
     data['account'] = account;
+    data['publicKey'] = publicKey;
     data['nickname'] = nickname;
     data['about'] = about;
     data['remark'] = remark;

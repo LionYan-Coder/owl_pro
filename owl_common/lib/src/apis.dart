@@ -11,21 +11,19 @@ class Apis {
       Options(headers: {'token': DataSp.chatToken});
 
   static Future<LoginCertificate> login({
-    String? areaCode,
-    String? phoneNumber,
-    String? email,
-    String? password,
-    String? verificationCode,
+    required String address,
+    required String nonce,
+    required String sign,
   }) async {
     try {
-      var data = await HttpUtil.post(Urls.login, data: {
-        "areaCode": areaCode,
-        'phoneNumber': phoneNumber,
-        'email': email,
-        'password': null != password ? IMUtils.generateMD5(password) : null,
-        'platform': IMUtils.getPlatform(),
-        'verifyCode': verificationCode,
-      });
+      var data = await HttpUtil.post(Urls.login,
+          data: {
+            "address": address,
+            "nonce": nonce,
+            "signature": sign,
+            'platform': IMUtils.getPlatform(),
+          },
+          showErrorToast: false);
       return LoginCertificate.fromJson(data!);
     } catch (e, s) {
       Logger.print('e:$e s:$s');

@@ -120,63 +120,16 @@ class Wallet {
   Map<String, dynamic> toJson() => _$WalletToJson(this);
 }
 
-@HiveType(typeId: 3)
+
 @JsonSerializable()
-class WallteAccount {
-  @HiveField(1)
-  String address;
-  @HiveField(2)
-  String nickname;
-  @HiveField(3)
-  String account;
-  @HiveField(4)
-  String? about;
-  @HiveField(5)
-  String? faceURL;
-  @HiveField(6)
-  String? coverURL;
-  @HiveField(7)
-  String publicKey;
+class Balance {
+  BigInt owlBalance;
+  BigInt olinkBalance;
 
-  WallteAccount(
-      {required this.address,
-      required this.publicKey,
-      required this.nickname,
-      required this.account,
-      this.about,
-      this.coverURL,
-      this.faceURL});
+  Balance({required this.owlBalance, required this.olinkBalance});
 
-  Future<void> addAccountToHive(Box box) async {
-    final users = WallteAccount.loadAccountsFromHive(box);
-    users.add(this);
+  factory Balance.fromJson(Map<String, dynamic> json) =>
+      _$BalanceFromJson(json);
 
-    box.put("accounts", users);
-  }
-
-  static List<dynamic> loadAccountsFromHive(Box box) {
-    final users = box.get('accounts') ?? [];
-    return users;
-  }
-
-  static Future<void> deleteAccount(Box box, String account) async {
-    final users = WallteAccount.loadAccountsFromHive(box);
-    users.removeWhere((item) => item.account == account);
-    box.put("accounts", users);
-  }
-
-  Future<void> saveCurrentAccount(Box box) async {
-    box.put("currentAccount", this);
-  }
-
-  static WallteAccount loadCurrentAccount(
-      Box box, WallteAccount walletAccountunt) {
-    final account = box.get("currentAccount") as WallteAccount;
-    return account;
-  }
-
-  factory WallteAccount.fromJson(Map<String, dynamic> json) =>
-      _$WallteAccountFromJson(json);
-
-  Map<String, dynamic> toJson() => _$WallteAccountToJson(this);
+  Map<String, dynamic> toJson() => _$BalanceToJson(this);
 }

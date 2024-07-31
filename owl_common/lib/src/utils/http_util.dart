@@ -24,11 +24,11 @@ class HttpUtil {
       ..interceptors.add(
         TalkerDioLogger(
           settings: const TalkerDioLoggerSettings(
-            printRequestHeaders: kDebugMode,
+            // printRequestHeaders: kDebugMode,
             printRequestData: kDebugMode,
-            printResponseMessage: kDebugMode,
+            // printResponseMessage: kDebugMode,
             printResponseData: kDebugMode,
-            printResponseHeaders: kDebugMode,
+            // printResponseHeaders: kDebugMode,
           ),
         ),
       )

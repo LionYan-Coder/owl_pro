@@ -27,6 +27,7 @@ export 'src/utils/sp_util.dart';
 export 'src/utils/utils.dart';
 export 'src/utils/voice_record.dart';
 export 'src/utils/encrypted.dart';
+export 'src/utils/wallet_util.dart';
 export 'src/res/images.dart';
 export 'src/res/strings.dart';
 export 'src/res/styles.dart';
@@ -44,6 +45,10 @@ export 'src/widget/avatar_view.dart';
 export 'src/widget/custom_cupertino_controls.dart';
 export 'src/widget/button.dart';
 export 'src/widget/title_bar.dart';
+export 'src/widget/user_avatar.dart';
+export 'src/widget/address_copy.dart';
+export 'src/widget/text_tab.dart';
+export 'src/widget/input.dart';
 
 export 'src/widget/chat/chat_picture_preview.dart';
 export 'src/widget/chat/chat_item_view.dart';

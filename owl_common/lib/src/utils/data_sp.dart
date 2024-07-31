@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:sprintf/sprintf.dart';
@@ -7,10 +8,13 @@ import 'package:uuid/uuid.dart';
 class DataSp {
   static const _isInit = 'isInit';
   static const _loginCertificate = 'loginCertificate';
-  static const _loginAccount = 'loginAccount';
+  static const _accounts = 'userIds';
   static const _server = "server";
   static const _ip = 'ip';
   static const _deviceID = 'deviceID';
+  static const _devicePassword = 'devicePassword';
+  static const _lastVerifyPwdTime = 'lastVerifyPwdTime';
+  static const _verifyPwdGap = 'verifyPwdGap';
   static const _language = "language";
   static const _appTheme = 'appTheme';
   static const _groupApplication = "%s_groupApplication";
@@ -41,6 +45,14 @@ class DataSp {
 
   static bool? get isInit => getIsInit();
 
+  static String? get devicePassword => getDevicePassword();
+
+  static List<String> get userIDs => getAccounts() ?? [];
+
+  static int? get lastVerifyPwdTime => getLastVerifyPwdTime(); // 上次校验密码的时间点
+
+  static int? get verifyPwdGap => getVerifyGapPwdTime(); //间隔校验密码的时长
+
   static ThemeMode? get appTheme => ThemeMode.values
       .firstWhere((e) => e.name == getTheme(), orElse: () => ThemeMode.system);
 
@@ -52,12 +64,38 @@ class DataSp {
     return SpUtil().putObject(_loginCertificate, lc);
   }
 
-  static Future<bool>? putLoginAccount(Map map) {
-    return SpUtil().putObject(_loginAccount, map);
-  }
-
   static bool? getIsInit() {
     return SpUtil().getBool(_isInit);
+  }
+
+  static String? getDevicePassword() {
+    return SpUtil().getString(
+      _devicePassword,
+    );
+  }
+
+  static Future<bool>? putDevicePasswrd(String password) {
+    return SpUtil().putString(_devicePassword, password);
+  }
+
+  static int? getLastVerifyPwdTime() {
+    return SpUtil().getInt(
+      _lastVerifyPwdTime,
+    );
+  }
+
+  static Future<bool>? putLastVerifyPwdTime(int time) {
+    return SpUtil().putInt(_lastVerifyPwdTime, time);
+  }
+
+  static int? getVerifyGapPwdTime() {
+    return SpUtil().getInt(
+      _verifyPwdGap,
+    );
+  }
+
+  static Future<bool>? putVerifyGapPwdTime(int time) {
+    return SpUtil().putInt(_verifyPwdGap, time);
   }
 
   static LoginCertificate? getLoginCertificate() {
@@ -69,8 +107,22 @@ class DataSp {
     return SpUtil().remove(_loginCertificate);
   }
 
-  static Map? getLoginAccount() {
-    return SpUtil().getObject(_loginAccount);
+  static List<String>? getAccounts() {
+    return SpUtil().getStringList(_accounts);
+  }
+
+  static Future<bool>? addAccounts(String userID) {
+    var list = List<String>.from(getAccounts() ?? []);
+    if (!list.contains(userID)) {
+      list.insert(0, userID);
+    }
+    return SpUtil().putStringList(_accounts, list);
+  }
+
+  static Future<bool>? removeAccounts(String userID) {
+    final list = getAccounts() ?? [];
+    list.remove(userID);
+    return SpUtil().putStringList(_accounts, list);
   }
 
   static Future<bool>? putServerConfig(Map<String, String> config) {

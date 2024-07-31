@@ -78,8 +78,8 @@ class _ButtonViewState extends State<Button>
     switch (widget.variants) {
       case ButtonVariants.secondary:
         color = tapDown
-            ? Styles.c_F6F6F6.adapterDark("#222222".color)
-            : Styles.c_EDEDED.adapterDark(Styles.c_F6F6F6);
+            ? Styles.c_EDEDED.adapterDark(Styles.c_F6F6F6)
+            : Styles.c_F6F6F6.adapterDark("#222222".color);
         break;
       case ButtonVariants.outline:
         color = tapDown
@@ -145,8 +145,9 @@ class _ButtonViewState extends State<Button>
     _scale = 1 - _controller!.value;
     var isTapDown = _controller!.value > 0;
 
+    // Logger.print("widget ${widget.text} ${widget.block}");
     return IgnorePointer(
-      ignoring: widget.onPressed == null,
+      ignoring: widget.onPressed == null || widget.loading == true,
       child: GestureDetector(
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
@@ -155,29 +156,39 @@ class _ButtonViewState extends State<Button>
             scale: _scale,
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: 200),
-              opacity: widget.onPressed != null ? 1 : 0.4,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.fastOutSlowIn,
-                width: widget.width?.w ??
-                    (widget.block == true ? double.infinity : null),
-                height: widget.height?.w,
-                margin: widget.margin,
-                decoration: BoxDecoration(
-                    color: _getBgColor(isTapDown),
-                    border: Border.all(color: _getBorderColor(isTapDown)),
-                    borderRadius:
-                        BorderRadius.circular(widget.borderRadius!.r)),
-                child: widget.child ??
-                    Container(
-                      alignment: Alignment.center,
-                      padding: widget.padding,
-                      child: Text(
-                        widget.text ?? '',
-                        style: widget.textStyle ?? _getTextStyle(),
-                        maxLines: 1,
-                      ),
-                    ),
+              opacity: widget.onPressed == null ? 0.4 : 1,
+              child: Stack(
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.fastOutSlowIn,
+                    width: widget.width?.w ??
+                        (widget.block == true ? double.infinity : null),
+                    height: widget.height?.w,
+                    margin: widget.margin,
+                    decoration: BoxDecoration(
+                        color: _getBgColor(isTapDown),
+                        border: Border.all(color: _getBorderColor(isTapDown)),
+                        borderRadius:
+                            BorderRadius.circular(widget.borderRadius!.r)),
+                    child: widget.child ??
+                        Container(
+                          alignment: Alignment.center,
+                          padding: widget.padding,
+                          child: Text(
+                            widget.text ?? '',
+                            style: widget.textStyle ?? _getTextStyle(),
+                            maxLines: 1,
+                          ),
+                        ),
+                  ),
+                  widget.loading == true
+                      ? Positioned(
+                          right: 12.w,
+                          bottom: 14.w,
+                          child: const CircularProgressIndicator.adaptive())
+                      : const SizedBox.shrink()
+                ],
               ),
             ),
           )),

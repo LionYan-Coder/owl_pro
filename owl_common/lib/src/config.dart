@@ -80,7 +80,6 @@ class Config {
       await DataSp.init();
       await Hive.initFlutter(path);
       Hive.registerAdapter(WalletAdapter());
-      Hive.registerAdapter(WallteAccountAdapter());
       HttpUtil.init();
     } catch (_) {}
 

@@ -67,6 +67,8 @@ extension StrExt on String {
     return Characters(this).join('\u{200B}');
   }
 
+  String get toOc => replaceFirst("0x", "oc");
+
   Color get color => Color(int.parse(replaceFirst("#", "0xFF")));
 
   String get svg => "assets/svg/$this.svg";
