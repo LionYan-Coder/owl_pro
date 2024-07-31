@@ -1,7 +1,7 @@
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="me_ico_notification" clip-path="url(#clip0_67_6384)">
-<path id="Vector" d="M4.16699 15.8337V7.50033C4.16699 4.27866 6.77866 1.66699 10.0003 1.66699C13.222 1.66699 15.8337 4.27866 15.8337 7.50033V15.8337M1.66699 15.8337H18.3337" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M10.0003 18.333C11.1509 18.333 12.0837 17.4003 12.0837 16.2497V15.833H7.91699V16.2497C7.91699 17.4003 8.84974 18.333 10.0003 18.333Z" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M4.16699 15.8337V7.50033C4.16699 4.27866 6.77866 1.66699 10.0003 1.66699C13.222 1.66699 15.8337 4.27866 15.8337 7.50033V15.8337M1.66699 15.8337H18.3337" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M10.0003 18.333C11.1509 18.333 12.0837 17.4003 12.0837 16.2497V15.833H7.91699V16.2497C7.91699 17.4003 8.84974 18.333 10.0003 18.333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <clipPath id="clip0_67_6384">

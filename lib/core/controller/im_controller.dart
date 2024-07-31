@@ -11,7 +11,7 @@ class IMController extends GetxController with IMCallback {
   // ignore: non_constant_identifier_names
   static IMController get IMState => Get.find<IMController>();
 
-  final userInfo = Rx<UserFullInfo?>(null);
+  late Rx<UserFullInfo> userInfo;
   late String atAllTag;
 
   @override
@@ -165,7 +165,7 @@ class IMController extends GetxController with IMCallback {
         token: token,
         defaultValue: () async => UserInfo(userID: userID),
       );
-      userInfo.value = UserFullInfo.fromJson(user.toJson());
+      userInfo = UserFullInfo.fromJson(user.toJson()).obs;
 
       Logger.print(
           "-------------logind------------ user = ${userInfo.toJson()}");
@@ -200,6 +200,7 @@ class IMController extends GetxController with IMCallback {
         val?.address = data.address;
         val?.coverURL = data.coverURL;
         val?.publicKey = data.publicKey;
+        val?.account = data.account;
         // val?.phoneNumber = data.phoneNumber;
         // val?.email = data.email;
         // val?.birth = data.birth;

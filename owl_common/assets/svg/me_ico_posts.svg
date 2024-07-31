@@ -1,6 +1,6 @@
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="me_ico_posts" clip-path="url(#clip0_67_6385)">
-<path id="Vector" d="M7.91642 1.66699H12.0831V6.39187L16.175 4.02942L18.2583 7.63787L14.1664 10.0003L18.2583 12.3627L16.175 15.9712L12.0831 13.6087V18.3337H7.91642V13.6087L3.82454 15.9712L1.74121 12.3627L5.83309 10.0003L1.74121 7.63787L3.82454 4.02942L7.91642 6.39187V1.66699Z" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M7.91642 1.66699H12.0831V6.39187L16.175 4.02942L18.2583 7.63787L14.1664 10.0003L18.2583 12.3627L16.175 15.9712L12.0831 13.6087V18.3337H7.91642V13.6087L3.82454 15.9712L1.74121 12.3627L5.83309 10.0003L1.74121 7.63787L3.82454 4.02942L7.91642 6.39187V1.66699Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <clipPath id="clip0_67_6385">

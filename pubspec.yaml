@@ -104,6 +104,7 @@ dependencies:
     path: owl_live
   flutter_localizations:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:

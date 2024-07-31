@@ -1,5 +1,5 @@
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="me_ico_favorite">
-<path id="Vector" d="M9.99974 2.08301L7.45266 7.28201L1.66699 8.12097L5.8582 12.2185L4.85633 17.9163L9.99974 15.1743L15.1442 17.9163L14.1497 12.2185L18.3337 8.12097L12.58 7.28201L9.99974 2.08301Z" stroke="#333333" stroke-width="1.5" stroke-linejoin="round"/>
+<path id="Vector" d="M9.99974 2.08301L7.45266 7.28201L1.66699 8.12097L5.8582 12.2185L4.85633 17.9163L9.99974 15.1743L15.1442 17.9163L14.1497 12.2185L18.3337 8.12097L12.58 7.28201L9.99974 2.08301Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
 </g>
 </svg>

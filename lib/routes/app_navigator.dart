@@ -43,4 +43,64 @@ class AppNavigator {
       AppRoutes.accountList,
     );
   }
+
+  static void startAccountInfo() {
+    Get.toNamed(
+      AppRoutes.accountInfo,
+    );
+  }
+
+  static void startAccountInfoEdit() {
+    Get.toNamed(
+      AppRoutes.accountInfoEdit,
+    );
+  }
+
+  static void startAccountQRCode() {
+    Get.toNamed(
+      AppRoutes.accountQRCode,
+    );
+  }
+
+  static void startSetting() {
+    Get.toNamed(
+      AppRoutes.setting,
+    );
+  }
+
+  static void startSettingLanguage() {
+    Get.toNamed(
+      AppRoutes.settingLanguage,
+    );
+  }
+
+  static void startSettingTheme() {
+    Get.toNamed(
+      AppRoutes.settingTheme,
+    );
+  }
+
+  static void startNotify() {
+    Get.toNamed(
+      AppRoutes.notify,
+    );
+  }
+
+  static void startAsset() {
+    Get.toNamed(
+      AppRoutes.asset,
+    );
+  }
+
+  static void startTransfer() {
+    Get.toNamed(
+      AppRoutes.transfer,
+    );
+  }
+
+  static void startReceipt() {
+    Get.toNamed(
+      AppRoutes.receipt,
+    );
+  }
 }

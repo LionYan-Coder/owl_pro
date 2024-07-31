@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:talker_dio_logger/talker_dio_logger.dart';
+// import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 var dio = Dio();
 

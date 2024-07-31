@@ -28,6 +28,8 @@ export 'src/utils/sp_util.dart';
 export 'src/utils/utils.dart';
 export 'src/utils/voice_record.dart';
 export 'src/utils/encrypted.dart';
+export 'src/utils/web3_util.dart';
+export 'src/utils/web3_http_util.dart';
 export 'src/utils/wallet_util.dart';
 export 'src/res/images.dart';
 export 'src/res/strings.dart';

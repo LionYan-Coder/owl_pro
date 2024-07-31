@@ -75,6 +75,8 @@ extension StrExt on String {
   String get svg => "assets/svg/$this.svg";
   String get png => "assets/image/$this.png";
   String get lang => this == 'zh_CN' ? '简体中文' : "EngLish";
+
+  String get at => '@$this';
 }
 
 extension NumExt on num {
