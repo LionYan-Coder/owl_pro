@@ -56,9 +56,9 @@ class AppNavigator {
     );
   }
 
-  static void startAccountQRCode() {
+  static void startMineQRCode() {
     Get.toNamed(
-      AppRoutes.accountQRCode,
+      AppRoutes.mineQRcode,
     );
   }
 

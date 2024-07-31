@@ -105,6 +105,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_dotenv: ^5.1.0
+  pretty_qr_code: ^3.3.0
+  screenshot: ^3.0.0
+  share_plus: ^10.0.0
 
 dev_dependencies:
   flutter_test:

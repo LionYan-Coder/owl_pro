@@ -93,7 +93,7 @@ class AssetBaseInfo extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          onOperTap(context, oper);
+                          onOperTap(oper);
                         },
                         child: 'wallet_img_$oper'.png.toImage
                           ..adpaterDark = true
@@ -110,7 +110,7 @@ class AssetBaseInfo extends StatelessWidget {
     );
   }
 
-  void onOperTap(BuildContext context, String oper) {
+  void onOperTap(String oper) {
     switch (oper) {
       case 'send':
         AppNavigator.startTransfer();

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
+import 'package:owlpro_app/routes/app_navigator.dart';
 
 class AccountBaseInfo extends StatelessWidget {
   AccountBaseInfo({super.key});
@@ -28,7 +29,7 @@ class AccountBaseInfo extends StatelessWidget {
                     ..style =
                         Styles.ts_999999_12.adapterDark(Styles.ts_555555_12),
                   9.gapv,
-                  AddressCopy(address: currentUser.value?.address ?? ''),
+                  AddressCopy(address: currentUser.value.address ?? ''),
                   10.gapv,
                   SizedBox(
                     width: 0.62.sw,
@@ -60,7 +61,7 @@ class AccountBaseInfo extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {
-                      // context.push(AppRouter.identityPath);
+                      AppNavigator.startMineQRCode();
                     },
                     child: UserAvatar(
                       radius: 32.w,
@@ -70,7 +71,7 @@ class AccountBaseInfo extends StatelessWidget {
                 26.gapv,
                 GestureDetector(
                     onTap: () {
-                      // context.push(AppRouter.sharePath);
+                      AppNavigator.startMineQRCode();
                     },
                     child: "me_ico_code".svg.toSvg
                       ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)

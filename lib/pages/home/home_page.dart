@@ -34,7 +34,7 @@ class Tabbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          bottom: context.mediaQueryPadding.bottom + 16.w,
+          bottom: context.mediaQueryPadding.bottom,
           left: 34.w,
           right: 34.w,
           top: 16.w),

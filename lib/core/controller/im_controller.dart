@@ -189,7 +189,6 @@ class IMController extends GetxController with IMCallback {
   void _queryMyFullInfo() async {
     final data = await Apis.queryMyFullInfo();
     if (data is UserFullInfo) {
-      Logger.print("_queryMyFullInfo user = ${data.toJson()}");
       userInfo.update((val) {
         val?.allowAddFriend = data.allowAddFriend;
         val?.allowBeep = data.allowBeep;

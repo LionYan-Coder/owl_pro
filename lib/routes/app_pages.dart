@@ -10,8 +10,12 @@ import 'package:owlpro_app/pages/login/login_create_page.dart';
 import 'package:owlpro_app/pages/login/login_ready_page.dart';
 import 'package:owlpro_app/pages/login/login_restore_page.dart';
 import 'package:owlpro_app/pages/login/loign_page.dart';
-import 'package:owlpro_app/pages/mine/account_list/account_list_binding.dart';
-import 'package:owlpro_app/pages/mine/account_list/account_list_page.dart';
+import 'package:owlpro_app/pages/account/list/account_list_binding.dart';
+import 'package:owlpro_app/pages/account/list/account_list_page.dart';
+import 'package:owlpro_app/pages/mine/qrcode/mine_qrcode_binding.dart';
+import 'package:owlpro_app/pages/mine/qrcode/mine_qrcode_page.dart';
+import 'package:owlpro_app/pages/receipt/receipt_binding.dart';
+import 'package:owlpro_app/pages/receipt/receipt_page.dart';
 import 'package:owlpro_app/pages/splash/splash_binding.dart';
 import 'package:owlpro_app/pages/splash/splash_page.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
@@ -71,6 +75,16 @@ class AppPages {
       name: AppRoutes.accountList,
       page: () => AccountListPage(),
       binding: AccountListBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.receipt,
+      page: () => ReceiptPage(),
+      binding: ReceiptBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.mineQRcode,
+      page: () => MineQrcodePage(),
+      binding: MineQrcodeBinding(),
     ),
   ];
 }

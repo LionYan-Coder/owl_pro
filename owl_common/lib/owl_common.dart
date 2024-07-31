@@ -52,6 +52,7 @@ export 'src/widget/user_avatar.dart';
 export 'src/widget/address_copy.dart';
 export 'src/widget/text_tab.dart';
 export 'src/widget/input.dart';
+export 'src/widget/qrcode.dart';
 
 export 'src/widget/chat/chat_picture_preview.dart';
 export 'src/widget/chat/chat_item_view.dart';

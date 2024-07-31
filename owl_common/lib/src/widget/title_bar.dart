@@ -64,11 +64,13 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
     this.showUnderline = false,
     Function()? onTap,
   })  : height = 44.h,
-        backgroundColor = backgroundColor ?? Styles.c_FFFFFF,
+        backgroundColor =
+            backgroundColor ?? Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
         center = Expanded(
             child: (title ?? '').toText
-              ..style = (titleStyle ?? Styles.ts_333333_18_medium
-                ..adapterDark(Styles.ts_0C8CE9_18_medium))
+              ..style = titleStyle ??
+                  Styles.ts_333333_18_medium
+                      .adapterDark(Styles.ts_CCCCCC_18_medium)
               ..textAlign = TextAlign.center),
         left = GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -79,7 +81,8 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
               "nvbar_ico_back".svg.toSvg
                 ..width = 24.w
                 ..height = 24.h
-                ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
+                ..color = backIconColor ??
+                    Styles.c_333333.adapterDark(Styles.c_CCCCCC),
               if (null != leftTitle)
                 leftTitle.toText
                   ..style = (leftTitleStyle ??

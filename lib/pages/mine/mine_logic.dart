@@ -27,21 +27,23 @@ class MineLogic extends GetxController {
   }
 
   Future<void> loadedWalletBalance(UserFullInfo user) async {
-    try {
-      loadingBalance.value = true;
-      final olinkBalance =
-          await Web3Util.getBalance(address: user.address ?? '');
-      final owlBalance = await Web3Util.getBalanceOfContract(
-        address: user.address ?? '',
-      );
-      currentBalance.update((val) {
-        val?.olinkBalance = olinkBalance;
-        val?.owlBalance = owlBalance;
-      });
-    } catch (e) {
-      Logger.print("MineLogic-loadedWalletBalance error = ${e.toString()}");
-    } finally {
-      loadingBalance.value = false;
+    if (user.address != null && user.address!.isNotEmpty) {
+      try {
+        loadingBalance.value = true;
+        final olinkBalance =
+            await Web3Util.getBalance(address: user.address ?? '');
+        final owlBalance = await Web3Util.getBalanceOfContract(
+          address: user.address ?? '',
+        );
+        currentBalance.update((val) {
+          val?.olinkBalance = olinkBalance;
+          val?.owlBalance = owlBalance;
+        });
+      } catch (e) {
+        Logger.print("MineLogic-loadedWalletBalance error = ${e.toString()}");
+      } finally {
+        loadingBalance.value = false;
+      }
     }
   }
 
@@ -50,10 +52,10 @@ class MineLogic extends GetxController {
     super.onInit();
 
     _worker = ever(im.userInfo, (userInfo) {
-      if (userInfo != null) {
-        loadedWalletBalance(userInfo);
-      }
+      loadedWalletBalance(userInfo);
     });
+
+    loadedWalletBalance(im.userInfo.value);
   }
 
   @override

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
-import 'package:owlpro_app/pages/mine/account_list/account_list_logic.dart';
+import 'package:owlpro_app/pages/account/list/account_list_logic.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AccountListPage extends StatelessWidget {
