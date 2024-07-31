@@ -6,4 +6,6 @@ abstract class AppRoutes {
   static const loginReady = '/login_ready';
   static const loginRestore = '/login_restore';
   static const home = '/home';
+
+  static const accountList = '/account/list';
 }

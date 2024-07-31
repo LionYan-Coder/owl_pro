@@ -39,6 +39,7 @@ class LoginCreatePage extends StatelessWidget {
                 children: [
                   "sign_create_button".tr.toButton
                     ..onPressed = () {
+                      logic.createWallet();
                       if (logic.wallet.value != null) {
                         AppNavigator.startLogin();
                       }

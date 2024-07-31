@@ -20,6 +20,8 @@ class GuidePage extends StatelessWidget {
       backgroundColor: Styles.c_FFFFFF.adapterDark(Styles.c_121212),
       body: GestureDetector(
         onPanUpdate: guideLogic.onPanUpdate,
+        onTapDown: guideLogic.onTapDown,
+        onTapUp: guideLogic.onTapUp,
         child: Container(
           width: double.infinity,
           height: double.infinity,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/theme_controller.dart';
+import 'package:owlpro_app/routes/app_navigator.dart';
 import 'mine_logic.dart';
 
 class MinePage extends StatelessWidget {
@@ -57,7 +58,9 @@ class MinePage extends StatelessWidget {
 
   Widget identityButton(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        AppNavigator.startAccountList();
+      },
       child: Container(
         height: 24.w,
         padding: const EdgeInsets.only(left: 8, right: 10).w,

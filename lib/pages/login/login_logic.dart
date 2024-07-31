@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:convert/convert.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:owl_common/owl_common.dart';
@@ -20,59 +22,112 @@ class LoginLogic extends GetxController {
   final checked = false.obs;
   final wallet = Rx<Wallet?>(null);
 
-  createWallet() {
-    Future.microtask(() {
-      Future.delayed(const Duration(milliseconds: 400), () async {
-        try {
-          loading.value = true;
-          wallet.value = await Wallet.createWallet();
-          Logger.print("wallet create: ${wallet.toJson()}");
-        } catch (e) {
-          Logger.print("LoginLogic-createWallet error=${e.toString()}");
-        } finally {
-          loading.value = false;
-        }
-      });
-    });
+  late PageController pageController;
+  final restoreformKey = GlobalKey<FormBuilderState>();
+
+  final restoreActiveTab = 0.obs;
+  final List<String> restoreTabs = ['privkey', 'mnemonic'];
+
+  createWallet() async {
+    try {
+      loading.value = true;
+      wallet.value = await Wallet.createWallet();
+      Logger.print("wallet create: ${wallet.toJson()}");
+    } catch (e) {
+      Logger.print("LoginLogic-createWallet error=${e.toString()}");
+    } finally {
+      loading.value = false;
+    }
   }
 
-  create() async {
-    String account = randString(6);
-    String nickname = randString(6);
-    String faceUrl = generateRandomHexColor();
-    String publicKey = wallet.value!.publicKey;
-    String address = wallet.value!.address;
+  startRestore() async {
+    final tab = restoreTabs[restoreActiveTab.value];
+    final field = restoreformKey.currentState?.fields[tab];
 
-    final WallteAccount wallteAccount = WallteAccount(
-        publicKey: publicKey,
-        address: address,
-        nickname: nickname,
-        account: account,
-        faceURL: faceUrl);
-    var walletBox = await Hive.openBox('Wallet');
+    if (field != null) {
+      final valid = field.validate(focusOnInvalid: false);
+      if (valid) {
+        field.save();
+        final String? fieldValue = field.value;
+        Wallet? restoreWallet;
+        if (restoreTabs[restoreActiveTab.value] == 'privkey') {
+          restoreWallet = Wallet.restoreFromPrivateKey(fieldValue ?? '');
+        } else {
+          restoreWallet = Wallet.restoreFromMnemonic(fieldValue ?? '');
+        }
 
-    await wallteAccount.saveCurrentAccount(walletBox);
-    await wallteAccount.addAccountToHive(walletBox);
-    await wallet.value?.saveWalletToHive(walletBox);
+        if (restoreWallet != null) {
+          _restoreWallet(restoreWallet);
+        }
+      }
+    }
+  }
 
-    walletBox.close();
+  registerWallet(Wallet registerWallet) async {
+    try {
+      loading.value = true;
+      String account = randString(6);
+      String nickname = randString(6);
+      String faceUrl = generateRandomHexColor();
+      String publicKey = registerWallet.publicKey;
+      String address = registerWallet.address;
 
-    final nonce = generateRandomHex(32);
-    final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
-    final signature = wallet.value?.sign(nonceHash);
-    final data = await Apis.register(
-        nonce: bytesToHex(nonceHash, include0x: true),
-        sign: signature ?? '',
-        nickname: nickname,
-        account: account,
-        address: address,
-        publicKey: publicKey,
-        faceURL: faceUrl);
+      var walletBox = await Hive.openBox('Wallet');
+      await registerWallet.saveWalletToHive(walletBox);
+      walletBox.close();
 
-    await DataSp.putLoginCertificate(data);
-    await DataSp.putLoginAccount(wallteAccount.toJson());
-    await imLogic.login(data.userID, data.imToken);
-    AppNavigator.startMain();
+      final nonce = WalletUtil.generateRandomHex(32);
+      final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
+      final signature = registerWallet.sign(nonceHash);
+      final data = await Apis.register(
+          nonce: bytesToHex(nonceHash, include0x: true),
+          sign: signature,
+          nickname: nickname,
+          account: account,
+          address: address,
+          publicKey: publicKey,
+          faceURL: faceUrl);
+
+      await DataSp.addAccounts(data.userID);
+      await DataSp.putLoginCertificate(data);
+      await imLogic.login(data.userID, data.imToken);
+      AppNavigator.startMain();
+    } catch (e) {
+      Logger.print("Loginlogic-registerWallet error= ${e.toString()}",
+          isError: true);
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  _restoreWallet(Wallet restoreWallet) async {
+    try {
+      loading.value = true;
+      final nonce = WalletUtil.generateRandomHex(32);
+      final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
+      final signature = restoreWallet.sign(nonceHash);
+      final data = await Apis.login(
+          address: restoreWallet.address,
+          nonce: bytesToHex(nonceHash, include0x: true),
+          sign: signature);
+      // ignore: unnecessary_null_comparison
+      if (data.userID != null && data.userID.isNotEmpty) {
+        await DataSp.addAccounts(data.userID);
+        await DataSp.putLoginCertificate(data);
+        await imLogic.login(data.userID, data.imToken);
+        AppNavigator.startMain();
+      } else {
+        await registerWallet(restoreWallet);
+      }
+    } catch (e) {
+      if (e.toString().contains("AccountNotFound")) {
+        await registerWallet(restoreWallet);
+      } else {
+        Logger.print("LoginLogic_restoreWallet error = ${e.toString()}");
+      }
+    } finally {
+      loading.value = false;
+    }
   }
 
   String randString(int n) {
@@ -90,9 +145,15 @@ class LoginLogic extends GetxController {
     return '0x${Color.fromRGBO(r, g, b, 1).value.toRadixString(16)}';
   }
 
-  String generateRandomHex(int length) {
-    final random = Random.secure();
-    final bytes = List<int>.generate(length, (_) => random.nextInt(256));
-    return hex.encode(bytes);
+  @override
+  void onInit() {
+    pageController = PageController(initialPage: restoreActiveTab.value);
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
+    super.onClose();
   }
 }

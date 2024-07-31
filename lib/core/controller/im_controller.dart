@@ -8,6 +8,9 @@ import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:owlpro_app/core/im_callback.dart';
 
 class IMController extends GetxController with IMCallback {
+  // ignore: non_constant_identifier_names
+  static IMController get IMState => Get.find<IMController>();
+
   late Rx<UserFullInfo> userInfo;
   late String atAllTag;
 
@@ -186,6 +189,10 @@ class IMController extends GetxController with IMCallback {
         val?.allowVibration = data.allowVibration;
         val?.nickname = data.nickname;
         val?.faceURL = data.faceURL;
+        val?.about = data.about;
+        val?.address = data.address;
+        val?.coverURL = data.coverURL;
+        val?.publicKey = data.publicKey;
         // val?.phoneNumber = data.phoneNumber;
         // val?.email = data.email;
         // val?.birth = data.birth;

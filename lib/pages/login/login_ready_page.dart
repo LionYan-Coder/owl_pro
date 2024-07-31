@@ -67,9 +67,7 @@ class LoginReadyPage extends StatelessWidget {
                   Button(
                       height: 56.w,
                       onPressed: () {
-                        logic.createWallet();
                         AppNavigator.startLoginCreate();
-                        // context.push(AppRouter.signCreatePath);
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,7 +84,7 @@ class LoginReadyPage extends StatelessWidget {
                   Button(
                       height: 56.w,
                       onPressed: () {
-                        // context.push(AppRouter.signCreatePath);
+                        AppNavigator.startRestoreCreate();
                       },
                       variants: ButtonVariants.outline,
                       child: Column(

@@ -32,6 +32,14 @@ class GuideLogic extends GetxController with GetSingleTickerProviderStateMixin {
     }
   }
 
+  void onTapUp(TapUpDetails _) {
+    _startTimer();
+  }
+
+  void onTapDown(TapDownDetails _) {
+    _timer?.cancel();
+  }
+
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (animationController.value >= 0.4) {

@@ -14,10 +14,8 @@ class OwlApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = DataSp.appTheme;
-    Logger.print("theme: ${theme?.name}");
     return AppView(
-        builder: (locale, builder) => GetMaterialApp(
+        builder: (locale, theme, builder) => GetMaterialApp(
               debugShowCheckedModeBanner: true,
               enableLog: true,
               builder: builder,

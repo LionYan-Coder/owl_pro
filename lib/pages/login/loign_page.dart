@@ -61,11 +61,18 @@ class LoginPage extends StatelessWidget {
                               logic.checked.value = b ?? false;
                             }),
                         "sign_backup_check".tr.toText
-                          ..style = Styles.ts_333333_14.adapterDark(Styles.ts_999999_14)
+                          ..style = Styles.ts_333333_14
+                              .adapterDark(Styles.ts_999999_14)
                       ],
                     ),
                     Button(
-                      onPressed: logic.checked.value ? logic.create : null,
+                      onPressed: (logic.checked.value &&
+                              logic.wallet.value != null)
+                          ? () {
+                              logic
+                                  .registerWallet(logic.wallet.value as Wallet);
+                            }
+                          : null,
                       text: "sign_backup_button".tr,
                     )
                   ],
@@ -87,7 +94,8 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             label.toText
-              ..style = Styles.ts_333333_16_medium.adapterDark(Styles.ts_EDEDED_16_medium),
+              ..style = Styles.ts_333333_16_medium
+                  .adapterDark(Styles.ts_EDEDED_16_medium),
             ButtonCopy(data: content),
           ],
         ),

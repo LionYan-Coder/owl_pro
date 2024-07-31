@@ -16,6 +16,10 @@ class AppNavigator {
     Get.toNamed(AppRoutes.loginCreate);
   }
 
+  static void startRestoreCreate() {
+    Get.toNamed(AppRoutes.loginRestore);
+  }
+
   static void startLogin() {
     Get.toNamed(AppRoutes.login);
   }
@@ -31,6 +35,12 @@ class AppNavigator {
     Get.offAndToNamed(
       AppRoutes.home,
       arguments: {'isAutoLogin': isAutoLogin},
+    );
+  }
+
+  static void startAccountList() {
+    Get.toNamed(
+      AppRoutes.accountList,
     );
   }
 }
