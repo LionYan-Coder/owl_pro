@@ -40,6 +40,7 @@ class GetTags {
   static final List<String> _userMomentsTags = <String>[];
   static final List<String> _momentsDetailTags = <String>[];
   static final List<String> _userProfileTags = <String>[];
+  static final List<String> _userProfileQRCodeTags = <String>[];
 
   static void createChatTag() {
     _chatTags.add('_${DateTime.now().millisecondsSinceEpoch}');
@@ -59,6 +60,10 @@ class GetTags {
 
   static void createUserProfileTag() {
     _userProfileTags.add('_${DateTime.now().millisecondsSinceEpoch}');
+  }
+
+  static void createUserProfileQRTags() {
+    _userProfileQRCodeTags.add('_${DateTime.now().millisecondsSinceEpoch}');
   }
 
   static void destroyChatTag() {
@@ -81,6 +86,10 @@ class GetTags {
     _userProfileTags.removeLast();
   }
 
+  static void destoryUserProfileQRTag() {
+    _userProfileQRCodeTags.removeLast();
+  }
+
   static String get chat => _chatTags.last;
 
   static String get moments => _momentsTags.last;
@@ -90,4 +99,6 @@ class GetTags {
   static String get momentsDetail => _momentsDetailTags.last;
 
   static String get userProfile => _userProfileTags.last;
+
+  static String get userProfileQR => _userProfileQRCodeTags.last;
 }

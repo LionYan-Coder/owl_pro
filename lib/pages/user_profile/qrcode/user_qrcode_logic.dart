@@ -4,14 +4,25 @@ import 'package:share_plus/share_plus.dart';
 
 class UserQrcodeLogic extends GetxController {
   Future<void> Function()? saveFunction;
-  final user = Rx<UserFullInfo?>(null);
+  late Rx<UserFullInfo> user;
 
   void save() {
     if (saveFunction != null) saveFunction!();
   }
 
   void share(String text) {
-    user.value = Get.arguments;
     Share.share(text);
+  }
+
+  @override
+  void onInit() {
+    user = Rx<UserFullInfo>(Get.arguments);
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    GetTags.destoryUserProfileQRTag();
+    super.onClose();
   }
 }

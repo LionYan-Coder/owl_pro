@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
+import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AccountBaseInfo extends StatelessWidget {
@@ -71,8 +72,7 @@ class AccountBaseInfo extends StatelessWidget {
                 26.gapv,
                 GestureDetector(
                     onTap: () {
-                      Get.toNamed(AppRoutes.userQRcode,
-                          arguments: logic.userInfo.value);
+                      AppNavigator.startUserQRCode(logic.userInfo.value);
                     },
                     child: "me_ico_code".svg.toSvg
                       ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)

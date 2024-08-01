@@ -76,4 +76,10 @@ class UserProfileLogic extends GetxController {
     userInfo = Rx<UserFullInfo>(Get.arguments);
     super.onInit();
   }
+
+  @override
+  void onClose() {
+    GetTags.destroyUserProfileTag();
+    super.onClose();
+  }
 }

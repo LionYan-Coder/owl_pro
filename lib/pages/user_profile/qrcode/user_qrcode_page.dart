@@ -7,9 +7,8 @@ import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/user_profile/qrcode/user_qrcode_logic.dart';
 
 class UserQrcodePage extends StatelessWidget {
+  final logic = Get.find<UserQrcodeLogic>(tag: GetTags.userProfileQR);
   UserQrcodePage({super.key});
-
-  final logic = Get.find<UserQrcodeLogic>();
 
   @override
   Widget build(BuildContext context) {

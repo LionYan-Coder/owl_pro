@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AppNavigator {
@@ -38,81 +39,56 @@ class AppNavigator {
     );
   }
 
-  static void startAccountList() {
-    Get.toNamed(
-      AppRoutes.accountList,
-    );
+  static void startAccountList() => Get.toNamed(
+        AppRoutes.accountList,
+      );
+
+  static void startAccountInfo() => Get.toNamed(
+        AppRoutes.accountInfo,
+      );
+
+  static void startAccountInfoEdit() => Get.toNamed(
+        AppRoutes.accountInfoEdit,
+      );
+
+  static Future<dynamic>? startUserQRCode(UserFullInfo user) {
+    GetTags.createUserProfileQRTags();
+    return Get.toNamed(AppRoutes.userQRcode, arguments: user);
   }
 
-  static void startAccountInfo() {
-    Get.toNamed(
-      AppRoutes.accountInfo,
-    );
-  }
+  static startSetting() => Get.toNamed(
+        AppRoutes.setting,
+      );
 
-  static void startAccountInfoEdit() {
-    Get.toNamed(
-      AppRoutes.accountInfoEdit,
-    );
-  }
+  static void startSettingLanguage() => Get.toNamed(
+        AppRoutes.settingLanguage,
+      );
 
-  static void startUserQRCode() {
-    Get.toNamed(
-      AppRoutes.userQRcode,
-    );
-  }
+  static void startSettingTheme() => Get.toNamed(
+        AppRoutes.settingTheme,
+      );
 
-  static void startSetting() {
-    Get.toNamed(
-      AppRoutes.setting,
-    );
-  }
+  static void startSettingPassword() => Get.toNamed(
+        AppRoutes.settingPassword,
+      );
 
-  static void startSettingLanguage() {
-    Get.toNamed(
-      AppRoutes.settingLanguage,
-    );
-  }
+  static void startNotify() => Get.toNamed(
+        AppRoutes.notify,
+      );
 
-  static void startSettingTheme() {
-    Get.toNamed(
-      AppRoutes.settingTheme,
-    );
-  }
+  static void startAsset() => Get.toNamed(
+        AppRoutes.asset,
+      );
 
-  static void startSettingPassword() {
-    Get.toNamed(
-      AppRoutes.settingPassword,
-    );
-  }
+  static void startTransfer() => Get.toNamed(
+        AppRoutes.transfer,
+      );
 
-  static void startNotify() {
-    Get.toNamed(
-      AppRoutes.notify,
-    );
-  }
+  static void startReceipt() => Get.toNamed(
+        AppRoutes.receipt,
+      );
 
-  static void startAsset() {
-    Get.toNamed(
-      AppRoutes.asset,
-    );
-  }
-
-  static void startTransfer() {
-    Get.toNamed(
-      AppRoutes.transfer,
-    );
-  }
-
-  static void startReceipt() {
-    Get.toNamed(
-      AppRoutes.receipt,
-    );
-  }
-
-  static void startAddBySearch() {
-    Get.toNamed(
-      AppRoutes.contactAddBySearch,
-    );
-  }
+  static void startAddBySearch() => Get.toNamed(
+        AppRoutes.contactAddBySearch,
+      );
 }
