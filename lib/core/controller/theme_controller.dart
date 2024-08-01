@@ -5,11 +5,13 @@ import 'package:owl_common/owl_common.dart';
 
 class ThemeController extends GetxController {
   static ThemeController get to => Get.find<ThemeController>();
-  final appTheme = DataSp.appTheme.obs;
+  ThemeMode appTheme = DataSp.appTheme ?? ThemeMode.system;
+
+  bool get isDarkMode => appTheme == ThemeMode.dark;
 
   void toggleTheme() async {
-    final theme = Get.isDarkMode ? ThemeMode.light : ThemeMode.dark;
-    Get.changeThemeMode(theme);
+    final theme = appTheme == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+
     _changeSystemUI(theme);
   }
 
@@ -18,28 +20,27 @@ class ThemeController extends GetxController {
     _changeSystemUI(theme);
   }
 
-  void _changeSystemUI(ThemeMode theme) {
-    var brightness =
-        theme == ThemeMode.dark ? Brightness.dark : Brightness.light;
-
+  void _changeSystemUI(ThemeMode theme) async {
+    appTheme = theme;
+    Get.changeThemeMode(theme);
     Future.delayed(const Duration(milliseconds: 250), () async {
       await Get.forceAppUpdate();
+
+      await DataSp.putTheme(theme);
+      var brightness =
+          theme == ThemeMode.dark ? Brightness.dark : Brightness.light;
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: brightness,
         statusBarIconBrightness: brightness,
       ));
-      appTheme.value = theme;
-      DataSp.putTheme(theme);
-      //
     });
   }
 
   @override
   void onInit() {
     // Logger.print("appTheme :${appTheme?.name}");
-    appTheme.value = DataSp.appTheme;
-    _changeSystemUI(appTheme.value ?? ThemeMode.system);
+    _changeSystemUI(DataSp.appTheme ?? ThemeMode.system);
     super.onInit();
   }
 }

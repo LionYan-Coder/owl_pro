@@ -56,9 +56,9 @@ class AppNavigator {
     );
   }
 
-  static void startMineQRCode() {
+  static void startUserQRCode() {
     Get.toNamed(
-      AppRoutes.mineQRcode,
+      AppRoutes.userQRcode,
     );
   }
 
@@ -107,6 +107,12 @@ class AppNavigator {
   static void startReceipt() {
     Get.toNamed(
       AppRoutes.receipt,
+    );
+  }
+
+  static void startAddBySearch() {
+    Get.toNamed(
+      AppRoutes.contactAddBySearch,
     );
   }
 }

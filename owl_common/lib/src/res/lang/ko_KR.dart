@@ -182,7 +182,7 @@ const Map<String, String> ko_KR = {
   "chat_list_newfriend": "添加好友",
   "chat_list_group": "创建群组",
   "user_search_title": "添加好友",
-  "user_search_field_hint": "身份地址/ID",
+  "user_search_field_hint": "身份地址",
   "user_search_button": "搜索",
   "user_search_result_empty": "没有找到用户",
   "user_search_result_title": "个人信息",

@@ -69,6 +69,7 @@ extension StrExt on String {
   }
 
   String get toOc => replaceFirst("0x", "oc");
+  String get to0x => replaceFirst("oc", "0x");
 
   Color get color => Color(int.parse(replaceFirst("#", "0xFF")));
 

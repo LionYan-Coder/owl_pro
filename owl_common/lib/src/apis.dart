@@ -76,50 +76,6 @@ class Apis {
     }
   }
 
-  static Future<dynamic> resetPassword({
-    String? areaCode,
-    String? phoneNumber,
-    String? email,
-    required String password,
-    required String verificationCode,
-  }) async {
-    return HttpUtil.post(
-      Urls.resetPwd,
-      data: {
-        "areaCode": areaCode,
-        'phoneNumber': phoneNumber,
-        'email': email,
-        'password': IMUtils.generateMD5(password),
-        'verifyCode': verificationCode,
-        'platform': IMUtils.getPlatform(),
-      },
-      options: chatTokenOptions,
-    );
-  }
-
-  static Future<bool> changePassword({
-    required String userID,
-    required String currentPassword,
-    required String newPassword,
-  }) async {
-    try {
-      await HttpUtil.post(
-        Urls.changePwd,
-        data: {
-          "userID": userID,
-          'currentPassword': IMUtils.generateMD5(currentPassword),
-          'newPassword': IMUtils.generateMD5(newPassword),
-          'platform': IMUtils.getPlatform(),
-        },
-        options: chatTokenOptions,
-      );
-      return true;
-    } catch (e, s) {
-      Logger.print('e:$e s:$s');
-      return false;
-    }
-  }
-
   static Future<dynamic> updateUserInfo({
     required String userID,
     String? account,
@@ -165,6 +121,18 @@ class Apis {
       },
       options: chatTokenOptions,
     );
+  }
+
+  static Future<UserFullInfo> searchUserByAccountOrAddress({
+    String address = "",
+    String account = "",
+  }) async {
+    final data = await HttpUtil.post(Urls.searchUserByAccountOrAddress,
+        data: {'address': address, "account": account},
+        options: chatTokenOptions,
+        showErrorToast: false);
+    var user = data["user"];
+    return UserFullInfo.fromJson(user);
   }
 
   static Future<List<FriendInfo>> searchFriendInfo(

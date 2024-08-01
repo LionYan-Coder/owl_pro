@@ -1,7 +1,7 @@
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="chat_ico_newfirend">
-<path id="Vector" d="M6.33333 6.66667C7.622 6.66667 8.66667 5.622 8.66667 4.33333C8.66667 3.04467 7.622 2 6.33333 2C5.04467 2 4 3.04467 4 4.33333C4 5.622 5.04467 6.66667 6.33333 6.66667Z" stroke="#333333" stroke-width="1.5" stroke-linejoin="round"/>
-<path id="Vector_2" d="M12 9.66602V13.666M10 11.666H14" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_3" d="M9 9.33398H6.26667C4.7732 9.33398 4.02647 9.33398 3.45603 9.62462C2.95426 9.88028 2.54631 10.2883 2.29065 10.79C2 11.3605 2 12.1072 2 13.6007V14.0007H9" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M6.33333 6.66667C7.622 6.66667 8.66667 5.622 8.66667 4.33333C8.66667 3.04467 7.622 2 6.33333 2C5.04467 2 4 3.04467 4 4.33333C4 5.622 5.04467 6.66667 6.33333 6.66667Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path id="Vector_2" d="M12 9.66602V13.666M10 11.666H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M9 9.33398H6.26667C4.7732 9.33398 4.02647 9.33398 3.45603 9.62462C2.95426 9.88028 2.54631 10.2883 2.29065 10.79C2 11.3605 2 12.1072 2 13.6007V14.0007H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

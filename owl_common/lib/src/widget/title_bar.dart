@@ -31,18 +31,22 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
       child: Container(
         color: backgroundColor ?? Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
         padding: EdgeInsets.only(top: mq.padding.top),
-        child: Container(
-          height: height,
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Row(
-            children: [
-              if (null != left) left!,
-              if (null != center) center!,
-              if (null != left && null != center && null == right)
-                SizedBox(width: 24.w),
-              if (null != right) right!,
-            ],
-          ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            if (null != center) center!,
+            Container(
+              height: height,
+              padding: EdgeInsets.only(left: 24.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (null != left) left!,
+                  if (null != right) right!,
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -66,12 +70,10 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
   })  : height = 44.h,
         backgroundColor =
             backgroundColor ?? Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
-        center = Expanded(
-            child: (title ?? '').toText
-              ..style = titleStyle ??
-                  Styles.ts_333333_18_medium
-                      .adapterDark(Styles.ts_CCCCCC_18_medium)
-              ..textAlign = TextAlign.center),
+        center = (title ?? '').toText
+          ..style = titleStyle ??
+              Styles.ts_333333_18_medium.adapterDark(Styles.ts_CCCCCC_18_medium)
+          ..textAlign = TextAlign.center,
         left = GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: onTap ?? (() => Get.back(result: result)),

@@ -14,39 +14,45 @@ class OwlApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppView(
-        builder: (locale, theme, builder) => GetMaterialApp(
-              debugShowCheckedModeBanner: true,
-              // enableLog: true,
-              builder: builder,
-              // logWriterCallback: Logger.print,
-              translations: TranslationService(),
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              fallbackLocale: TranslationService.fallbackLocale,
-              localeResolutionCallback: (locale, list) {
-                Get.locale ??= locale;
-                return locale;
-              },
-              locale: locale,
-              theme: Styles.lightTheme,
-              darkTheme: Styles.darkTheme,
-              themeMode: theme ?? ThemeMode.system,
-              supportedLocales: const [Locale('zh', 'CN'), Locale('en', 'US')],
-              getPages: AppPages.routes,
-              initialBinding: InitBinding(),
-              initialRoute: AppRoutes.splash,
-            ));
+    return GetBuilder(
+        init: ThemeController(),
+        builder: (theme) {
+          return AppView(
+              builder: (locale, builder) => GetMaterialApp(
+                    debugShowCheckedModeBanner: true,
+                    // enableLog: true,
+                    builder: builder,
+                    // logWriterCallback: Logger.print,
+                    translations: TranslationService(),
+                    localizationsDelegates: const [
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    fallbackLocale: TranslationService.fallbackLocale,
+                    localeResolutionCallback: (locale, list) {
+                      Get.locale ??= locale;
+                      return locale;
+                    },
+                    locale: locale,
+                    theme: Styles.lightTheme,
+                    darkTheme: Styles.darkTheme,
+                    themeMode: theme.appTheme,
+                    supportedLocales: const [
+                      Locale('zh', 'CN'),
+                      Locale('en', 'US')
+                    ],
+                    getPages: AppPages.routes,
+                    initialBinding: InitBinding(),
+                    initialRoute: AppRoutes.splash,
+                  ));
+        });
   }
 }
 
 class InitBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<ThemeController>(ThemeController());
     Get.put<PermissionController>(PermissionController());
     Get.put<IMController>(IMController());
     // Get.put<PushController>(PushController());

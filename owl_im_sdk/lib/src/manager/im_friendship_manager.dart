@@ -26,7 +26,8 @@ class FriendshipManager {
                 "userIDList": userIDList,
                 "operationID": Utils.checkOperationID(operationID),
               }))
-          .then((value) => Utils.toList(value, (v) => FullUserInfo.fromJson(v)));
+          .then(
+              (value) => Utils.toList(value, (v) => FullUserInfo.fromJson(v)));
 
   /// Send a Friend Request, the other party needs to accept the request to become friends.
   /// [userID] User ID to be invited
@@ -34,6 +35,7 @@ class FriendshipManager {
   Future<dynamic> addFriend({
     required String userID,
     String? reason,
+    String? remark,
     String? operationID,
   }) =>
       _channel.invokeMethod(
@@ -41,26 +43,33 @@ class FriendshipManager {
           _buildParam({
             "toUserID": userID,
             "reqMsg": reason,
+            "remark": remark,
             "operationID": Utils.checkOperationID(operationID),
           }));
 
   /// Get Friend Requests Sent to Me
-  Future<List<FriendApplicationInfo>> getFriendApplicationListAsRecipient({String? operationID}) => _channel
-      .invokeMethod(
-          'getFriendApplicationListAsRecipient',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }))
-      .then((value) => Utils.toList(value, (v) => FriendApplicationInfo.fromJson(v)));
+  Future<List<FriendApplicationInfo>> getFriendApplicationListAsRecipient(
+          {String? operationID}) =>
+      _channel
+          .invokeMethod(
+              'getFriendApplicationListAsRecipient',
+              _buildParam({
+                "operationID": Utils.checkOperationID(operationID),
+              }))
+          .then((value) =>
+              Utils.toList(value, (v) => FriendApplicationInfo.fromJson(v)));
 
   /// Get Friend Requests Sent by Me
-  Future<List<FriendApplicationInfo>> getFriendApplicationListAsApplicant({String? operationID}) => _channel
-      .invokeMethod(
-          'getFriendApplicationListAsApplicant',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }))
-      .then((value) => Utils.toList(value, (v) => FriendApplicationInfo.fromJson(v)));
+  Future<List<FriendApplicationInfo>> getFriendApplicationListAsApplicant(
+          {String? operationID}) =>
+      _channel
+          .invokeMethod(
+              'getFriendApplicationListAsApplicant',
+              _buildParam({
+                "operationID": Utils.checkOperationID(operationID),
+              }))
+          .then((value) =>
+              Utils.toList(value, (v) => FriendApplicationInfo.fromJson(v)));
 
   /// Get Friend List, including friends who have been put into the blacklist
   Future<List<FullUserInfo>> getFriendList({String? operationID}) => _channel
@@ -146,7 +155,8 @@ class FriendshipManager {
                 'userIDList': userIDList,
                 "operationID": Utils.checkOperationID(operationID),
               }))
-          .then((value) => Utils.toList(value, (v) => FriendshipInfo.fromJson(v)));
+          .then((value) =>
+              Utils.toList(value, (v) => FriendshipInfo.fromJson(v)));
 
   /// Delete Friend
   /// [userID] User ID
@@ -217,7 +227,8 @@ class FriendshipManager {
                 },
                 'operationID': Utils.checkOperationID(operationID),
               }))
-          .then((value) => Utils.toList(value, (map) => SearchFriendsInfo.fromJson(map)));
+          .then((value) =>
+              Utils.toList(value, (map) => SearchFriendsInfo.fromJson(map)));
 
   Future<String?> setFriendsEx(
     List<String> friendIDs, {

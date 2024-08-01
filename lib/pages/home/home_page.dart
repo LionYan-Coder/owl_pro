@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owlpro_app/pages/chat/chat_page.dart';
+import 'package:owlpro_app/pages/contacts/contact_page.dart';
 import 'package:owlpro_app/pages/home/home_logic.dart';
 import 'package:owlpro_app/pages/mine/mine_logic.dart';
 import 'package:owlpro_app/pages/mine/mine_page.dart';
@@ -9,6 +11,7 @@ import 'package:owlpro_app/pages/mine/mine_page.dart';
 class HomePage extends StatelessWidget {
   final logic = Get.find<HomeLogic>();
   final mineLogic = Get.find<MineLogic>();
+  
   HomePage({super.key});
 
   @override
@@ -18,7 +21,7 @@ class HomePage extends StatelessWidget {
         bottomNavigationBar: Tabbar(logic: logic),
         body: IndexedStack(
           index: logic.currentPage.value,
-          children: [Text("home"), Text("home"), Text("home"), MinePage()],
+          children: [ChatPage(), ContactPage(), Text("home"), MinePage()],
         ),
       );
     });

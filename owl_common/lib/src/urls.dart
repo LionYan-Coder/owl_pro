@@ -1,15 +1,18 @@
 import 'config.dart';
 
 class Urls {
+  static final searchUserByAccountOrAddress =
+      "${Config.appAuthUrl}/user/search";
   static final updateUserInfo = "${Config.appAuthUrl}/user/update";
   static final getUsersFullInfo = "${Config.appAuthUrl}/user/find/full";
   static final searchUserFullInfo = "${Config.appAuthUrl}/user/search/full";
   static final searchFriendInfo = "${Config.appAuthUrl}/friend/search";
   static final queryUserInfo = "${Config.appAuthUrl}/user/info";
   static final getVerificationCode = "${Config.appAuthUrl}/account/code/send";
-  static final checkVerificationCode = "${Config.appAuthUrl}/account/code/verify";
+  static final checkVerificationCode =
+      "${Config.appAuthUrl}/account/code/verify";
   static final register = "${Config.appAuthUrl}/account/register";
-    static final challenge = "${Config.appAuthUrl}/account/challenge";
+  static final challenge = "${Config.appAuthUrl}/account/challenge";
   static final resetPwd = "${Config.appAuthUrl}/account/password/reset";
   static final changePwd = "${Config.appAuthUrl}/account/password/change";
   static final login = "${Config.appAuthUrl}/account/login";

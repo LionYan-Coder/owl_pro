@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_common/src/models/google_time.dart';
 
@@ -55,6 +56,14 @@ class UserFullInfo {
   });
 
   UserFullInfo.fromJson(Map<String, dynamic> json) {
+    var c_time = null;
+    if (json['createTime'] != null) {
+      if (json['createTime'].runtimeType == int) {
+        c_time = json['createTime'];
+      } else {
+        c_time = GoogleTime.fromJson(json['createTime']);
+      }
+    }
     userID = json['userID'];
     nickname = json['nickname'];
     faceURL = json['faceURL'];
@@ -63,9 +72,7 @@ class UserFullInfo {
     about = json['remark'];
     coverURL = json['coverURL'];
     address = json['address'];
-    createTime = json['createTime'].runtimeType == int
-        ? json['createTime']
-        : GoogleTime.fromJson(json['createTime']);
+    createTime = c_time;
     order = json['order'];
     status = json['status'];
     allowAddFriend = json['allowAddFriend'];
@@ -86,6 +93,7 @@ class UserFullInfo {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+
     data['userID'] = userID;
     data['nickname'] = nickname;
     data['remark'] = remark;

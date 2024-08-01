@@ -1,6 +1,8 @@
 import 'package:get/get_instance/src/bindings_interface.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_binding.dart';
+import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_page.dart';
 import 'package:owlpro_app/pages/guide/guide_binding.dart';
 import 'package:owlpro_app/pages/guide/guide_page.dart';
 import 'package:owlpro_app/pages/home/home_binding.dart';
@@ -12,8 +14,8 @@ import 'package:owlpro_app/pages/login/login_restore_page.dart';
 import 'package:owlpro_app/pages/login/loign_page.dart';
 import 'package:owlpro_app/pages/account/list/account_list_binding.dart';
 import 'package:owlpro_app/pages/account/list/account_list_page.dart';
-import 'package:owlpro_app/pages/mine/qrcode/mine_qrcode_binding.dart';
-import 'package:owlpro_app/pages/mine/qrcode/mine_qrcode_page.dart';
+import 'package:owlpro_app/pages/user_profile/qrcode/user_qrcode_binding.dart';
+import 'package:owlpro_app/pages/user_profile/qrcode/user_qrcode_page.dart';
 import 'package:owlpro_app/pages/receipt/receipt_binding.dart';
 import 'package:owlpro_app/pages/receipt/receipt_page.dart';
 import 'package:owlpro_app/pages/setting/language/setting_language_binding.dart';
@@ -26,6 +28,8 @@ import 'package:owlpro_app/pages/setting/theme/setting_theme_binding.dart';
 import 'package:owlpro_app/pages/setting/theme/setting_theme_page.dart';
 import 'package:owlpro_app/pages/splash/splash_binding.dart';
 import 'package:owlpro_app/pages/splash/splash_page.dart';
+import 'package:owlpro_app/pages/user_profile/user_profile_binding.dart';
+import 'package:owlpro_app/pages/user_profile/user_profile_page.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AppPages {
@@ -90,11 +94,6 @@ class AppPages {
       binding: ReceiptBinding(),
     ),
     _pageBuilder(
-      name: AppRoutes.mineQRcode,
-      page: () => MineQrcodePage(),
-      binding: MineQrcodeBinding(),
-    ),
-    _pageBuilder(
       name: AppRoutes.setting,
       page: () => SettingPage(),
       binding: SettingBinding(),
@@ -114,5 +113,19 @@ class AppPages {
       page: () => const SettingLanguagePage(),
       binding: SettingLanguageBinding(),
     ),
+    _pageBuilder(
+        name: AppRoutes.contactAddBySearch,
+        page: () => AddBySearchPage(),
+        binding: AddBySearchBinding()),
+    _pageBuilder(
+        name: AppRoutes.userProfile,
+        page: () => UserProfilePage(),
+        binding: UserProfileBinding(),
+        preventDuplicates: false),
+    _pageBuilder(
+        name: AppRoutes.userQRcode,
+        page: () => UserQrcodePage(),
+        binding: UserQrcodeBinding(),
+        preventDuplicates: false),
   ];
 }

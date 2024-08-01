@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owlpro_app/core/controller/im_controller.dart';
-import 'package:owlpro_app/pages/mine/qrcode/mine_qrcode_logic.dart';
+import 'package:owlpro_app/pages/user_profile/qrcode/user_qrcode_logic.dart';
 
-class MineQrcodePage extends StatelessWidget {
-  MineQrcodePage({super.key});
+class UserQrcodePage extends StatelessWidget {
+  UserQrcodePage({super.key});
 
-  final logic = Get.find<MineQrcodeLogic>();
-  final imLogic = Get.find<IMController>();
+  final logic = Get.find<UserQrcodeLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +65,7 @@ class MineQrcodePage extends StatelessWidget {
                                   onSave: (fn) {
                                     logic.saveFunction = fn;
                                   },
-                                  code: imLogic.userInfo.value.address?.toOc ??
-                                      ''),
+                                  code: logic.user.value?.address?.toOc ?? ''),
                               16.gapv,
                               Container(
                                 height: 1,
@@ -117,14 +114,14 @@ class MineQrcodePage extends StatelessWidget {
           "sign_guide_desc".tr.toText..style = Styles.ts_999999_10,
           16.gapv,
           UserAvatar(
-              avatar: imLogic.userInfo.value.faceURL,
+              avatar: logic.user.value?.faceURL,
               radius: 32.w,
-              nickname: imLogic.userInfo.value.nickname ?? ''),
+              nickname: logic.user.value?.nickname ?? ''),
           8.gapv,
-          (imLogic.userInfo.value.nickname ?? '').toText
+          (logic.user.value?.nickname ?? '').toText
             ..style = Styles.ts_333333_20_medium,
           16.gapv,
-          (imLogic.userInfo.value.address?.toOc ?? '').toText
+          (logic.user.value?.address?.toOc ?? '').toText
             ..style = Styles.ts_666666_14
             ..maxLines = 2
             ..textAlign = TextAlign.center
@@ -155,7 +152,7 @@ class MineQrcodePage extends StatelessWidget {
           80.gaph,
           GestureDetector(
             onTap: () {
-              logic.share(imLogic.userInfo.value.address?.toOc ?? '');
+              logic.share(logic.user.value?.address?.toOc ?? '');
             },
             child: Column(
               children: [

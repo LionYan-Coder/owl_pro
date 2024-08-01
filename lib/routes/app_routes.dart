@@ -7,7 +7,7 @@ abstract class AppRoutes {
   static const loginRestore = '/login_restore';
   static const home = '/home';
 
-  static const mineQRcode = '/mine/qrcode';
+  static const userQRcode = '/user/qrcode';
   static const accountInfo = '/account';
   static const accountList = '/account/list';
   static const accountInfoEdit = '/account/edit';
@@ -22,4 +22,7 @@ abstract class AppRoutes {
   static const asset = '/asset';
   static const transfer = '/transfer';
   static const receipt = '/receipt';
+
+  static const contactAddBySearch = "/contact/add_by_search";
+  static const userProfile = '/user/profile';
 }

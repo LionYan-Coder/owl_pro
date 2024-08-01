@@ -19,7 +19,7 @@ class SettingThemePage extends StatelessWidget {
         padding: const EdgeInsets.all(24).w,
         child: Obx(() => Column(
               children: ThemeMode.values.map((theme) {
-                final isSelected = themeLogic.appTheme.value == theme;
+                final isSelected = themeLogic.appTheme == theme;
                 return GestureDetector(
                   onTap: () {
                     themeLogic.changeTheme(theme);

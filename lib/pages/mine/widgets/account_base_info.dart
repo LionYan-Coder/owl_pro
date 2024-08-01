@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
-import 'package:owlpro_app/routes/app_navigator.dart';
+import 'package:owlpro_app/routes/app_routes.dart';
 
 class AccountBaseInfo extends StatelessWidget {
   AccountBaseInfo({super.key});
@@ -61,7 +61,7 @@ class AccountBaseInfo extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {
-                      AppNavigator.startMineQRCode();
+                      // AppNavigator.startUserQRCode();
                     },
                     child: UserAvatar(
                       radius: 32.w,
@@ -71,7 +71,8 @@ class AccountBaseInfo extends StatelessWidget {
                 26.gapv,
                 GestureDetector(
                     onTap: () {
-                      AppNavigator.startMineQRCode();
+                      Get.toNamed(AppRoutes.userQRcode,
+                          arguments: logic.userInfo.value);
                     },
                     child: "me_ico_code".svg.toSvg
                       ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)
