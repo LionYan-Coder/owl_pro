@@ -57,7 +57,7 @@ class GuideTwo extends StatelessWidget {
                     children: [
                       "guide_two_title".tr.toText
                         ..style = Styles.ts_333333_24_bold
-                            .adapterDark(Styles.ts_CCCCCC_24_bold),
+                            .adapterDark(Styles.ts_CCCCCC_24_bold).copyWith(letterSpacing: 5.w),
                       12.gapv,
                       "guide_two_text".tr.toText
                         ..textAlign = TextAlign.center

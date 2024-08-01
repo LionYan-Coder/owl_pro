@@ -91,6 +91,7 @@ class DataSp {
   static int? getVerifyGapPwdTime() {
     return SpUtil().getInt(
       _verifyPwdGap,
+      defValue: const Duration(days: 1).inMilliseconds
     );
   }
 

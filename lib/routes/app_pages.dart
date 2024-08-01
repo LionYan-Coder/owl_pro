@@ -16,6 +16,14 @@ import 'package:owlpro_app/pages/mine/qrcode/mine_qrcode_binding.dart';
 import 'package:owlpro_app/pages/mine/qrcode/mine_qrcode_page.dart';
 import 'package:owlpro_app/pages/receipt/receipt_binding.dart';
 import 'package:owlpro_app/pages/receipt/receipt_page.dart';
+import 'package:owlpro_app/pages/setting/language/setting_language_binding.dart';
+import 'package:owlpro_app/pages/setting/language/setting_language_page.dart';
+import 'package:owlpro_app/pages/setting/password/setting_password_binding.dart';
+import 'package:owlpro_app/pages/setting/password/setting_password_page.dart';
+import 'package:owlpro_app/pages/setting/setting_binding.dart';
+import 'package:owlpro_app/pages/setting/setting_page.dart';
+import 'package:owlpro_app/pages/setting/theme/setting_theme_binding.dart';
+import 'package:owlpro_app/pages/setting/theme/setting_theme_page.dart';
 import 'package:owlpro_app/pages/splash/splash_binding.dart';
 import 'package:owlpro_app/pages/splash/splash_page.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
@@ -85,6 +93,26 @@ class AppPages {
       name: AppRoutes.mineQRcode,
       page: () => MineQrcodePage(),
       binding: MineQrcodeBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.setting,
+      page: () => SettingPage(),
+      binding: SettingBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.settingPassword,
+      page: () => SettingPasswordPage(),
+      binding: SettingPasswordBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.settingTheme,
+      page: () => SettingThemePage(),
+      binding: SettingThemeBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.settingLanguage,
+      page: () => const SettingLanguagePage(),
+      binding: SettingLanguageBinding(),
     ),
   ];
 }

@@ -115,10 +115,13 @@ class AccountCard extends StatelessWidget {
                       ),
                       8.gaph,
                       AnimatedDefaultTextStyle(
-                        style: isSelected
-                            ? Styles.ts_0481DC_16_medium
-                            : Styles.ts_333333_16_medium
-                                .adapterDark(Styles.ts_CCCCCC_16_medium),
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: Styles.fontFamily,
+                            fontWeight: FontWeight.w500,
+                            color: isSelected
+                                ? Styles.c_0481DC
+                                : Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
                         duration: const Duration(milliseconds: 250),
                         child: user.nickname!.toText,
                       ),

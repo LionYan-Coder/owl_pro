@@ -43,7 +43,7 @@ class GuideFirst extends StatelessWidget {
                   children: [
                     "guide_one_title".tr.toText
                       ..style = Styles.ts_333333_24_bold
-                          .adapterDark(Styles.ts_CCCCCC_24_bold),
+                          .adapterDark(Styles.ts_CCCCCC_24_bold).copyWith(letterSpacing: 5.w),
                     12.gapv,
                     "guide_one_text".tr.toText
                       ..textAlign = TextAlign.center

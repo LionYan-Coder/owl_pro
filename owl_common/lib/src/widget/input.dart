@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 
-import 'button.dart';
-
-enum InputType { text, password, number, tel }
+enum InputType2 { text, password, number, tel }
 
 class Input extends StatefulWidget {
   final String name;
   final String? hintText;
   final String? Function(String?)? validator;
-  final InputType? inputType;
+  final InputType2? inputType;
   final Widget? suffixIcon;
   final Widget? suffix;
   final Widget? prefix;
@@ -39,7 +36,7 @@ class Input extends StatefulWidget {
       this.prefixText,
       this.prefixIcon,
       this.controller,
-      this.inputType = InputType.text});
+      this.inputType = InputType2.text});
 
   @override
   State<Input> createState() => _InputState();
@@ -49,21 +46,35 @@ class _InputState extends State<Input> {
   bool _obscureText = true;
 
   Widget? getSuffixIcon() {
-    if (widget.inputType == InputType.password) {
-      return GestureDetector(
-        onTap: () {
-          setState(() {
-            _obscureText = !_obscureText;
-          });
-        },
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          child: SvgPicture.asset(
-            _obscureText ? "closeeye".svg : "openeye".svg,
-            width: 24.w,
-            height: 24.w,
-          ),
-        ),
+    if (widget.inputType == InputType2.password) {
+      return Column(
+        children: [
+          Stack(alignment: Alignment.center, children: [
+            Padding(
+              padding: EdgeInsets.only(top: 10.w),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+                child: AnimatedCrossFade(
+                  duration: const Duration(milliseconds: 250),
+                  alignment: Alignment.center,
+                  crossFadeState: _obscureText
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  firstChild: "closeeye".svg.toSvg
+                    ..width = 24.w
+                    ..height = 24.w,
+                  secondChild: "openeye".svg.toSvg
+                    ..width = 24.w
+                    ..height = 24.w,
+                ),
+              ),
+            )
+          ]),
+        ],
       );
     } else {
       return null;
@@ -71,9 +82,9 @@ class _InputState extends State<Input> {
   }
 
   TextInputType getKeyboardType() {
-    if (widget.inputType == InputType.number) {
+    if (widget.inputType == InputType2.number) {
       return TextInputType.number;
-    } else if (widget.inputType == InputType.tel) {
+    } else if (widget.inputType == InputType2.tel) {
       return TextInputType.phone;
     }
 
@@ -85,7 +96,7 @@ class _InputState extends State<Input> {
     return FormBuilderTextField(
       name: widget.name,
       obscureText:
-          widget.inputType == InputType.password ? _obscureText : false,
+          widget.inputType == InputType2.password ? _obscureText : false,
       maxLines: widget.maxLines,
       keyboardType: getKeyboardType(),
       style: widget.style,
@@ -130,7 +141,7 @@ class PasteInput extends StatefulWidget {
   final String name;
   final String? hintText;
   final String? Function(String?)? validator;
-  final InputType? inputType;
+  final InputType2? inputType;
   final Widget? suffix;
   final int? maxLines;
   final TextStyle? style;
@@ -145,7 +156,7 @@ class PasteInput extends StatefulWidget {
       this.maxLines = 1,
       this.style,
       this.contentPadding,
-      this.inputType = InputType.text});
+      this.inputType = InputType2.text});
 
   @override
   State<PasteInput> createState() => _PasteInputState();
@@ -155,9 +166,9 @@ class _PasteInputState extends State<PasteInput> {
   final TextEditingController _editingController = TextEditingController();
 
   TextInputType getKeyboardType() {
-    if (widget.inputType == InputType.number) {
+    if (widget.inputType == InputType2.number) {
       return TextInputType.number;
-    } else if (widget.inputType == InputType.tel) {
+    } else if (widget.inputType == InputType2.tel) {
       return TextInputType.phone;
     }
 

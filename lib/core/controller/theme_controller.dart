@@ -10,7 +10,15 @@ class ThemeController extends GetxController {
   void toggleTheme() async {
     final theme = Get.isDarkMode ? ThemeMode.light : ThemeMode.dark;
     Get.changeThemeMode(theme);
+    _changeSystemUI(theme);
+  }
 
+  void changeTheme(ThemeMode theme) async {
+    Get.changeThemeMode(theme);
+    _changeSystemUI(theme);
+  }
+
+  void _changeSystemUI(ThemeMode theme) {
     var brightness =
         theme == ThemeMode.dark ? Brightness.dark : Brightness.light;
 
@@ -31,13 +39,7 @@ class ThemeController extends GetxController {
   void onInit() {
     // Logger.print("appTheme :${appTheme?.name}");
     appTheme.value = DataSp.appTheme;
-    var brightness =
-        appTheme.value == ThemeMode.dark ? Brightness.dark : Brightness.light;
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: brightness,
-      statusBarIconBrightness: brightness,
-    ));
+    _changeSystemUI(appTheme.value ?? ThemeMode.system);
     super.onInit();
   }
 }

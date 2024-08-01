@@ -31,6 +31,8 @@ export 'src/utils/encrypted.dart';
 export 'src/utils/web3_util.dart';
 export 'src/utils/web3_http_util.dart';
 export 'src/utils/wallet_util.dart';
+export 'src/utils/date_util.dart';
+export 'src/utils/toast.dart';
 export 'src/res/images.dart';
 export 'src/res/strings.dart';
 export 'src/res/styles.dart';

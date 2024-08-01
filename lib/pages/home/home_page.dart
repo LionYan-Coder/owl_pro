@@ -3,22 +3,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/home/home_logic.dart';
+import 'package:owlpro_app/pages/mine/mine_logic.dart';
 import 'package:owlpro_app/pages/mine/mine_page.dart';
 
 class HomePage extends StatelessWidget {
   final logic = Get.find<HomeLogic>();
-
+  final mineLogic = Get.find<MineLogic>();
   HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
-          bottomNavigationBar: Tabbar(logic: logic),
-          body: IndexedStack(
-            index: logic.currentPage.value,
-            children: [Text("home"), Text("home"), Text("home"), MinePage()],
-          ),
-        ));
+    return Obx(() {
+      return Scaffold(
+        bottomNavigationBar: Tabbar(logic: logic),
+        body: IndexedStack(
+          index: logic.currentPage.value,
+          children: [Text("home"), Text("home"), Text("home"), MinePage()],
+        ),
+      );
+    });
   }
 }
 

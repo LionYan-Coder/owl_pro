@@ -15,6 +15,7 @@ abstract class AppRoutes {
   static const setting = '/setting';
   static const settingLanguage = '/setting/language';
   static const settingTheme = '/setting/theme';
+  static const settingPassword = '/setting/password';
 
   static const notify = '/norify';
 

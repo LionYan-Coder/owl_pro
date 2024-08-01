@@ -15,7 +15,7 @@ class OperationBaseMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: menus
-          .map((menu) => GestureDetector(
+          .map((menu) => InkWell(
                 onTap: () {
                   _onTapMenu(context, menu);
                 },

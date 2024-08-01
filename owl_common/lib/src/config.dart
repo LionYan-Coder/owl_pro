@@ -84,6 +84,9 @@ class Config {
       cachePath = '$path/';
       await DataSp.init();
       await Hive.initFlutter(path);
+
+      // SpUtil().clear();
+
       HttpUtil.init();
     } catch (_) {}
 

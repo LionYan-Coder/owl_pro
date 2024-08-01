@@ -9,7 +9,7 @@ import 'package:owl_common/owl_common.dart';
 class ToastHelper {
   static void showToast(BuildContext context, String text) {
     Widget widget = Positioned(
-      top: context.mediaQueryPadding.top + 58.w,
+      top: context.mediaQueryPadding.top + 48.w,
       left: 0,
       right: 0,
       child: Align(
@@ -26,7 +26,7 @@ class ToastHelper {
                 ],
                 borderRadius: BorderRadius.circular(12.r)),
             padding:
-                const EdgeInsets.symmetric(vertical: 3.0, horizontal: 14.0).w,
+                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0).w,
             child: text.toText
               ..style = Styles.ts_FFFFFF_12.adapterDark(Styles.ts_CCCCCC_12)),
       ),

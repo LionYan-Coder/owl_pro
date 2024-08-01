@@ -80,6 +80,12 @@ class AppNavigator {
     );
   }
 
+  static void startSettingPassword() {
+    Get.toNamed(
+      AppRoutes.settingPassword,
+    );
+  }
+
   static void startNotify() {
     Get.toNamed(
       AppRoutes.notify,
