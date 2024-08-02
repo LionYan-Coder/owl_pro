@@ -21,11 +21,11 @@ class AccountBaseInfo extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  currentUser.value!.nickname!.toText
+                  currentUser.value.nickname!.toText
                     ..style = Styles.ts_333333_24_bold
                         .adapterDark(Styles.ts_0C8CE9_24_bold),
                   4.gapv,
-                  currentUser.value!.account!.at.toText
+                  currentUser.value.account!.at.toText
                     ..style =
                         Styles.ts_999999_12.adapterDark(Styles.ts_555555_12),
                   9.gapv,

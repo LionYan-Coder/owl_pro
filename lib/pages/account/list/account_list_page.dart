@@ -10,6 +10,7 @@ class AccountListPage extends StatelessWidget {
   AccountListPage({super.key});
 
   final logic = Get.find<AccountListLogic>();
+  final imLogic = Get.find<IMController>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,96 +56,84 @@ class AccountListPage extends StatelessWidget {
               itemCount: logic.accounts.length,
               padding: const EdgeInsets.all(24).w,
               itemBuilder: (context, index) {
-                return AccountCard(
+                return accountCard(
                   user: logic.accounts[index],
-                  onChanged: (user) {
-                    logic.onChangeUser(user);
-                  },
                 );
               },
             )),
     );
   }
-}
 
-class AccountCard extends StatelessWidget {
-  final UserFullInfo user;
-  final Function(UserFullInfo user) onChanged;
-  AccountCard({super.key, required this.user, required this.onChanged});
-
-  final imLogic = Get.find<IMController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() {
-      final isSelected = user.userID == imLogic.userInfo.value?.userID;
-      return GestureDetector(
-        onTap: () {
-          onChanged(user);
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.easeInOut,
-          padding:
-              const EdgeInsets.only(left: 16, right: 12, top: 20, bottom: 20).w,
-          margin: const EdgeInsets.only(bottom: 12).w,
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: isSelected
-                    ? Styles.c_0C8CE9
-                    : Styles.c_EDEDED.adapterDark(Styles.c_262626)),
-            color: isSelected
-                ? Styles.c_0C8CE9.withOpacity(0.05)
-                : Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AvatarView(
-                        radius: 12.w,
-                        url: user.faceURL ?? '',
-                        text: user.nickname ?? '',
-                        textStyle: TextStyle(
-                          fontSize: 10.sp,
+  Widget accountCard({required UserFullInfo user}) {
+    return Obx(() => GestureDetector(
+          onTap: () {
+            logic.onChangeUser(user);
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeInOut,
+            padding:
+                const EdgeInsets.only(left: 16, right: 12, top: 20, bottom: 20)
+                    .w,
+            margin: const EdgeInsets.only(bottom: 12).w,
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: user.address == imLogic.userInfo.value.address
+                      ? Styles.c_0C8CE9
+                      : Styles.c_EDEDED.adapterDark(Styles.c_262626)),
+              color: user.address == imLogic.userInfo.value.address
+                  ? Styles.c_0C8CE9.withOpacity(0.05)
+                  : Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AvatarView(
+                          radius: 12.w,
+                          url: user.faceURL ?? '',
+                          text: user.nickname ?? '',
+                          textStyle: TextStyle(
+                            fontSize: 10.sp,
+                          ),
                         ),
-                      ),
-                      8.gaph,
-                      AnimatedDefaultTextStyle(
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            fontFamily: Styles.fontFamily,
-                            fontWeight: FontWeight.w500,
-                            color: isSelected
-                                ? Styles.c_0481DC
-                                : Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
-                        duration: const Duration(milliseconds: 250),
-                        child: user.nickname!.toText,
-                      ),
-                    ],
-                  ),
-                  4.gapv,
-                  AddressCopy(
-                    address: user.address ?? '',
-                    width: 210.w,
-                  )
-                ],
-              ),
-              isSelected
-                  ? ("selected".svg.toSvg
-                    ..width = 24.w
-                    ..height = 24.w)
-                  : const SizedBox.shrink()
-            ],
+                        8.gaph,
+                        AnimatedDefaultTextStyle(
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontFamily: Styles.fontFamily,
+                              fontWeight: FontWeight.w500,
+                              color:
+                                  user.address == imLogic.userInfo.value.address
+                                      ? Styles.c_0481DC
+                                      : Styles.c_333333
+                                          .adapterDark(Styles.c_CCCCCC)),
+                          duration: const Duration(milliseconds: 250),
+                          child: user.nickname!.toText,
+                        ),
+                      ],
+                    ),
+                    4.gapv,
+                    AddressCopy(
+                      address: user.address ?? '',
+                      width: 210.w,
+                    )
+                  ],
+                ),
+                user.address == imLogic.userInfo.value.address
+                    ? ("selected".svg.toSvg
+                      ..width = 24.w
+                      ..height = 24.w)
+                    : const SizedBox.shrink()
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        ));
   }
 }

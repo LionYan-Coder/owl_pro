@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owlpro_app/core/controller/im_controller.dart';
+import 'package:owlpro_app/pages/chat/chat_logic.dart';
 import 'package:owlpro_app/pages/chat/widgets/dropdown_add.dart';
+import 'package:owlpro_app/pages/chat/widgets/user_online_status.dart';
 
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
 
+  final imLogic = Get.find<IMController>();
+  final logic = Get.find<ChatLogic>();
+
   @override
   Widget build(BuildContext context) {
+    final status = imLogic.userInfo.value.status;
+    Logger.print("status: $status");
     return SafeArea(
       child: Column(
         children: [chatNavbar()],
@@ -32,16 +40,7 @@ class ChatPage extends StatelessWidget {
                       ..style = Styles.ts_333333_18_bold
                           .adapterDark(Styles.ts_CCCCCC_18_bold),
                     6.gaph,
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 4).w,
-                      decoration: BoxDecoration(
-                          color: Styles.c_0C8CE9.withOpacity(0.05),
-                          borderRadius: BorderRadius.circular(4.r)),
-                      child: Center(
-                        child: "device_online".tr.toText
-                          ..style = Styles.ts_0C8CE9_10,
-                      ),
-                    )
+                    Obx(() => UserOnlineStatus(status: logic.userStatus.value))
                   ],
                 ),
               ),

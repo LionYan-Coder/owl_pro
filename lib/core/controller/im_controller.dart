@@ -11,7 +11,7 @@ class IMController extends GetxController with IMCallback {
   // ignore: non_constant_identifier_names
   static IMController get IMState => Get.find<IMController>();
 
-  late Rx<UserFullInfo> userInfo;
+  final userInfo = UserFullInfo().obs;
   late String atAllTag;
 
   @override
@@ -38,6 +38,7 @@ class IMController extends GetxController with IMCallback {
             imSdkStatus(IMSdkStatus.connectionFailed);
           },
           onConnectSuccess: () {
+            Logger.print("onConnectSuccess onConnectSuccess");
             imSdkStatus(IMSdkStatus.connectionSucceeded);
           },
           onKickedOffline: kickedOffline,
@@ -161,19 +162,17 @@ class IMController extends GetxController with IMCallback {
 
   Future login(String userID, String token) async {
     try {
-      Logger.print(
-          '---------im-login---------- userID: $userID, token: $token');
       var user = await OwlIM.iMManager.login(
         userID: userID,
         token: token,
         defaultValue: () async => UserInfo(userID: userID),
       );
-      userInfo = UserFullInfo.fromJson(user.toJson()).obs;
 
-      Logger.print(
-          "-------------logind------------ user = ${userInfo.toJson()}");
-      _queryMyFullInfo();
+      userInfo.value = UserFullInfo.fromJson(user.toJson());
+      await _queryMyFullInfo();
       _queryAtAllTag();
+
+      return;
     } catch (e, s) {
       Logger.print('e: $e  s:$s');
       await _handleLoginRepeatError(e);
@@ -189,7 +188,7 @@ class IMController extends GetxController with IMCallback {
     atAllTag = OwlIM.iMManager.conversationManager.atAllTag;
   }
 
-  void _queryMyFullInfo() async {
+  Future<void> _queryMyFullInfo() async {
     final data = await Apis.queryMyFullInfo();
     if (data is UserFullInfo) {
       userInfo.update((val) {

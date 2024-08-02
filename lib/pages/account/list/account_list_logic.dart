@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
@@ -22,8 +21,6 @@ class AccountListLogic extends GetxController {
       users?.sort(
           (a, b) => b.createTime!.dateTime.compareTo(a.createTime!.dateTime));
       accounts.value = users ?? [];
-
-      Logger.print("imLogic user: ${imLogic.userInfo.value?.toJson()}");
     } catch (e) {
       Logger.print("AccountListLogic _init error = ${e.toString()}");
     } finally {
@@ -33,6 +30,7 @@ class AccountListLogic extends GetxController {
 
   void onChangeUser(UserFullInfo user) async {
     try {
+      // loading.value = true;
       final wallet = Wallet.loadWalletFromHive(user.address ?? '');
       final nonce = WalletUtil.generateRandomHex(32);
       final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
@@ -50,12 +48,13 @@ class AccountListLogic extends GetxController {
             await imLogic.logout();
           }
           await imLogic.login(data.userID, data.imToken);
+          // Get.forceAppUpdate();
         }
       }
     } catch (e) {
       Logger.print("AccountListLogic onChangeUser error = ${e.toString()}");
     } finally {
-      loading.value = false;
+      // loading.value = false;
     }
   }
 

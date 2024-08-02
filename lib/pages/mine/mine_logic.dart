@@ -81,8 +81,11 @@ class MineLogic extends GetxController {
     super.onInit();
     _worker = ever(im.userInfo, (userInfo) {
       loadedWalletBalance(userInfo);
-      currentWallet.value =
-          Wallet.loadWalletFromHive(userInfo.address ?? '') as Wallet;
+      if (userInfo.address != null) {
+        currentWallet.value =
+            Wallet.loadWalletFromHive(userInfo.address ?? '') as Wallet;
+      }
+      ;
     });
     currentWallet.value =
         Wallet.loadWalletFromHive(im.userInfo.value.address ?? '') ??
