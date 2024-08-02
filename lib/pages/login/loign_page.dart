@@ -106,7 +106,7 @@ class LoginPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.r),
                 color: Styles.c_F9F9F9.adapterDark(Styles.c_121212),
                 border: Border.all(
-                    color: Styles.c_EDEDED.adapterDark("#262626".color))),
+                    color: Styles.c_EDEDED.adapterDark(Styles.c_262626))),
             child: content.toText
               ..textAlign = TextAlign.center
               ..style = Styles.ts_666666_14)

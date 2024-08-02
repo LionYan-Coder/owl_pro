@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
@@ -18,6 +19,13 @@ class SplashLogic extends GetxController {
 
   @override
   void onInit() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Get.context != null) {
+        ImageUtil.preloadAssetImage(Get.context!,
+            ['login_img_logo', 'login_img_logo_dark', 'logo', 'owl']);
+      }
+    });
+
     initializedSub = imLogic.initializedSubject.listen((value) {
       Logger.print('---------------------initialized---------------------');
       if (null != userID && null != token) {

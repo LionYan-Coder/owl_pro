@@ -79,11 +79,11 @@ class _ButtonViewState extends State<Button>
       case ButtonVariants.secondary:
         color = tapDown
             ? Styles.c_EDEDED.adapterDark(Styles.c_F6F6F6)
-            : Styles.c_F6F6F6.adapterDark("#222222".color);
+            : Styles.c_F6F6F6.adapterDark("0xFF222222".toColor);
         break;
       case ButtonVariants.outline:
         color = tapDown
-            ? Styles.c_F9F9F9.adapterDark("#1A1A1A".color)
+            ? Styles.c_F9F9F9.adapterDark("0xFF1A1A1A".toColor)
             : Styles.c_FFFFFF.adapterDark(Styles.c_555555);
         break;
       case ButtonVariants.primary:
@@ -130,7 +130,8 @@ class _ButtonViewState extends State<Button>
         style = Styles.ts_0C8CE9_16_medium;
         break;
       case ButtonVariants.outline:
-        style = Styles.ts_CCCCCC_16_medium;
+        style =
+            Styles.ts_333333_16_medium.adapterDark(Styles.ts_CCCCCC_16_medium);
         break;
       default:
         style = Styles.ts_FFFFFF_16_medium;

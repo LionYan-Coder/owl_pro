@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/routes/app_navigator.dart';
-import 'package:owlpro_app/routes/app_routes.dart';
 
 class AccountBaseInfo extends StatelessWidget {
   AccountBaseInfo({super.key});
@@ -60,15 +59,15 @@ class AccountBaseInfo extends StatelessWidget {
             ),
             Column(
               children: [
-                GestureDetector(
-                    onTap: () {
-                      // AppNavigator.startUserQRCode();
-                    },
-                    child: UserAvatar(
-                      radius: 32.w,
-                      avatar: currentUser.value?.faceURL,
-                      nickname: currentUser.value?.nickname ?? '',
-                    )),
+                AvatarView(
+                  radius: 32.w,
+                  onTap: () {
+                    AppNavigator.startAccountInfo();
+                  },
+                  tag: currentUser.value.nickname ?? 'avatar',
+                  url: currentUser.value.faceURL ?? '',
+                  text: currentUser.value.nickname ?? '',
+                ),
                 26.gapv,
                 GestureDetector(
                     onTap: () {

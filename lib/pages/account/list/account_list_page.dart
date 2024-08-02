@@ -107,11 +107,13 @@ class AccountCard extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      UserAvatar(
+                      AvatarView(
                         radius: 12.w,
-                        avatar: user.faceURL ?? '',
-                        nickname: user.nickname ?? '',
-                        fontSize: 10.sp,
+                        url: user.faceURL ?? '',
+                        text: user.nickname ?? '',
+                        textStyle: TextStyle(
+                          fontSize: 10.sp,
+                        ),
                       ),
                       8.gaph,
                       AnimatedDefaultTextStyle(

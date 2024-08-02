@@ -168,4 +168,10 @@ class ImageUtil {
     final maxH = .6.sh;
     return (height == null ? maxH : (height < maxH ? height : maxH)).toInt();
   }
+
+  static Future<void> preloadAssetImage(
+      BuildContext context, List<String> images) async {
+    await Future.wait(images.map((img) =>
+        precacheImage(AssetImage(img.png, package: _package), context)));
+  }
 }

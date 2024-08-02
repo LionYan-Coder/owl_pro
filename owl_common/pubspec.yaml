@@ -30,7 +30,7 @@ dependencies:
   get: ^4.6.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  image_cropper: ^7.1.0
+  image_cropper: ^8.0.1
   image_gallery_saver: ^2.0.3
   image_picker: ^1.1.2
   just_audio: ^0.9.37

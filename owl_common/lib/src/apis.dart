@@ -79,17 +79,10 @@ class Apis {
   static Future<dynamic> updateUserInfo({
     required String userID,
     String? account,
-    String? phoneNumber,
-    String? areaCode,
-    String? email,
     String? nickname,
     String? faceURL,
-    int? gender,
-    int? birth,
-    int? level,
-    int? allowAddFriend,
-    int? allowBeep,
-    int? allowVibration,
+    String? coverURL,
+    String? about,
   }) async {
     Map<String, dynamic> param = {'userID': userID};
     void put(String key, dynamic value) {
@@ -99,18 +92,10 @@ class Apis {
     }
 
     put('account', account);
-    put('phoneNumber', phoneNumber);
-    put('areaCode', areaCode);
-    put('email', email);
     put('nickname', nickname);
     put('faceURL', faceURL);
-    put('gender', gender);
-    put('gender', gender);
-    put('level', level);
-    put('birth', birth);
-    put('allowAddFriend', allowAddFriend);
-    put('allowBeep', allowBeep);
-    put('allowVibration', allowVibration);
+    put('coverURL', coverURL ?? '');
+    put('about', about ?? '');
 
     return HttpUtil.post(
       Urls.updateUserInfo,

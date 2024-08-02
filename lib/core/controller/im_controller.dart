@@ -52,6 +52,9 @@ class IMController extends GetxController with IMCallback {
             val?.nickname = u.nickname;
             val?.faceURL = u.faceURL;
             val?.remark = u.remark;
+            val?.about = u.about;
+            val?.account = u.account;
+            val?.coverURL = u.coverURL;
             val?.ex = u.ex;
             val?.globalRecvMsgOpt = u.globalRecvMsgOpt;
           });
@@ -200,10 +203,6 @@ class IMController extends GetxController with IMCallback {
         val?.coverURL = data.coverURL;
         val?.publicKey = data.publicKey;
         val?.account = data.account;
-        // val?.phoneNumber = data.phoneNumber;
-        // val?.email = data.email;
-        // val?.birth = data.birth;
-        // val?.gender = data.gender;
       });
     }
   }

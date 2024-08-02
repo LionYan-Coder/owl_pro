@@ -12,13 +12,15 @@ class AvatarView extends StatelessWidget {
     super.key,
     this.width,
     this.height,
+    this.radius,
     this.onTap,
     this.url,
     this.builder,
     this.text,
+    this.tag,
     this.textStyle,
     this.onLongPress,
-    this.isCircle = false,
+    this.isCircle = true,
     this.borderRadius,
     this.enabledPreview = false,
     this.lowMemory = false,
@@ -28,6 +30,8 @@ class AvatarView extends StatelessWidget {
   });
   final double? width;
   final double? height;
+  final double? radius;
+  final String? tag;
   final Function()? onTap;
   final Function()? onLongPress;
   final String? url;
@@ -42,25 +46,32 @@ class AvatarView extends StatelessWidget {
   final bool isGroup;
   final bool showDefaultAvatar;
 
-  double get _avatarSize => min(width ?? 44.w, height ?? 44.h);
+  double get _avatarSize => radius != null
+      ? (radius! * 2)
+      : min(
+          width ?? 44.w,
+          height ?? 44.h,
+        );
 
   TextStyle get _textStyle => textStyle ?? Styles.ts_FFFFFF_16;
 
-  Color get _textAvatarBgColor => Styles.c_0C8CE9;
+  Color get _textAvatarBgColor => isHexValid ? url!.toColor : Styles.c_0C8CE9;
 
   String? get _showName {
     if (isGroup) return null;
     if (text != null && text!.trim().isNotEmpty) {
-      return text!.substring(0, 1);
+      return text!.substring(0, 2);
     }
     return null;
   }
 
   bool get isUrlValid => IMUtils.isUrlValid(url);
 
+  bool get isHexValid => RegExp(r'^0x[0-9A-Fa-f]{8}$').hasMatch(url ?? '');
+
   @override
   Widget build(BuildContext context) {
-    var tag = const Uuid().v4();
+    var rTag = const Uuid().v4();
     var child = GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap ??
@@ -72,7 +83,7 @@ class AvatarView extends StatelessWidget {
           (nineGridUrl.isNotEmpty ? _nineGridAvatar() : _normalAvatar()),
     );
     return Hero(
-      tag: tag,
+      tag: tag ?? rTag,
       child: isCircle
           ? ClipOval(child: child)
           : ClipRRect(

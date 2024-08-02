@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:web3dart/crypto.dart';
@@ -84,7 +85,10 @@ class LoginLogic extends GetxController {
 
       await DataSp.addAccounts(data.userID);
       await DataSp.putLoginCertificate(data);
-      await imLogic.logout();
+      if (OwlIM.iMManager.isLogined) {
+        await imLogic.logout();
+      }
+
       await imLogic.login(data.userID, data.imToken);
       AppNavigator.startMain();
     } catch (e) {
@@ -110,7 +114,9 @@ class LoginLogic extends GetxController {
         await restoreWallet.saveWalletToHive();
         await DataSp.addAccounts(data.userID);
         await DataSp.putLoginCertificate(data);
-        await imLogic.logout();
+        if (OwlIM.iMManager.isLogined) {
+          await imLogic.logout();
+        }
         await imLogic.login(data.userID, data.imToken);
         AppNavigator.startMain();
       } else {

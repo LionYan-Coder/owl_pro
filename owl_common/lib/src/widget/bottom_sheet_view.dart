@@ -92,14 +92,14 @@ class BottomSheetView extends StatelessWidget {
   }) =>
       Ink(
         decoration: BoxDecoration(
-          color: Styles.c_FFFFFF,
+          color: Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
           borderRadius: borderRadius,
         ),
         child: InkWell(
           onTap: onTap,
           child: Container(
             decoration: line
-                ? BoxDecoration(
+                ? const BoxDecoration(
                     border: BorderDirectional(
                       bottom: BorderSide(color: Styles.c_EDEDED, width: 0.5),
                     ),
@@ -120,8 +120,10 @@ class BottomSheetView extends StatelessWidget {
         ),
       );
 
-  _text(String label, TextStyle? style) =>
-      label.toText..style = (style ?? textStyle ?? Styles.ts_333333_18);
+  _text(String label, TextStyle? style) => label.toText
+    ..style = (style ??
+        textStyle ??
+        Styles.ts_333333_18.adapterDark(Styles.ts_CCCCCC_18));
 
   _image(String icon) => icon.toImage
     ..width = 24.w

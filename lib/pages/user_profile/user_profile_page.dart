@@ -40,12 +40,12 @@ class UserProfilePage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 40.w, bottom: 12.w),
                       child: Column(
                         children: [
-                          Hero(
-                              tag: user.account ?? 'avatar',
-                              child: UserAvatar(
-                                  avatar: user.faceURL,
-                                  radius: 36.r,
-                                  nickname: user.nickname ?? '')),
+                          AvatarView(
+                            radius: 32.w,
+                            tag: user.nickname ?? 'avatar',
+                            url: user.faceURL ?? '',
+                            text: user.nickname ?? '',
+                          ),
                           12.gapv,
                           (user.nickname ?? '').toText
                             ..style = Styles.ts_333333_18_medium

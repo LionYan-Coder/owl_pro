@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_common/src/models/google_time.dart';
 
@@ -69,7 +68,7 @@ class UserFullInfo {
     faceURL = json['faceURL'];
     account = json['account'];
     publicKey = json['publicKey'];
-    about = json['remark'];
+    about = json['about'];
     coverURL = json['coverURL'];
     address = json['address'];
     createTime = c_time;

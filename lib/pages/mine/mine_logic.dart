@@ -66,8 +66,7 @@ class MineLogic extends GetxController {
 
         if (DateTime.now().difference(lastChecked).inMilliseconds >=
             verifyPwdGapTime.value) {
-          final valid = await AuthDialog.showVerifyPasswordDialog(
-              password: currentPassword);
+          final valid = await AuthDialog.showVerifyPasswordDialog();
 
           if (valid) {
             saveLastVerifyPwdTime();
@@ -82,10 +81,15 @@ class MineLogic extends GetxController {
     super.onInit();
     _worker = ever(im.userInfo, (userInfo) {
       loadedWalletBalance(userInfo);
+      currentWallet.value =
+          Wallet.loadWalletFromHive(userInfo.address ?? '') as Wallet;
     });
-
+    currentWallet.value =
+        Wallet.loadWalletFromHive(im.userInfo.value.address ?? '') ??
+            Wallet(address: '', privKey: '', mnemonic: '');
     loadedWalletBalance(im.userInfo.value);
-    verifyPwdGapTime.value = DataSp.verifyPwdGap ?? const Duration(days: 1).inMilliseconds;
+    verifyPwdGapTime.value =
+        DataSp.verifyPwdGap ?? const Duration(days: 1).inMilliseconds;
     Logger.print("verifyPwdGapTime : ${verifyPwdGapTime.value}");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkPassword();

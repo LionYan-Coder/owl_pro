@@ -56,7 +56,7 @@ dependencies:
   open_filex: ^4.4.0
   mobile_scanner: ^4.0.1
   scan: ^1.6.0
-  image_cropper: ^7.1.0
+  image_cropper: ^8.0.1
   package_info_plus: ^4.2.0
   flutter_app_badger: ^1.5.0
   flutter_local_notifications: ^17.2.1+2
@@ -108,6 +108,7 @@ dependencies:
   pretty_qr_code: ^3.3.0
   screenshot: ^3.0.0
   share_plus: ^10.0.0
+  cached_network_image: ^3.4.0
 
 dev_dependencies:
   flutter_test:

@@ -86,12 +86,11 @@ class AddBySearchPage extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 14, vertical: 24).w,
               child: Row(
                 children: [
-                  Hero(
+                  AvatarView(
+                    radius: 20.w,
                     tag: user?.account ?? 'avatar',
-                    child: UserAvatar(
-                        avatar: user?.faceURL ?? '',
-                        radius: 20.w,
-                        nickname: user?.nickname ?? ''),
+                    url: user?.faceURL ?? '',
+                    text: user?.nickname ?? '',
                   ),
                   8.gaph,
                   Column(

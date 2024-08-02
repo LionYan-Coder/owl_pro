@@ -112,10 +112,12 @@ class UserQrcodePage extends StatelessWidget {
                 letterSpacing: 5.w),
           "sign_guide_desc".tr.toText..style = Styles.ts_999999_10,
           16.gapv,
-          UserAvatar(
-              avatar: logic.user.value?.faceURL,
-              radius: 32.w,
-              nickname: logic.user.value?.nickname ?? ''),
+          AvatarView(
+            radius: 32.w,
+            tag: logic.user.value.nickname ?? 'avatar',
+            url: logic.user.value.faceURL ?? '',
+            text: logic.user.value.nickname ?? '',
+          ),
           8.gapv,
           (logic.user.value?.nickname ?? '').toText
             ..style = Styles.ts_333333_20_medium,

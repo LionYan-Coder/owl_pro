@@ -88,12 +88,16 @@ class Wallet {
     SpUtil().putString(address, encstr);
   }
 
-  static Wallet loadWalletFromHive(
+  static Wallet? loadWalletFromHive(
     String address,
   ) {
-    String encstr = SpUtil().getString(address) ?? '';
-    String decstr = EncryptionHelper.decrypt64(encstr);
-    return Wallet.fromJson(jsonDecode(decstr));
+    if (address.isNotEmpty) {
+      String encstr = SpUtil().getString(address) ?? '';
+      String decstr = EncryptionHelper.decrypt64(encstr);
+      return Wallet.fromJson(jsonDecode(decstr));
+    }
+
+    return null;
   }
 
   static Future<void> deleteWallet(

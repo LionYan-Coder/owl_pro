@@ -124,7 +124,7 @@ const Map<String, String> ko_KR = {
   "identity_edit_about_label": "个人签名",
   "identity_edit_about_hint": "添加一些关于你的介绍",
   "identity_edit_account_label": "OW ID",
-  "identity_edit_account_hint": "4-16个字符，仅支持英文，",
+  "identity_edit_account_hint": "4-16个字符，仅支持数字与英文，",
   "identity_edit_account_warning": "每3天仅可修改一次，",
   "identity_edit_sheet_action_camera": "拍照",
   "identity_edit_sheet_action_gallery": "从相册选取",

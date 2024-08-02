@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Config {
   static late String cachePath;
@@ -19,7 +20,7 @@ class Config {
   static const friendScheme = "com.owlpro.app/addFriend/";
   static const groupScheme = "com.owlpro.app/joinGroup/";
 
-  static const _host = "127.0.0.1";
+  static const _host = "16.162.220.76";
 
   static const _ipRegex =
       '((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)';
@@ -91,5 +92,9 @@ class Config {
     } catch (_) {}
 
     runApp();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 }

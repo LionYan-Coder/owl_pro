@@ -91,10 +91,10 @@ class AuthDialog {
   }
 
   static Future<bool> showVerifyPasswordDialog({
-    required String password,
     bool close = false,
   }) async {
     final formKey = GlobalKey<FormBuilderState>();
+    final password = DataSp.devicePassword;
 
     void submit() {
       var valid = formKey.currentState?.saveAndValidate(focusOnInvalid: false);
@@ -150,8 +150,6 @@ class AuthDialog {
                             FormBuilderValidators.minLength(6,
                                 errorText: "sign_dialog_password_error".tr),
                             (val) {
-                              Logger.print(
-                                  "passwprd $password ${EncryptionHelper.decrypt64(password)} $val");
                               if (val != null &&
                                   val.isNotEmpty &&
                                   EncryptionHelper.encrypted64(val) !=

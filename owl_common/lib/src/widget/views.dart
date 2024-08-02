@@ -182,27 +182,23 @@ class IMViews {
       dynamic result;
       if (null != cropFile) {
         Logger.print('-----------crop path: ${cropFile.path}');
-        result = await LoadingView.singleton.wrap(asyncFunction: () async {
-          final image =
-              await IMUtils.compressImageAndGetFile(File(cropFile!.path));
+        final image =
+            await IMUtils.compressImageAndGetFile(File(cropFile!.path));
 
-          return OwlIM.iMManager.uploadFile(
-            id: putID,
-            filePath: image!.path,
-            fileName: image.path.split('/').last,
-          );
-        });
+        result = await OwlIM.iMManager.uploadFile(
+          id: putID,
+          filePath: image!.path,
+          fileName: image.path.split('/').last,
+        );
       } else {
         Logger.print('-----------source path: $path');
-        result = await LoadingView.singleton.wrap(asyncFunction: () async {
-          final image = await IMUtils.compressImageAndGetFile(File(path));
+        final image = await IMUtils.compressImageAndGetFile(File(path));
 
-          return OwlIM.iMManager.uploadFile(
-            id: putID,
-            filePath: image!.path,
-            fileName: image.path,
-          );
-        });
+        result = await OwlIM.iMManager.uploadFile(
+          id: putID,
+          filePath: image!.path,
+          fileName: image.path,
+        );
       }
       if (result is String) {
         url = jsonDecode(result)['url'];

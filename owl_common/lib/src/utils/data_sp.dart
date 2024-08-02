@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:sprintf/sprintf.dart';
@@ -89,10 +88,8 @@ class DataSp {
   }
 
   static int? getVerifyGapPwdTime() {
-    return SpUtil().getInt(
-      _verifyPwdGap,
-      defValue: const Duration(days: 1).inMilliseconds
-    );
+    return SpUtil().getInt(_verifyPwdGap,
+        defValue: const Duration(days: 1).inMilliseconds);
   }
 
   static Future<bool>? putVerifyGapPwdTime(int time) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:owl_common/owl_common.dart';
 
 bool isValidHexColor(String hexColor) {
   final RegExp regex = RegExp(r'^0x[0-9A-Fa-f]{8}$');
@@ -23,11 +22,10 @@ class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isHexColor = isValidHexColor(avatar ?? '');
-    final avatatURL = isHexColor ? avatar : '${Config.appAuthUrl}/$avatar';
     final backgroundColor =
         isHexColor ? Color(int.parse(avatar!.substring(2), radix: 16)) : null;
 
-    final foregroundImage = !isHexColor ? NetworkImage(avatatURL ?? '') : null;
+    final foregroundImage = !isHexColor ? NetworkImage(avatar ?? '') : null;
     return CircleAvatar(
       radius: radius,
       backgroundColor: backgroundColor,

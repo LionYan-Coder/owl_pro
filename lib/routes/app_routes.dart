@@ -10,7 +10,7 @@ abstract class AppRoutes {
   static const userQRcode = '/user/qrcode';
   static const accountInfo = '/account';
   static const accountList = '/account/list';
-  static const accountInfoEdit = '/account/edit';
+  static const accountInfoEdit = '/account/:userID';
 
   static const setting = '/setting';
   static const settingLanguage = '/setting/language';
