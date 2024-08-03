@@ -43,12 +43,13 @@ class AccountPage extends StatelessWidget {
             Obx(() => userInfo()),
             Obx(() => walletInfo()),
             36.gapv,
-            Padding(
+            Obx(() => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 64).w,
                 child: "identity_del_button".tr.toButton
+                  ..loading = logic.loading.value
                   ..onPressed = logic.delAccount
                   ..variants = ButtonVariants.outline
-                  ..textStyle = Styles.ts_DE473E_16_medium)
+                  ..textStyle = Styles.ts_DE473E_16_medium))
           ],
         ),
       ),

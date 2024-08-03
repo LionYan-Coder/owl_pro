@@ -92,7 +92,7 @@ class TradeDetailPage extends StatelessWidget {
             ..style =
                 Styles.ts_333333_28_bold.adapterDark(Styles.ts_CCCCCC_28_bold),
           8.gapv,
-          logic.token.value.name.toUpperCase.toString().toText
+          logic.token.value.name.toUpperCase().toString().toText
             ..style = Styles.ts_999999_14
         ],
       ),
@@ -117,7 +117,7 @@ class TradeDetailPage extends StatelessWidget {
           24.gapv,
           label("asset_trade_detail_receipt"),
           AddressCopy(
-            address: logic.tokenTransaction.value!.to.toOc,
+            address: logic.tokenTransaction.value!.to.delPad.toOc,
             width: 243.w,
           ),
         ],

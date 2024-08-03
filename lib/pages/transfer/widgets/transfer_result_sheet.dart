@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/transfer/transfer_logic.dart';
+import 'package:owlpro_app/routes/app_navigator.dart';
 
 class TransferResultSheet extends StatelessWidget {
   TransferResultSheet({super.key});
@@ -14,11 +15,11 @@ class TransferResultSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final isSuccessful = logic.txHash.value.isNotEmpty;
+      final isSuccessful = logic.resultMsg.value.isEmpty;
       var title = "send_coin_transfer_sending_title";
       if (logic.loading.value) {
         title = "send_coin_transfer_sending_title";
-      } else if (logic.txHash.value.isEmpty) {
+      } else if (!isSuccessful) {
         title = "send_coin_transfer_error_title";
       } else if (isSuccessful) {
         title = "send_coin_transfer_successful_title";
@@ -92,12 +93,15 @@ class TransferResultSheet extends StatelessWidget {
                     "send_coin_transfer_button".tr.toButton
                       ..onPressed = () => (Get.back()),
                     Visibility(
-                      visible: logic.txHash.isNotEmpty,
+                      visible: logic.resultMsg.isEmpty,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24).w,
                         child: TextButton(
                             onPressed: () {
                               Get.back();
+                              AppNavigator.startTradeDetail(
+                                  token: logic.tokenType.value,
+                                  txHash: logic.txHash.value);
                               // Get.toNamed(AppRouter.assetTradeDetailName,
                               //     extra: coinType,
                               //     pathParameters: {

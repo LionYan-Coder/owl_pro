@@ -14,17 +14,18 @@ class TradeDetailLogic extends GetxController {
   Future<void> _fetchTxInfo() async {
     try {
       loading.value = true;
+      final response = await Web3Util.getTx(txHash: txHash.value);
+      if (response.code == 0 && response.result != null) {
+        final txDataJson = response.result;
+        tokenTransaction.value = TokenTransaction.fromJson(txDataJson);
+      } else {
+        tokenTransaction.value = null;
+      }
     } catch (e) {
       Logger.print("TradeDetailLogic_fetchTxInfo error = ${e.toString()}");
     } finally {
       loading.value = false;
     }
-    final response = await Web3Util.getTx(txHash: txHash.value);
-    if (response.code == 0 && response.result != null) {
-      final txDataJson = response.result;
-      tokenTransaction.value = TokenTransaction.fromJson(txDataJson);
-    }
-    tokenTransaction.value = null;
   }
 
   Future<void> _fetchTxs() async {
@@ -44,8 +45,9 @@ class TradeDetailLogic extends GetxController {
         tokenTransaction.update((val) {
           val?.gasPrice = tx2.gasPrice;
         });
+      } else {
+        tokenTransaction.value = null;
       }
-      tokenTransaction.value = null;
     } catch (e) {
       Logger.print("TradeDetailLogic__fetchTxs error = ${e.toString()}");
     } finally {
@@ -68,8 +70,11 @@ class TradeDetailLogic extends GetxController {
 
   @override
   void onInit() {
-    token = Rx<TokenType>(Get.arguments);
-    txHash.value = Get.parameters['txHash'] ?? '';
+    token = Rx<TokenType>(
+        Get.arguments['token'].toString().toLowerCase() == 'owl'
+            ? TokenType.owl
+            : TokenType.olink);
+    txHash.value = Get.arguments['txHash'] ?? '';
     super.onInit();
   }
 }

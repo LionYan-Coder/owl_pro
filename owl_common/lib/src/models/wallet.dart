@@ -101,10 +101,9 @@ class Wallet {
   }
 
   static Future<void> deleteWallet(
-    Box box,
     String address,
   ) async {
-    await box.delete(address);
+    await SpUtil().remove(address);
   }
 
   String get publicKey => bytesToHex(

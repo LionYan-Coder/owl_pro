@@ -13,4 +13,10 @@ class AssetTokenLogic extends GetxController {
         curve: Curves.fastOutSlowIn);
     currentTab.value = index;
   }
+
+  @override
+  void onInit() {
+    pageController = PageController(initialPage: currentTab.value);
+    super.onInit();
+  }
 }

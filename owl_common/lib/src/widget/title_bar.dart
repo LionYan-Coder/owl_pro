@@ -37,7 +37,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
             if (null != center) center!,
             Container(
               height: height,
-              padding: EdgeInsets.only(left: 24.w),
+              padding: EdgeInsets.only(left: 18.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -74,23 +74,25 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
           ..style = titleStyle ??
               Styles.ts_333333_18_medium.adapterDark(Styles.ts_CCCCCC_18_medium)
           ..textAlign = TextAlign.center,
-        left = GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: onTap ?? (() => Get.back(result: result)),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              "nvbar_ico_back".svg.toSvg
-                ..width = 24.w
-                ..height = 24.h
-                ..color = backIconColor ??
-                    Styles.c_333333.adapterDark(Styles.c_CCCCCC),
-              if (null != leftTitle)
-                leftTitle.toText
-                  ..style = (leftTitleStyle ??
-                      Styles.ts_333333_16_medium
-                          .adapterDark(Styles.ts_CCCCCC_16_medium)),
-            ],
-          ),
-        );
+        left = Visibility(
+            visible: Get.previousRoute != null && Get.previousRoute.isNotEmpty,
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: onTap ?? (() => Get.back(result: result)),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  "nvbar_ico_back".svg.toSvg
+                    ..width = 24.w
+                    ..height = 24.h
+                    ..color = backIconColor ??
+                        Styles.c_333333.adapterDark(Styles.c_CCCCCC),
+                  if (null != leftTitle)
+                    leftTitle.toText
+                      ..style = (leftTitleStyle ??
+                          Styles.ts_333333_16_medium
+                              .adapterDark(Styles.ts_CCCCCC_16_medium)),
+                ],
+              ),
+            ));
 }

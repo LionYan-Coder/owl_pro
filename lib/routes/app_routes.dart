@@ -22,7 +22,7 @@ abstract class AppRoutes {
   static const notify = '/norify';
 
   static const transfer = '/transfer';
-  static const tradeDetail = '/trade/:txHash';
+  static const tradeDetail = '/trade/detail';
   static const tradeList = '/trade/list';
   static const assetToken = '/asset/token';
   static const receipt = '/receipt';

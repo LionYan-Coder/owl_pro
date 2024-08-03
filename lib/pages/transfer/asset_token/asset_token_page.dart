@@ -11,6 +11,8 @@ import 'package:owlpro_app/routes/app_navigator.dart';
 
 final tabs = ["asset_tab_token", "asset_tab_nft"];
 
+final tokens = ['open link', 'owl pro'];
+
 class AssetTokenPage extends StatelessWidget {
   AssetTokenPage({super.key});
 
@@ -24,7 +26,7 @@ class AssetTokenPage extends StatelessWidget {
       appBar: TitleBar.back(
         title: "asset_title".tr,
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24).w,
         child: Obx(() => Column(
               mainAxisSize: MainAxisSize.min,
@@ -83,7 +85,7 @@ class AssetTokenPage extends StatelessWidget {
                       height: 48.w,
                       color: Styles.c_EDEDED.adapterDark(Styles.c_FFFFFF),
                       child: Center(
-                          child: "item.name.png".toImage
+                          child: item.name.png.toImage
                             ..width = 32.w
                             ..fit = BoxFit.cover),
                     ),
@@ -101,9 +103,8 @@ class AssetTokenPage extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Styles.c_0C8CE9.withOpacity(0.05),
                               borderRadius: BorderRadius.circular(4.r)),
-                          child: tabs[TokenType.values.indexOf(item)]
-                              .toUpperCase
-                              .toString()
+                          child: (tokens[TokenType.values.indexOf(item)])
+                              .toUpperCase()
                               .toText
                             ..style = Styles.ts_0C8CE9_10),
                     ],

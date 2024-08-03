@@ -43,8 +43,9 @@ class TradeListLogic extends GetxController {
             .map((item) => TokenTransaction.fromJson(item))
             .toList();
         tradeList.value = list;
+      } else {
+        tradeList.value = [];
       }
-      tradeList.value = [];
     } catch (e) {
       Logger.print("TradeListLogic_fetchTx error = ${e.toString()}");
     } finally {

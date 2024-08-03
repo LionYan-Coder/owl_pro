@@ -78,23 +78,25 @@ class TradeListPage extends StatelessWidget {
                     onChanged: (index) => logic.onChangeTab(index)),
               ),
               Expanded(
-                child: PageView.builder(
-                  onPageChanged: (index) {
-                    logic.currentTab.value = index;
-                  },
-                  controller: logic.pageController,
-                  itemCount: tabs.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12)
-                            .w,
-                    child: ListView.builder(
-                        itemCount: logic.filterList.length,
-                        itemBuilder: (context, index) {
-                          return _buildItemView(logic.filterList[index]);
-                        }),
-                  ),
-                ),
+                child: logic.loading.value
+                    ? const Center(child: CircularProgressIndicator.adaptive())
+                    : PageView.builder(
+                        onPageChanged: (index) {
+                          logic.currentTab.value = index;
+                        },
+                        controller: logic.pageController,
+                        itemCount: tabs.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 12)
+                              .w,
+                          child: ListView.builder(
+                              itemCount: logic.filterList.length,
+                              itemBuilder: (context, index) {
+                                return _buildItemView(logic.filterList[index]);
+                              }),
+                        ),
+                      ),
               )
             ],
           ),
@@ -137,7 +139,7 @@ class TradeListPage extends StatelessWidget {
                         .tr
                         .toText
                       ..style =
-                          isSend ? Styles.ts_DE473E_14 : Styles.ts_0C8CE9_14),
+                          isSend ? Styles.ts_DE473E_12 : Styles.ts_0C8CE9_12),
                 4.gaph,
                 Container(
                   width: 120.w,
@@ -159,7 +161,8 @@ class TradeListPage extends StatelessWidget {
                         ((isSend ? '-' : '+') + amount.hextobigInt.toWei.fixed4)
                             .toText
                           ..style = Styles.ts_333333_16_bold
-                              .adapterDark(Styles.ts_CCCCCC_16_bold))
+                              .adapterDark(Styles.ts_CCCCCC_16_bold)
+                          ..textAlign = TextAlign.right)
               ],
             ),
             Padding(

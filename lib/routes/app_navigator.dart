@@ -93,15 +93,13 @@ class AppNavigator {
           {required TokenType token, required String txHash}) =>
       Get.toNamed(
         AppRoutes.tradeDetail,
-        arguments: token,
-        parameters: {"txHash": txHash},
+        arguments: {"txHash": txHash, "token": token.name},
       );
 
   static void startTradeList({required TokenType token}) => Get.toNamed(
         AppRoutes.tradeList,
         arguments: token,
       );
-
 
   static void startReceipt() => Get.toNamed(
         AppRoutes.receipt,

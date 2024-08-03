@@ -85,13 +85,17 @@ class TransferLogic extends GetxController {
     }
   }
 
-  void _showTransferSheet({required String address, required String amount}) {
-    Get.bottomSheet(
+  void _showTransferSheet(
+      {required String address, required String amount}) async {
+    await Get.bottomSheet(
       TransferResultSheet(),
       elevation: 10,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
       backgroundColor: Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
     );
+
+    txHash.value = '';
+    resultMsg.value = '';
   }
 
   void showSelectTokenSheet() {
