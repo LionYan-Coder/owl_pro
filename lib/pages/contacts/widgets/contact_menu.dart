@@ -2,49 +2,64 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owlpro_app/pages/contacts/contact_logic.dart';
 
 class ContactMenus extends StatelessWidget {
-  const ContactMenus({super.key});
+  ContactMenus({super.key});
+
+  final contactLogic = Get.find<ContactLogic>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _panelButton(
-            context: context,
-            icon: "chat_ico_newfriend".svg.toSvg
-              ..width = 16.w
-              ..fit = BoxFit.cover
-              ..color = Styles.c_0C8CE9,
-            text: "contact_panel_new_friend".tr,
-            onTap: () {
-              // context.push(AppRouter.contactNewFriend);
-            }),
-        _panelButton(
-            context: context,
-            icon: "chat_ico_inform".svg.toSvg
-              ..width = 16.w
-              ..fit = BoxFit.cover
-              ..color = Styles.c_0C8CE9,
-            text: "contact_panel_inform".tr,
-            extra: redDot(context, count: 6)),
-        _panelButton(
-          context: context,
-          icon: "chat_ico_block".svg.toSvg
-            ..width = 16.w
-            ..fit = BoxFit.cover
-            ..color = Styles.c_DE473E,
-          text: "contact_panel_block".tr,
-        ),
-        _panelButton(
-          context: context,
-          icon: "chat_ico_group".svg.toSvg
-            ..width = 16.w
-            ..fit = BoxFit.cover
-            ..color = Styles.c_1ED386,
-          text: "contact_panel_group".tr,
-        )
-      ],
+    return Padding(
+      padding:
+          const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 18).w,
+      child: Column(
+        children: [
+          _panelButton(
+              context: context,
+              icon: "chat_ico_newfriend".svg.toSvg
+                ..width = 16.w
+                ..fit = BoxFit.cover
+                ..color = Styles.c_0C8CE9,
+              text: "contact_panel_new_friend".tr,
+              onTap: () {
+                contactLogic.newFriend();
+                // context.push(AppRouter.contactNewFriend);
+              }),
+          _panelButton(
+              context: context,
+              icon: "chat_ico_inform".svg.toSvg
+                ..width = 16.w
+                ..fit = BoxFit.cover
+                ..color = Styles.c_0C8CE9,
+              text: "contact_panel_inform".tr,
+              extra: redDot(context, count: 6),
+              onTap: () {
+                contactLogic.myGroup();
+              }),
+          _panelButton(
+              context: context,
+              icon: "chat_ico_block".svg.toSvg
+                ..width = 16.w
+                ..fit = BoxFit.cover
+                ..color = Styles.c_DE473E,
+              text: "contact_panel_block".tr,
+              onTap: () {
+                contactLogic.myBlack();
+              }),
+          _panelButton(
+              context: context,
+              icon: "chat_ico_group".svg.toSvg
+                ..width = 16.w
+                ..fit = BoxFit.cover
+                ..color = Styles.c_1ED386,
+              text: "contact_panel_group".tr,
+              onTap: () {
+                contactLogic.myGroup();
+              })
+        ],
+      ),
     );
   }
 

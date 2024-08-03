@@ -13,16 +13,10 @@ class UserProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: TitleBar.back(
-        title: "user_search_result_title".tr,
-        backgroundColor: Styles.c_0C8CE9
-            .withOpacity(0.1)
-            .adapterDark(Styles.c_0C8CE9.withOpacity(0.2)),
-      ),
-      body: Obx(() {
-        final user = logic.userInfo.value;
-        return SingleChildScrollView(
+    return Obx(() {
+      final user = logic.userInfo;
+      return Scaffold(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -36,18 +30,22 @@ class UserProfilePage extends StatelessWidget {
                         bottomRight: Radius.circular(12.r))),
                 child: Column(
                   children: [
+                    TitleBar.back(
+                      title: "user_search_result_title".tr,
+                      backgroundColor: Colors.transparent,
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 40.w, bottom: 12.w),
                       child: Column(
                         children: [
                           AvatarView(
                             radius: 32.w,
-                            tag: user.nickname ?? 'avatar',
-                            url: user.faceURL ?? '',
-                            text: user.nickname ?? '',
+                            tag: user.value.nickname ?? 'avatar',
+                            url: user.value.faceURL ?? '',
+                            text: user.value.nickname ?? '',
                           ),
                           12.gapv,
-                          (user.nickname ?? '').toText
+                          (user.value.nickname ?? '').toText
                             ..style = Styles.ts_333333_18_medium
                                 .adapterDark(Styles.ts_CCCCCC_18_medium),
                           12.gapv,
@@ -90,7 +88,7 @@ class UserProfilePage extends StatelessWidget {
                         "identity_Id".tr.toText
                           ..style = Styles.ts_333333_16
                               .adapterDark(Styles.ts_CCCCCC_16),
-                        (user.account ?? '').at.toText
+                        (user.value.account ?? '').at.toText
                           ..style = Styles.ts_666666_16
                               .adapterDark(Styles.ts_999999_16)
                       ],
@@ -103,7 +101,7 @@ class UserProfilePage extends StatelessWidget {
                         "identity_address".tr.toText
                           ..style = Styles.ts_333333_16
                               .adapterDark(Styles.ts_CCCCCC_16),
-                        AddressCopy(address: user.address ?? '')
+                        AddressCopy(address: user.value.address ?? '')
                       ],
                     ),
                     32.gapv,
@@ -116,8 +114,9 @@ class UserProfilePage extends StatelessWidget {
                           ..adpaterDark = true,
                         3.gaph,
                         Expanded(
-                            child: (user.about != null && user.about!.isNotEmpty
-                                    ? user.about
+                            child: (user.value.about != null &&
+                                        user.value.about!.isNotEmpty
+                                    ? user.value.about
                                     : "identity_about_empty".tr)!
                                 .toText
                               ..maxLines = 2
@@ -131,9 +130,9 @@ class UserProfilePage extends StatelessWidget {
                             EdgeInsets.only(left: 40.w, right: 40.w, top: 64.w),
                         child: "user_search_result_user_button".tr.toButton
                           ..onPressed = () async {
-                            if (!user.isFriendship) {
-                              final valid =
-                                  await Get.dialog(AddFriendDialog(user: user));
+                            if (!user.value.isFriendship) {
+                              final valid = await Get.dialog(
+                                  AddFriendDialog(user: user.value));
 
                               if (valid == true) {
                                 logic.addFriend();
@@ -147,8 +146,8 @@ class UserProfilePage extends StatelessWidget {
               ),
             ],
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }

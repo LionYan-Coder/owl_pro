@@ -109,6 +109,7 @@ dependencies:
   screenshot: ^3.0.0
   share_plus: ^10.0.0
   connectivity_plus: ^6.0.4
+  flutter_slidable: ^3.1.1
 
 dev_dependencies:
   flutter_test:

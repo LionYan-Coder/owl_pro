@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_logic.dart';
+import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AddBySearchPage extends StatelessWidget {
@@ -78,8 +79,9 @@ class AddBySearchPage extends StatelessWidget {
                       color: Styles.c_F6F6F6.adapterDark(Styles.c_161616)))),
           child: InkWell(
             onTap: () {
-              GetTags.createUserProfileTag();
-              Get.toNamed(AppRoutes.userProfile, arguments: user);
+              if (user != null) {
+                AppNavigator.startUserProfile(user);
+              }
             },
             child: Padding(
               padding:

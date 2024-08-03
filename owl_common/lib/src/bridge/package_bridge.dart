@@ -1,3 +1,5 @@
+import 'package:owl_common/owl_common.dart';
+
 class PackageBridge {
   PackageBridge._();
 
@@ -14,7 +16,7 @@ abstract class ScanBridge {
 }
 
 abstract class ViewUserProfileBridge {
-  viewUserProfile(String userID, String? nickname, String? faceURL);
+  viewUserProfile(UserFullInfo user);
 }
 
 abstract class SelectContactsBridge {

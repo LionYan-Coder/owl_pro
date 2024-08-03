@@ -34,6 +34,10 @@ class UserProfileLogic extends GetxController {
         val?.isBlacklist = isBlack;
         val?.isFriendship = isFriendship;
         val?.allowAddFriend = fullInfo.allowAddFriend;
+        val?.account = fullInfo.account;
+        val?.address = fullInfo.address;
+        val?.about = fullInfo.about;
+        val?.coverURL = fullInfo.coverURL;
       });
     }
   }

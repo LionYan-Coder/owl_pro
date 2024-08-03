@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/account/edit/account_edit_logic.dart';
+import 'package:owlpro_app/widgets/dialog.dart';
 
 class AccountEditPage extends StatelessWidget {
   AccountEditPage({super.key});
@@ -19,6 +18,17 @@ class AccountEditPage extends StatelessWidget {
       final userInfo = logic.userInfo.value;
       return Scaffold(
         appBar: TitleBar.back(
+          onTap: () async {
+            if (logic.isChange) {
+              final b = await WillPopDialog.showConfirmDialog();
+              if (!b) {
+                Get.back();
+              }
+              if (b) {
+                logic.submit();
+              }
+            }
+          },
           title: "identity_edit_title".tr,
           right: Row(
             children: [
@@ -51,110 +61,82 @@ class AccountEditPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             padding: const EdgeInsets.all(24).w,
-            child: PopScope(
-              canPop: false,
-              onPopInvoked: (bool didPop) async {
-                // TODO 跳转报错问题检测
-                // var formState = _formKey.currentState;
-                // if (userInfo?.nickname != formState?.getRawValue('nickname') ||
-                //     userInfo?.about != formState?.getRawValue('about') ||
-                //     userInfo?.account != formState?.getRawValue('account') ||
-                //     userInfo?.avatar != avatarUrl.value ||
-                //     userInfo?.coverFile != coverUrl.value) {
-                //   final shouldPop =
-                //       await WillPopDialog(context).showConfirmDialog();
-                //   if (!shouldPop && context.mounted) {
-                //     await _submit(context);
-                //     if (context.mounted) {
-                //       context.pop();
-                //     }
-                //   }
-
-                //   if (shouldPop && context.mounted) {
-                //     context.pop();
-                //   }
-                // } else {
-                //   context.pop();
-                // }
-              },
-              child: Padding(
-                padding:
-                    EdgeInsets.only(bottom: context.mediaQueryPadding.bottom),
-                child: FormBuilder(
-                  key: logic.formKey,
-                  initialValue: {
-                    "nickname": userInfo.nickname,
-                    "about": userInfo.about,
-                    "account": userInfo.account,
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      label("identity_edit_cover_label".tr),
-                      hint("identity_edit_cover_hint".tr),
-                      GestureDetector(
-                        onTap: () {
-                          logic.openPhotoSheet('coverURL');
-                        },
-                        child: userCover(),
-                      ),
-                      24.gapv,
-                      label("identity_edit_avatar_label".tr),
-                      hint("identity_edit_avatar_hint".tr),
-                      AvatarView(
-                        onTap: () {
-                          logic.openPhotoSheet('faceURL');
-                        },
-                        radius: 36.w,
-                        tag: userInfo.nickname ?? 'avatar',
-                        url: logic.avatarUrl.value.isNotEmpty
-                            ? logic.avatarUrl.value
-                            : userInfo.faceURL,
-                        text: userInfo.nickname ?? '',
-                      ),
-                      24.gapv,
-                      label("identity_edit_nickname_label".tr),
-                      hint("identity_edit_nickname_hint".tr),
-                      Input(
-                          name: "nickname",
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                                errorText:
-                                    "identity_edit_nickname_hint".tr), // 必须输入
-                            FormBuilderValidators.minLength(4,
-                                errorText: "identity_edit_nickname_hint".tr),
-                            FormBuilderValidators.maxLength(16,
-                                errorText: "identity_edit_nickname_hint".tr),
-                          ])),
-                      24.gapv,
-                      label("identity_edit_about_label".tr),
-                      hint("identity_edit_about_hint".tr),
-                      const Input(
-                        name: "about",
-                        maxLines: 4,
-                      ),
-                      24.gapv,
-                      label("identity_edit_account_label".tr),
-                      hint("identity_edit_account_hint".tr,
-                          warning: "identity_edit_account_warning".tr),
-                      Input(
-                        name: "account",
+            child: Padding(
+              padding:
+                  EdgeInsets.only(bottom: context.mediaQueryPadding.bottom),
+              child: FormBuilder(
+                key: logic.formKey,
+                initialValue: {
+                  "nickname": userInfo.nickname,
+                  "about": userInfo.about,
+                  "account": userInfo.account,
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    label("identity_edit_cover_label".tr),
+                    hint("identity_edit_cover_hint".tr),
+                    GestureDetector(
+                      onTap: () {
+                        logic.openPhotoSheet('coverURL');
+                      },
+                      child: userCover(),
+                    ),
+                    24.gapv,
+                    label("identity_edit_avatar_label".tr),
+                    hint("identity_edit_avatar_hint".tr),
+                    AvatarView(
+                      onTap: () {
+                        logic.openPhotoSheet('faceURL');
+                      },
+                      radius: 36.w,
+                      tag: userInfo.nickname ?? 'avatar',
+                      url: logic.avatarUrl.value.isNotEmpty
+                          ? logic.avatarUrl.value
+                          : userInfo.faceURL,
+                      text: userInfo.nickname ?? '',
+                    ),
+                    24.gapv,
+                    label("identity_edit_nickname_label".tr),
+                    hint("identity_edit_nickname_hint".tr),
+                    Input(
+                        name: "nickname",
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                               errorText:
-                                  "identity_edit_account_hint".tr), // 必须输入
+                                  "identity_edit_nickname_hint".tr), // 必须输入
                           FormBuilderValidators.minLength(4,
-                              errorText: "identity_edit_account_hint".tr),
+                              errorText: "identity_edit_nickname_hint".tr),
                           FormBuilderValidators.maxLength(16,
-                              errorText: "identity_edit_account_hint".tr),
-                          FormBuilderValidators.match(
-                            RegExp(r'^[a-zA-Z0-9]+$'), // 仅支持英文和数字
-                            errorText: "identity_edit_account_hint".tr,
-                          ),
-                        ]),
-                      ),
-                    ],
-                  ),
+                              errorText: "identity_edit_nickname_hint".tr),
+                        ])),
+                    24.gapv,
+                    label("identity_edit_about_label".tr),
+                    hint("identity_edit_about_hint".tr),
+                    const Input(
+                      name: "about",
+                      maxLines: 4,
+                    ),
+                    24.gapv,
+                    label("identity_edit_account_label".tr),
+                    hint("identity_edit_account_hint".tr,
+                        warning: "identity_edit_account_warning".tr),
+                    Input(
+                      name: "account",
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                            errorText: "identity_edit_account_hint".tr), // 必须输入
+                        FormBuilderValidators.minLength(4,
+                            errorText: "identity_edit_account_hint".tr),
+                        FormBuilderValidators.maxLength(16,
+                            errorText: "identity_edit_account_hint".tr),
+                        FormBuilderValidators.match(
+                          RegExp(r'^[a-zA-Z0-9]+$'), // 仅支持英文和数字
+                          errorText: "identity_edit_account_hint".tr,
+                        ),
+                      ]),
+                    ),
+                  ],
                 ),
               ),
             )),

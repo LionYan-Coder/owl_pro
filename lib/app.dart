@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/core/controller/permission_controller.dart';
+import 'package:owlpro_app/core/controller/push_controller.dart';
 import 'package:owlpro_app/core/controller/theme_controller.dart';
 import 'package:owlpro_app/routes/app_pages.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
@@ -55,7 +56,7 @@ class InitBinding extends Bindings {
   void dependencies() {
     Get.put<PermissionController>(PermissionController());
     Get.put<IMController>(IMController());
-    // Get.put<PushController>(PushController());
+    Get.put<PushController>(PushController());
     Get.put<CacheController>(CacheController());
     Get.put<DownloadController>(DownloadController());
   }

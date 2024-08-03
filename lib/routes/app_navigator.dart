@@ -56,6 +56,11 @@ class AppNavigator {
     return Get.toNamed(AppRoutes.userQRcode, arguments: user);
   }
 
+    static Future<dynamic>? startUserProfile(UserFullInfo user) {
+    GetTags.createUserProfileTag();
+    return Get.toNamed(AppRoutes.userProfile, arguments: user);
+  }
+
   static startSetting() => Get.toNamed(
         AppRoutes.setting,
       );
@@ -90,5 +95,15 @@ class AppNavigator {
 
   static void startAddBySearch() => Get.toNamed(
         AppRoutes.contactAddBySearch,
+      );
+
+  static void startFriendRequests() => Get.toNamed(
+        AppRoutes.startFriendRequests,
+      );
+  static void startGroupList() => Get.toNamed(
+        AppRoutes.startGroupList,
+      );
+  static void startBlackList() => Get.toNamed(
+        AppRoutes.startBlackList,
       );
 }

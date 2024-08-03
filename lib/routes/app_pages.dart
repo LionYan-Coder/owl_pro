@@ -7,6 +7,12 @@ import 'package:owlpro_app/pages/account/edit/account_edit_binding.dart';
 import 'package:owlpro_app/pages/account/edit/account_edit_page.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_binding.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_page.dart';
+import 'package:owlpro_app/pages/contacts/black_list/black_list_binding.dart';
+import 'package:owlpro_app/pages/contacts/black_list/black_list_page.dart';
+import 'package:owlpro_app/pages/contacts/group_list/group_list_binding.dart';
+import 'package:owlpro_app/pages/contacts/group_list/group_list_page.dart';
+import 'package:owlpro_app/pages/contacts/new_friend/new_friend_binding.dart';
+import 'package:owlpro_app/pages/contacts/new_friend/new_friend_page.dart';
 import 'package:owlpro_app/pages/guide/guide_binding.dart';
 import 'package:owlpro_app/pages/guide/guide_page.dart';
 import 'package:owlpro_app/pages/home/home_binding.dart';
@@ -102,6 +108,16 @@ class AppPages {
         page: () => AccountEditPage(),
         binding: AccountEditBinding()),
     _pageBuilder(
+        name: AppRoutes.userProfile,
+        page: () => UserProfilePage(),
+        binding: UserProfileBinding(),
+        preventDuplicates: false),
+    _pageBuilder(
+        name: AppRoutes.userQRcode,
+        page: () => UserQrcodePage(),
+        binding: UserQrcodeBinding(),
+        preventDuplicates: false),
+    _pageBuilder(
       name: AppRoutes.receipt,
       page: () => ReceiptPage(),
       binding: ReceiptBinding(),
@@ -131,14 +147,16 @@ class AppPages {
         page: () => AddBySearchPage(),
         binding: AddBySearchBinding()),
     _pageBuilder(
-        name: AppRoutes.userProfile,
-        page: () => UserProfilePage(),
-        binding: UserProfileBinding(),
-        preventDuplicates: false),
+        name: AppRoutes.startFriendRequests,
+        page: () => NewFriendPage(),
+        binding: NewFriendBinding()),
     _pageBuilder(
-        name: AppRoutes.userQRcode,
-        page: () => UserQrcodePage(),
-        binding: UserQrcodeBinding(),
-        preventDuplicates: false),
+        name: AppRoutes.startBlackList,
+        page: () => BlackListPage(),
+        binding: BlackListBinding()),
+    _pageBuilder(
+        name: AppRoutes.startGroupList,
+        page: () => GroupListPage(),
+        binding: GroupListBinding()),
   ];
 }

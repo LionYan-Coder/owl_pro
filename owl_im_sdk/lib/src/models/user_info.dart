@@ -53,7 +53,7 @@ class UserInfo {
     faceURL = json['faceURL'] ?? faceURL;
     account = json['account'];
     publicKey = json['publicKey'];
-    about = json['remark'];
+    about = json['about'];
     coverURL = json['coverURL'];
     address = json['address'];
     remark = json['remark'] ?? remark;

@@ -7,7 +7,9 @@ abstract class AppRoutes {
   static const loginRestore = '/login_restore';
   static const home = '/home';
 
+  static const userProfile = '/user/profile';
   static const userQRcode = '/user/qrcode';
+
   static const accountInfo = '/account';
   static const accountList = '/account/list';
   static const accountInfoEdit = '/account/:userID';
@@ -24,5 +26,7 @@ abstract class AppRoutes {
   static const receipt = '/receipt';
 
   static const contactAddBySearch = "/contact/add_by_search";
-  static const userProfile = '/user/profile';
+  static const startFriendRequests = '/contact/new_friend';
+  static const startGroupList = '/contact/group_list';
+  static const startBlackList = '/contact/black_list';
 }

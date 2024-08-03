@@ -54,12 +54,16 @@ class AccountEditLogic extends GetxController {
         quality: 15);
   }
 
+  bool get isChange =>
+      jsonEncode(formKey.currentState?.initialValue) !=
+          jsonEncode(formKey.currentState?.instantValue) ||
+      avatarUrl.value != userInfo.value.faceURL ||
+      coverUrl.value != userInfo.value.coverURL;
+
   void submit() async {
     try {
       var state = formKey.currentState;
-      if (jsonEncode(state?.initialValue) != jsonEncode(state?.instantValue) ||
-          avatarUrl.value != userInfo.value.faceURL ||
-          coverUrl.value != userInfo.value.coverURL) {
+      if (isChange) {
         final valid = state?.saveAndValidate(focusOnInvalid: false);
         if (valid == true) {
           loading.value = true;
