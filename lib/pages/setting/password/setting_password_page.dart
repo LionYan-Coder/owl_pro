@@ -76,7 +76,7 @@ class SettingPasswordPage extends StatelessWidget {
                       onChanged: (index) {
                         logic.pageController.animateToPage(index,
                             duration: const Duration(milliseconds: 350),
-                            curve: Curves.easeInOut);
+                            curve: Curves.fastOutSlowIn);
                         logic.onChangedTab(index);
                       }),
                 ),

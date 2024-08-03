@@ -100,7 +100,7 @@ class _InputState extends State<Input> {
       maxLines: widget.maxLines,
       keyboardType: getKeyboardType(),
       style: widget.style,
-      cursorHeight: 18.w,
+      // cursorHeight: 18.w,
       controller: widget.controller,
       decoration: InputDecoration(
         isDense: true,
@@ -146,6 +146,7 @@ class PasteInput extends StatefulWidget {
   final int? maxLines;
   final TextStyle? style;
   final EdgeInsetsGeometry? contentPadding;
+  final double? gapLine;
 
   const PasteInput(
       {super.key,
@@ -156,6 +157,7 @@ class PasteInput extends StatefulWidget {
       this.maxLines = 1,
       this.style,
       this.contentPadding,
+      this.gapLine,
       this.inputType = InputType2.text});
 
   @override
@@ -185,7 +187,7 @@ class _PasteInputState extends State<PasteInput> {
   @override
   Widget build(BuildContext context) {
     final lines = widget.maxLines ?? 1;
-    final height = 24.w * (lines - 1);
+    final height = 24.w * (lines - 1) + (widget.gapLine ?? 0);
     return Stack(
       children: [
         FormBuilderTextField(

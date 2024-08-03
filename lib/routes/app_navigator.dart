@@ -56,7 +56,7 @@ class AppNavigator {
     return Get.toNamed(AppRoutes.userQRcode, arguments: user);
   }
 
-    static Future<dynamic>? startUserProfile(UserFullInfo user) {
+  static Future<dynamic>? startUserProfile(UserFullInfo user) {
     GetTags.createUserProfileTag();
     return Get.toNamed(AppRoutes.userProfile, arguments: user);
   }
@@ -82,12 +82,26 @@ class AppNavigator {
       );
 
   static void startAsset() => Get.toNamed(
-        AppRoutes.asset,
+        AppRoutes.assetToken,
       );
 
   static void startTransfer() => Get.toNamed(
         AppRoutes.transfer,
       );
+
+  static void startTradeDetail(
+          {required TokenType token, required String txHash}) =>
+      Get.toNamed(
+        AppRoutes.tradeDetail,
+        arguments: token,
+        parameters: {"txHash": txHash},
+      );
+
+  static void startTradeList({required TokenType token}) => Get.toNamed(
+        AppRoutes.tradeList,
+        arguments: token,
+      );
+
 
   static void startReceipt() => Get.toNamed(
         AppRoutes.receipt,

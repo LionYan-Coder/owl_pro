@@ -17,6 +17,7 @@ export 'src/models/uni_mp_info.dart';
 export 'src/models/upgrade_info.dart';
 export 'src/models/user_full_info.dart';
 export 'src/models/user_info.dart';
+export 'src/models/transaction.dart';
 export 'src/models/wallet.dart';
 export 'src/models/google_time.dart';
 export 'src/utils/data_sp.dart';

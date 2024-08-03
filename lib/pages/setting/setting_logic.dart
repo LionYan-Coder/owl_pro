@@ -67,7 +67,7 @@ class SettingLogic extends GetxController {
     Get.bottomSheet(
       SafeArea(
         child: Container(
-          height: 216,
+          height: 216.w,
           padding: const EdgeInsets.only(top: 6.0),
           child: Column(
             children: [

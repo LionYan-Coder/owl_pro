@@ -7,15 +7,20 @@ import 'package:owl_common/owl_common.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
+enum BalanceType { balance, balanceOfContract, balanceOfAll }
+
+enum TokenType { owl, olink }
+
 class Web3Util {
   static final Web3Util _instance = Web3Util._internal();
 
-  static const String infuraUrl = '/api/transactionCount'; // 转账之前获取需要签名的消息和symbol
+  static const String infuraUrl =
+      '/api/transactionCount'; // 转账之前获取需要签名的消息和symbol
   static const String rawTxUrl = '/api/rawTransaction'; // owl和olink转账接口
   static const String olinkCallUrl = '/api/olinkCall'; //  获取owl余额接口
   static const String gasLimitUrl = '/api/gasLimit'; // 获取gas接口
-  static EthereumAddress coinAddress =
-      EthereumAddress.fromHex('0x1c4c015d144e7e4fbcb51394d03c635549be9cd5');  //合约地址
+  static EthereumAddress coinAddress = EthereumAddress.fromHex(
+      '0x1c4c015d144e7e4fbcb51394d03c635549be9cd5'); //合约地址
 
   // static EthereumAddress contractAddress =
   //     EthereumAddress.fromHex('0xd762ccf815a73d344b37a024b2a8426a10d67c6b');

@@ -53,11 +53,7 @@ class AssetBaseInfo extends StatelessWidget {
                 Obx(() => Row(
                       children: [
                         Text(
-                          (logic.currentBalance.value.olinkBalance.toWei
-                                      .owlToUsd +
-                                  logic.currentBalance.value.owlBalance.toWei
-                                      .olinkToUsd)
-                              .fixed2,
+                          logic.getAllBalance,
                           style: TextStyle(
                               fontSize: 40.sp,
                               height: 1.175,

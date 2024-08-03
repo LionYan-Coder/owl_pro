@@ -24,6 +24,13 @@ import 'package:owlpro_app/pages/login/login_restore_page.dart';
 import 'package:owlpro_app/pages/login/loign_page.dart';
 import 'package:owlpro_app/pages/account/list/account_list_binding.dart';
 import 'package:owlpro_app/pages/account/list/account_list_page.dart';
+import 'package:owlpro_app/pages/transfer/asset_token/asset_token_binding.dart';
+import 'package:owlpro_app/pages/transfer/asset_token/asset_token_page.dart';
+import 'package:owlpro_app/pages/transfer/trade_detail/trade_detail_binding.dart';
+import 'package:owlpro_app/pages/transfer/trade_detail/trade_detail_page.dart';
+import 'package:owlpro_app/pages/transfer/trade_list/trade_list_binding.dart';
+import 'package:owlpro_app/pages/transfer/transfer_binding.dart';
+import 'package:owlpro_app/pages/transfer/transfer_page.dart';
 import 'package:owlpro_app/pages/user_profile/qrcode/user_qrcode_binding.dart';
 import 'package:owlpro_app/pages/user_profile/qrcode/user_qrcode_page.dart';
 import 'package:owlpro_app/pages/receipt/receipt_binding.dart';
@@ -41,6 +48,8 @@ import 'package:owlpro_app/pages/splash/splash_page.dart';
 import 'package:owlpro_app/pages/user_profile/user_profile_binding.dart';
 import 'package:owlpro_app/pages/user_profile/user_profile_page.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
+
+import '../pages/transfer/trade_list/trade_list_page.dart';
 
 class AppPages {
   static _pageBuilder({
@@ -117,6 +126,28 @@ class AppPages {
         page: () => UserQrcodePage(),
         binding: UserQrcodeBinding(),
         preventDuplicates: false),
+    _pageBuilder(
+      name: AppRoutes.assetToken,
+      page: () => AssetTokenPage(),
+      binding: AssetTokenBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.transfer,
+      page: () => TransferPage(),
+      binding: TransferBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tradeDetail,
+      preventDuplicates: false,
+      page: () => TradeDetailPage(),
+      binding: TradeDetailBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.tradeList,
+      preventDuplicates: false,
+      page: () => TradeListPage(),
+      binding: TradeListBinding(),
+    ),
     _pageBuilder(
       name: AppRoutes.receipt,
       page: () => ReceiptPage(),

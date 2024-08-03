@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/widgets/dialog.dart';
-
-enum BalanceType { balance, balanceOfContract, balanceOfAll }
 
 class MineLogic extends GetxController {
   static get to => Get.find<MineLogic>();
@@ -22,6 +19,11 @@ class MineLogic extends GetxController {
   String get currentPassword => DataSp.devicePassword ?? '';
   int get lastVerifyPwdTime => DataSp.lastVerifyPwdTime ?? 0;
   final verifyPwdGapTime = 0.obs;
+
+  String get getAllBalance =>
+      (currentBalance.value.olinkBalance.toWei.owlToUsd +
+              currentBalance.value.owlBalance.toWei.olinkToUsd)
+          .fixed2;
 
   Future<void> savePassword(String password) async {
     final encrypted = EncryptionHelper.encrypted64(password);
@@ -76,6 +78,14 @@ class MineLogic extends GetxController {
     }
   }
 
+  // @override
+  // void onReady() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     checkPassword();
+  //   });
+  //   super.onReady();
+  // }
+
   @override
   void onInit() {
     super.onInit();
@@ -93,10 +103,6 @@ class MineLogic extends GetxController {
     loadedWalletBalance(im.userInfo.value);
     verifyPwdGapTime.value =
         DataSp.verifyPwdGap ?? const Duration(days: 1).inMilliseconds;
-    Logger.print("verifyPwdGapTime : ${verifyPwdGapTime.value}");
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkPassword();
-    });
   }
 
   @override
