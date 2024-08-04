@@ -376,6 +376,18 @@ class ChatLogic extends GetxController {
     _sendMessage(message);
   }
 
+  void sendVoice({
+    required String videoPath,
+    required int duration,
+  }) async {
+    var message =
+    await OwlIM.iMManager.messageManager.createSoundMessageFromFullPath(
+      soundPath: videoPath,
+      duration: duration,
+    );
+    _sendMessage(message);
+  }
+
   void sendTypingMsg({bool focus = false}) async {
     if (isSingleChat) {
       OwlIM.iMManager.messageManager.typingStatusUpdate(

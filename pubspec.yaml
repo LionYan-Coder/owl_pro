@@ -114,6 +114,7 @@ dependencies:
   animate_do: ^3.3.4
   wechat_camera_picker: ^4.1.2
   wechat_assets_picker: ^8.8.1+1
+  audio_waveforms: ^1.0.5
 
 dependency_overrides:
   wechat_assets_picker: ^8.9.0-dev.1

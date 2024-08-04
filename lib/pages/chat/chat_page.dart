@@ -26,8 +26,8 @@ class ChatPage extends StatelessWidget {
       leftFaceUrl: logic.getNewestFaceURL(message),
       // rightNickname: OwlIM.iMManager.userInfo.nickname,
       // rightFaceUrl: OwlIM.iMManager.userInfo.faceURL,
-      showLeftNickname: !hiddenAvatar,
-      showLeftAvatar: !hiddenAvatar,
+      showLeftNickname: logic.isGroupChat,
+      showLeftAvatar: !hiddenTime,
       showRightNickname: false,
       showTime: !hiddenTime,
       onFailedToResend: () => logic.failedResend(message),
@@ -133,6 +133,7 @@ class ChatPage extends StatelessWidget {
         focusNode: logic.focusNode,
         isNotInGroup: logic.isInvalidGroup,
         onSend: (v) => logic.sendTextMsg(),
+        onSendVoice: (_,videoPath) => logic.sendVoice(videoPath: videoPath, duration: 60),
         hintText: "chat_input_hint".tr,
         // toolbox: ChatToolBox(
         //   onTapAlbum: logic.onTapAlbum,

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owl_common/src/widget/chat/sounds_button.dart';
 
 import 'at_special_text_span_builder.dart';
 import 'chat_disable_input_box.dart';
@@ -27,6 +28,7 @@ class ChatInputBox extends StatefulWidget {
     this.isNotInGroup = false,
     this.hintText,
     this.onSend,
+    this.onSendVoice,
   }) : super(key: key);
   final AtTextCallback? atCallback;
   final Map<String, String> allAtMap;
@@ -41,6 +43,7 @@ class ChatInputBox extends StatefulWidget {
   final String? hintText;
   // final Widget toolbox;
   final ValueChanged<String>? onSend;
+  final Function(dynamic type, String content)? onSendVoice;
 
   @override
   State<ChatInputBox> createState() => _ChatInputBoxState();
@@ -48,9 +51,10 @@ class ChatInputBox extends StatefulWidget {
 
 class _ChatInputBoxState extends State<ChatInputBox> {
   bool _toolsVisible = true;
+  bool _isSpeak = false;
   // bool _emojiVisible = false;
-  bool _leftKeyboardButton = false;
-  bool _rightKeyboardButton = false;
+  // bool _leftKeyboardButton = false;
+  // bool _rightKeyboardButton = false;
   bool _sendButtonVisible = false;
 
   double get _opacity => (widget.enabled ? 1 : .4);
@@ -106,7 +110,15 @@ class _ChatInputBoxState extends State<ChatInputBox> {
                                 Styles.c_F6F6F6.adapterDark(Styles.c_161616)))),
                 child: Row(
                   children: [
-                    Expanded(child: _textFiled),
+                    Expanded(
+                        child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 200),
+                            child: _isSpeak ?  SoundsMessageButton(
+                              onSendSounds: (type,content) {
+                                widget.onSendVoice!(type,content);
+                                Logger.print("content: ${content}");
+                              },
+                            ) : _textFiled)),
                     Visibility(
                       visible: _toolsVisible,
                       child: FadeIn(
@@ -118,16 +130,24 @@ class _ChatInputBoxState extends State<ChatInputBox> {
                                 child: "chat_ico_tool_attachment".svg.toSvg
                                   ..width = 24
                                   ..height = 24.w
-                                  ..color =
-                                  Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
+                                  ..color = Styles.c_333333
+                                      .adapterDark(Styles.c_CCCCCC)),
                             12.gaph,
                             GestureDetector(
-                                // onPressed: () {},
+                                onTap: () {
+                                  if (!_isSpeak) {
+                                    onTapSpeak();
+                                  } else {
+                                    setState(() {
+                                      _isSpeak = false;
+                                    });
+                                  }
+                                },
                                 child: "chat_ico_tool_vioce".svg.toSvg
                                   ..width = 24
                                   ..height = 24.w
-                                  ..color =
-                                  Styles.c_333333.adapterDark(Styles.c_CCCCCC))
+                                  ..color =_isSpeak ? Styles.c_0C8CE9 :  Styles.c_333333
+                                      .adapterDark(Styles.c_CCCCCC))
                           ],
                         ),
                       ),
@@ -137,8 +157,7 @@ class _ChatInputBoxState extends State<ChatInputBox> {
               );
   }
 
-  Widget get _textFiled => AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+  Widget get _textFiled => Container(
         padding: EdgeInsets.only(left: 8.w),
         decoration: BoxDecoration(
           color: Styles.c_F9F9F9.adapterDark(Styles.c_121212),
@@ -162,7 +181,8 @@ class _ChatInputBoxState extends State<ChatInputBox> {
                 atCallback: widget.atCallback,
                 controller: widget.controller,
                 focusNode: widget.focusNode,
-                style: widget.style ?? Styles.ts_333333_14.adapterDark(Styles.ts_CCCCCC_14),
+                style: widget.style ??
+                    Styles.ts_333333_14.adapterDark(Styles.ts_CCCCCC_14),
                 atStyle: widget.atStyle ?? Styles.ts_0C8CE9_12_medium,
                 inputFormatters: widget.inputFormatters,
                 enabled: widget.enabled,
@@ -170,7 +190,15 @@ class _ChatInputBoxState extends State<ChatInputBox> {
                 textAlign: widget.enabled ? TextAlign.start : TextAlign.center,
               ),
             ),
-            Visibility(visible: _sendButtonVisible, child: FadeIn(child: IconButton(onPressed: send, icon: const Icon(Icons.send_rounded,color: Styles.c_0C8CE9,))))
+            Visibility(
+                visible: _sendButtonVisible,
+                child: FadeIn(
+                    child: IconButton(
+                        onPressed: send,
+                        icon: const Icon(
+                          Icons.send_rounded,
+                          color: Styles.c_0C8CE9,
+                        ))))
           ],
         ),
       );
@@ -188,8 +216,8 @@ class _ChatInputBoxState extends State<ChatInputBox> {
     setState(() {
       _toolsVisible = !_toolsVisible;
       // _emojiVisible = false;
-      _leftKeyboardButton = false;
-      _rightKeyboardButton = false;
+      // _leftKeyboardButton = false;
+      // _rightKeyboardButton = false;
       if (_toolsVisible) {
         unfocus();
       } else {
@@ -200,19 +228,20 @@ class _ChatInputBoxState extends State<ChatInputBox> {
 
   void onTapSpeak() {
     if (!widget.enabled) return;
-    Permissions.microphone(() => setState(() {
-          _leftKeyboardButton = true;
-          _rightKeyboardButton = false;
-          _toolsVisible = false;
-          // _emojiVisible = false;
-          unfocus();
-        }));
+    setState(() {
+      _isSpeak = true;
+      // _leftKeyboardButton = true;
+      // _rightKeyboardButton = false;
+      // _toolsVisible = false;
+      // _emojiVisible = false;
+      unfocus();
+    });
   }
 
   void onTapLeftKeyboard() {
     if (!widget.enabled) return;
     setState(() {
-      _leftKeyboardButton = false;
+      // _leftKeyboardButton = false;
       _toolsVisible = false;
       // _emojiVisible = false;
       focus();
@@ -222,7 +251,7 @@ class _ChatInputBoxState extends State<ChatInputBox> {
   void onTapRightKeyboard() {
     if (!widget.enabled) return;
     setState(() {
-      _rightKeyboardButton = false;
+      // _rightKeyboardButton = false;
       _toolsVisible = false;
       // _emojiVisible = false;
       focus();
@@ -232,8 +261,8 @@ class _ChatInputBoxState extends State<ChatInputBox> {
   void onTapEmoji() {
     if (!widget.enabled) return;
     setState(() {
-      _rightKeyboardButton = true;
-      _leftKeyboardButton = false;
+      // _rightKeyboardButton = true;
+      // _leftKeyboardButton = false;
       // _emojiVisible = true;
       _toolsVisible = false;
       unfocus();

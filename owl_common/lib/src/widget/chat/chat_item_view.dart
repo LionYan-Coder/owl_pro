@@ -7,6 +7,8 @@ import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'chat_vocie_view.dart';
+
 double maxWidth = 247.w;
 double pictureWidth = 120.w;
 double videoWidth = 120.w;
@@ -198,7 +200,15 @@ class _ChatItemViewState extends State<ChatItemView> {
         message: _message,
         sendProgressStream: widget.sendProgressSubject,
       );
-    } else if (_message.isVideoType) {
+    } else if (_message.isVoiceType){
+      isBubbleBg = true;
+      child = ChatVoiceView(
+        message: _message,
+        isISend: _isISend,
+        sendProgressStream: widget.sendProgressSubject,
+      );
+    }
+    else if (_message.isVideoType) {
       final video = _message.videoElem;
       child = ChatVideoView(
         isISend: _isISend,

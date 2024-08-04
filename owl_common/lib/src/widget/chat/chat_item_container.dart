@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:owl_common/owl_common.dart';
@@ -139,10 +138,6 @@ class ChatItemContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          AnimatedSwitcher(duration: const Duration(milliseconds: 200),child: Padding(
-            padding:  EdgeInsets.only(right: 8.0.w),
-            child: _buildSendStatus(),
-          )),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -157,7 +152,12 @@ class ChatItemContainer extends StatelessWidget {
               4.gapv,
               Row(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  AnimatedSwitcher(duration: const Duration(milliseconds: 200),child: Padding(
+                    padding:  EdgeInsets.only(right: 8.0.w),
+                    child: _buildSendStatus(),
+                  )),
                   _buildChildView(BubbleType.send),
                 ],
               ),
