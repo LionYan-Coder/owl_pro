@@ -77,7 +77,9 @@ class ChatItemView extends StatefulWidget {
     this.textScaleFactor = 1.0,
     this.ignorePointer = false,
     this.showLeftNickname = true,
+    this.showLeftAvatar = true,
     this.showRightNickname = false,
+    this.showTime = true,
     this.highlightColor,
     this.allAtMap = const {},
     this.patterns = const [],
@@ -106,7 +108,10 @@ class ChatItemView extends StatefulWidget {
 
   final bool ignorePointer;
   final bool showLeftNickname;
+  final bool showLeftAvatar;
   final bool showRightNickname;
+  final bool showTime;
+
 
   final Color? highlightColor;
   final Map<String, String> allAtMap;
@@ -151,8 +156,8 @@ class _ChatItemViewState extends State<ChatItemView> {
     return FocusDetector(
       child: Container(
         color: widget.highlightColor,
-        margin: EdgeInsets.only(bottom: 20.h),
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        margin: EdgeInsets.only(top: widget.showTime  ? 20.h : 0.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Center(child: _child),
       ),
       onVisibilityLost: () {},
@@ -171,6 +176,7 @@ class _ChatItemViewState extends State<ChatItemView> {
     if (_message.isTextType) {
       isBubbleBg = true;
       child = ChatText(
+        isISend: _isISend,
         text: _message.textElem!.content!,
         patterns: widget.patterns,
         textScaleFactor: widget.textScaleFactor,
@@ -179,6 +185,7 @@ class _ChatItemViewState extends State<ChatItemView> {
     } else if (_message.isAtTextType) {
       isBubbleBg = true;
       child = ChatText(
+        isISend: _isISend,
         text: _message.atTextElem!.text!,
         allAtMap: IMUtils.getAtMapping(_message, widget.allAtMap),
         patterns: widget.patterns,
@@ -227,10 +234,13 @@ class _ChatItemViewState extends State<ChatItemView> {
       rightFaceUrl: widget.rightFaceUrl ?? OwlIM.iMManager.userInfo.faceURL,
       showLeftNickname: widget.showLeftNickname,
       showRightNickname: widget.showRightNickname,
+      showTime: widget.showTime,
+      showLeftAvatar: widget.showLeftAvatar,
       timelineStr: widget.timelineStr,
-      timeStr: IMUtils.getChatTimeline(_message.sendTime!, 'HH:mm:ss'),
+      timeStr: IMUtils.getChatTimeline(_message.sendTime!, 'HH:mm'),
       isSending: _message.status == MessageStatus.sending,
       isSendFailed: _message.status == MessageStatus.failed,
+      isSendSucceeded: _message.status == MessageStatus.succeeded,
       isBubbleBg: child == null ? true : isBubbleBg,
       ignorePointer: widget.ignorePointer,
       sendStatusStream: widget.sendStatusSubject,

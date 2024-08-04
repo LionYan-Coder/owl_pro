@@ -1,7 +1,7 @@
 <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="nvbar_ico_add">
-<path id="Vector" d="M11.9997 20.1654C17.0623 20.1654 21.1663 16.0613 21.1663 10.9987C21.1663 5.93609 17.0623 1.83203 11.9997 1.83203C6.93706 1.83203 2.83301 5.93609 2.83301 10.9987C2.83301 16.0613 6.93706 20.1654 11.9997 20.1654Z" stroke="#333333" stroke-width="1.5" stroke-linejoin="round"/>
-<path id="Vector_2" d="M12 7.33203V14.6654" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_3" d="M8.33301 11H15.6663" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M11.9997 20.1654C17.0623 20.1654 21.1663 16.0613 21.1663 10.9987C21.1663 5.93609 17.0623 1.83203 11.9997 1.83203C6.93706 1.83203 2.83301 5.93609 2.83301 10.9987C2.83301 16.0613 6.93706 20.1654 11.9997 20.1654Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+<path id="Vector_2" d="M12 7.33203V14.6654" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M8.33301 11H15.6663" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

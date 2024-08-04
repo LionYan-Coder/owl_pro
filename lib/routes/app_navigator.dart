@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AppNavigator {
@@ -118,4 +119,43 @@ class AppNavigator {
   static void startBlackList() => Get.toNamed(
         AppRoutes.startBlackList,
       );
+
+
+  static Future<T?>? startChat<T>({
+    required ConversationInfo conversationInfo,
+    bool offUntilHome = true,
+    String? draftText,
+    Message? searchMessage,
+  }) async {
+    GetTags.createChatTag();
+
+    final arguments = {
+      'draftText': draftText,
+      'conversationInfo': conversationInfo,
+      'searchMessage': searchMessage,
+    };
+
+    return offUntilHome
+        ? Get.offNamedUntil(
+      AppRoutes.chat,
+          (route) => route.settings.name == AppRoutes.home,
+      arguments: arguments,
+    )
+        : Get.toNamed(
+      AppRoutes.chat,
+      arguments: arguments,
+      preventDuplicates: false,
+    );
+  }
+
+  static startChatSetup({
+    required ConversationInfo conversationInfo,
+  }) =>
+      Get.toNamed(AppRoutes.chatSetup, arguments: {
+        'conversationInfo': conversationInfo,
+      });
+
+
+
+  static startOANtfList({required ConversationInfo info}) {}
 }

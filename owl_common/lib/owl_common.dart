@@ -57,6 +57,9 @@ export 'src/widget/text_tab.dart';
 export 'src/widget/input.dart';
 export 'src/widget/qrcode.dart';
 export 'src/widget/azlist_view.dart';
+export 'src/widget/un_read_count_view.dart';
+export 'src/widget/bottom_bar.dart';
+export 'src/widget/custom_popup_menu.dart';
 
 export 'src/widget/chat/chat_picture_preview.dart';
 export 'src/widget/chat/chat_item_view.dart';
@@ -73,6 +76,10 @@ export 'src/widget/chat/chat_friend_relationship_hint_view.dart';
 export 'src/widget/chat/chat_hint_text_view.dart';
 export 'src/widget/chat/chat_nickname_view.dart';
 export 'src/widget/chat/chat_timeline_view.dart';
+export 'src/widget/chat/chat_listview.dart';
+export 'src/widget/chat/chat_toolbox.dart';
+export 'src/widget/chat/chat_input_box.dart';
+export 'src/widget/chat/water_mark_view.dart';
 
 export 'src/bridge/package_bridge.dart';
 export 'src/controller/cache_controller.dart';

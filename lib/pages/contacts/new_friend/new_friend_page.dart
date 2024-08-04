@@ -137,7 +137,7 @@ class NewFriendPage extends StatelessWidget {
                   ],
                 ),
               ),
-              (logic.isISendRequest(info) && info.handleResult == 0)
+              (!isSend && info.handleResult == 0)
                   ? _acceptAndReject(info)
                   : _requestStatus(info)
             ],

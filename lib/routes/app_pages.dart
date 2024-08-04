@@ -5,6 +5,8 @@ import 'package:owlpro_app/pages/account/account_binding.dart';
 import 'package:owlpro_app/pages/account/account_page.dart';
 import 'package:owlpro_app/pages/account/edit/account_edit_binding.dart';
 import 'package:owlpro_app/pages/account/edit/account_edit_page.dart';
+import 'package:owlpro_app/pages/chat/chat_binding.dart';
+import 'package:owlpro_app/pages/chat/chat_page.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_binding.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_page.dart';
 import 'package:owlpro_app/pages/contacts/black_list/black_list_binding.dart';
@@ -189,5 +191,16 @@ class AppPages {
         name: AppRoutes.startGroupList,
         page: () => GroupListPage(),
         binding: GroupListBinding()),
+    _pageBuilder(
+      name: AppRoutes.chat,
+      page: () => ChatPage(),
+      binding: ChatBinding(),
+      preventDuplicates: false,
+    ),
+    // _pageBuilder(
+    //   name: AppRoutes.chatSetup,
+    //   page: () => ChatSetupPage(),
+    //   binding: ChatSetupBinding(),
+    // ),
   ];
 }

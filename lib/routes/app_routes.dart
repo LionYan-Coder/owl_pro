@@ -31,4 +31,7 @@ abstract class AppRoutes {
   static const startFriendRequests = '/contact/new_friend';
   static const startGroupList = '/contact/group_list';
   static const startBlackList = '/contact/black_list';
+
+  static const chat = '/chat';
+  static const chatSetup = '/chat_setup';
 }

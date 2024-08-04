@@ -37,7 +37,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
             if (null != center) center!,
             Container(
               height: height,
-              padding: EdgeInsets.only(left: 18.w),
+              padding: EdgeInsets.only(left: 16.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

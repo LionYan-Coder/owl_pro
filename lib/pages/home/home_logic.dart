@@ -10,28 +10,20 @@ class HomeLogic extends GetxController {
   final pushLogic = Get.find<PushController>();
   final imLogic = Get.find<IMController>();
   final initLogic = Get.find<AppController>();
-  final index = 0.obs;
+  final tab = 0.obs;
   final unreadMsgCount = 0.obs;
   final unhandledFriendApplicationCount = 0.obs;
   final unhandledGroupApplicationCount = 0.obs;
   final unhandledCount = 0.obs;
   final _errorController = PublishSubject<String>();
-  RxInt currentPage = 0.obs;
 
   Function()? onScrollToUnreadMessage;
 
-  List<String> tabs = [
-    "tab_ico_chat",
-    "tab_ico_intimate",
-    "tab_ico_discover",
-    "tab_ico_me"
-  ];
-
-  onChangePage(int index) {
-    currentPage.value = index;
+  switchTab(int index) {
+    tab.value = index;
   }
 
-  scrollToUnreadMessage(index) {
+  scrollToUnreadMessage(int index) {
     onScrollToUnreadMessage?.call();
   }
 

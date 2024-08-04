@@ -3,43 +3,43 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/contacts/contact_logic.dart';
+import 'package:owlpro_app/pages/home/home_logic.dart';
 
 class ContactMenus extends StatelessWidget {
   ContactMenus({super.key});
 
   final contactLogic = Get.find<ContactLogic>();
+  final homeLogic = Get.find<HomeLogic>();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Obx(() => Padding(
       padding:
-          const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 18).w,
+      const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 18).w,
       child: Column(
         children: [
           _panelButton(
-              context: context,
               icon: "chat_ico_newfriend".svg.toSvg
                 ..width = 16.w
                 ..fit = BoxFit.cover
                 ..color = Styles.c_0C8CE9,
               text: "contact_panel_new_friend".tr,
+              extra: redDot(count: homeLogic.unhandledFriendApplicationCount.value),
               onTap: () {
                 contactLogic.newFriend();
                 // context.push(AppRouter.contactNewFriend);
               }),
           _panelButton(
-              context: context,
               icon: "chat_ico_inform".svg.toSvg
                 ..width = 16.w
                 ..fit = BoxFit.cover
                 ..color = Styles.c_0C8CE9,
               text: "contact_panel_inform".tr,
-              extra: redDot(context, count: 6),
+              extra: redDot(count: homeLogic.unhandledGroupApplicationCount.value),
               onTap: () {
                 contactLogic.myGroup();
               }),
           _panelButton(
-              context: context,
               icon: "chat_ico_block".svg.toSvg
                 ..width = 16.w
                 ..fit = BoxFit.cover
@@ -49,7 +49,6 @@ class ContactMenus extends StatelessWidget {
                 contactLogic.myBlack();
               }),
           _panelButton(
-              context: context,
               icon: "chat_ico_group".svg.toSvg
                 ..width = 16.w
                 ..fit = BoxFit.cover
@@ -60,11 +59,11 @@ class ContactMenus extends StatelessWidget {
               })
         ],
       ),
-    );
+    ));
   }
 
   Widget _panelButton(
-      {required BuildContext context,
+      {
       required Widget icon,
       required String text,
       VoidCallback? onTap,
@@ -114,15 +113,18 @@ class ContactMenus extends StatelessWidget {
     );
   }
 
-  Widget redDot(BuildContext context, {required int count}) {
-    return ClipOval(
-      child: Container(
-        color: Styles.c_DE473E,
-        width: 16.w,
-        height: 16.w,
-        child: Center(
-            child: "$count".toText
-              ..style = Styles.ts_FFFFFF_10.adapterDark(Styles.ts_333333_10)),
+  Widget redDot({required int count}) {
+    return Visibility(
+      visible: count > 0,
+      child: ClipOval(
+        child: Container(
+          color: Styles.c_DE473E,
+          width: 16.w,
+          height: 16.w,
+          child: Center(
+              child: "$count".toText
+                ..style = Styles.ts_FFFFFF_10.adapterDark(Styles.ts_333333_10)),
+        ),
       ),
     );
   }

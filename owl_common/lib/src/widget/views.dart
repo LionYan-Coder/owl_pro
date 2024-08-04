@@ -27,6 +27,56 @@ class IMViews {
     }
   }
 
+  static openIMCallSheet(
+      String label,
+      Function(int index) onTapSheetItem,
+      ) {
+    return Get.bottomSheet(
+      BottomSheetView(
+        mainAxisAlignment: MainAxisAlignment.start,
+        items: [
+          SheetItem(
+            label: StrRes.callVoice,
+            icon: ImageRes.callVoice,
+            alignment: MainAxisAlignment.start,
+            onTap: () => onTapSheetItem.call(0),
+          ),
+          SheetItem(
+            label: StrRes.callVideo,
+            icon: ImageRes.callVideo,
+            alignment: MainAxisAlignment.start,
+            onTap: () => onTapSheetItem.call(1),
+          ),
+        ],
+      ),
+      // barrierColor: Colors.transparent,
+    );
+  }
+
+  static openIMGroupCallSheet(
+      String groupID,
+      Function(int index) onTapSheetItem,
+      ) {
+    return Get.bottomSheet(
+      BottomSheetView(
+        mainAxisAlignment: MainAxisAlignment.start,
+        items: [
+          SheetItem(
+            label: StrRes.callVoice,
+            icon: ImageRes.callVoice,
+            onTap: () => onTapSheetItem.call(0),
+          ),
+          SheetItem(
+            label: StrRes.callVideo,
+            icon: ImageRes.callVideo,
+            onTap: () => onTapSheetItem.call(1),
+          ),
+        ],
+      ),
+      // barrierColor: Colors.transparent,
+    );
+  }
+
   static Widget buildHeader() => WaterDropMaterialHeader(
         backgroundColor: Styles.c_0C8CE9,
       );

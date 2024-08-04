@@ -34,7 +34,7 @@ class ChatBubble extends StatelessWidget {
         alignment: alignment,
         decoration: BoxDecoration(
           color:
-              backgroundColor ?? (isISend ? Styles.c_0C8CE9 : Styles.c_0481DC),
+              backgroundColor ?? (isISend ? Styles.c_0C8CE9 : Styles.c_F1F1F1.adapterDark(Styles.c_262626)),
           borderRadius: borderRadius(isISend),
         ),
         child: child,

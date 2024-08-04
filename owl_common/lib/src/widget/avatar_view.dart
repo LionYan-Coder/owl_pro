@@ -71,7 +71,7 @@ class AvatarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var rTag = const Uuid().v4();
+    var rTag =  Uuid().v4();
     var child = GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap ??

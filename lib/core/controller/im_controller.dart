@@ -5,9 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:owl_live/owl_live.dart';
 import 'package:owlpro_app/core/im_callback.dart';
 
-class IMController extends GetxController with IMCallback {
+class IMController extends GetxController with IMCallback,OpenIMLive {
   // ignore: non_constant_identifier_names
   static IMController get IMState => Get.find<IMController>();
 
@@ -17,7 +18,7 @@ class IMController extends GetxController with IMCallback {
   @override
   void onInit() async {
     super.onInit();
-    // onInitLive();
+    onInitLive();
     // Initialize SDK
     WidgetsBinding.instance.addPostFrameCallback((_) => initOwlIM());
   }

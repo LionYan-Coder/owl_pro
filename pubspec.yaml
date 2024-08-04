@@ -48,9 +48,9 @@ dependencies:
   image_picker: ^1.1.2
   flutter_easyloading: ^3.0.5
   azlistview: ^2.0.0
+  lpinyin: 2.0.3
   rxdart: ^0.28.0
   permission_handler: ^11.3.1
-  wechat_assets_picker: ^8.8.1+1
   image_gallery_saver: ^2.0.3
   file_picker: ^8.0.0+1
   open_filex: ^4.4.0
@@ -96,6 +96,7 @@ dependencies:
   ellipsized_text: ^1.2.0
   flutter_form_builder: ^9.3.0
   form_builder_validators: ^11.0.0
+  pull_to_refresh: 2.0.0
   owl_common:
     path: owl_common
   owl_im_sdk:
@@ -110,10 +111,20 @@ dependencies:
   share_plus: ^10.0.0
   connectivity_plus: ^6.0.4
   flutter_slidable: ^3.1.1
+  animate_do: ^3.3.4
+  wechat_camera_picker: ^4.1.2
+  wechat_assets_picker: ^8.8.1+1
+
+dependency_overrides:
+  wechat_assets_picker: ^8.9.0-dev.1
+  photo_manager: ^3.0.0-dev.2
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.2.19
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

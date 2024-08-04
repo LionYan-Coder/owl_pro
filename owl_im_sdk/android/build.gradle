@@ -1,9 +1,9 @@
 group = "com.lion.owl_im_sdk"
 version = "1.0-SNAPSHOT"
 
-
 buildscript {
     repositories {
+        maven { url 'https://open-im-online.rentsoft.cn:51000/repository/maven2/' }
         google()
         mavenCentral()
     }
@@ -15,7 +15,6 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
-        maven { url 'https://open-im-online.rentsoft.cn:51000/repository/maven2/' }
         google()
         mavenCentral()
     }
@@ -42,5 +41,7 @@ android {
 }
 
     dependencies {
-        implementation 'io.openim:core-sdk:3.5.1@aar'
+        implementation 'io.openim:android-sdk:3.4.1@aar'
+        implementation 'io.openim:core-sdk:3.4.1-alpha.4@aar'
+        implementation 'com.google.code.gson:gson:2.9.0'
     }

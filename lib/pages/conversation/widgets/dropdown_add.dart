@@ -13,7 +13,7 @@ class DropdownAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 2.w,
+      top: 2.w + context.mediaQueryPadding.top,
       right: 12.w,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2(
