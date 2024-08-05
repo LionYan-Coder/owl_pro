@@ -148,6 +148,11 @@ class AppNavigator {
     );
   }
 
+
+  static startLiveRoom() {
+    return Get.toNamed(AppRoutes.liveRoom);
+  }
+
   static startChatSetup({
     required ConversationInfo conversationInfo,
   }) =>

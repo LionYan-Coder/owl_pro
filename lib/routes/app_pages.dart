@@ -19,6 +19,9 @@ import 'package:owlpro_app/pages/guide/guide_binding.dart';
 import 'package:owlpro_app/pages/guide/guide_page.dart';
 import 'package:owlpro_app/pages/home/home_binding.dart';
 import 'package:owlpro_app/pages/home/home_page.dart';
+import 'package:owlpro_app/pages/live_room/live_room_binding.dart';
+import 'package:owlpro_app/pages/live_room/live_room_logic.dart';
+import 'package:owlpro_app/pages/live_room/live_room_page.dart';
 import 'package:owlpro_app/pages/login/login_binding.dart';
 import 'package:owlpro_app/pages/login/login_create_page.dart';
 import 'package:owlpro_app/pages/login/login_ready_page.dart';
@@ -58,6 +61,7 @@ class AppPages {
     required String name,
     required GetPageBuilder page,
     Bindings? binding,
+    Transition? transition,
     bool preventDuplicates = true,
   }) =>
       GetPage(
@@ -65,7 +69,7 @@ class AppPages {
         page: page,
         binding: binding,
         preventDuplicates: preventDuplicates,
-        transition: Transition.cupertino,
+        transition: transition ??  Transition.cupertino,
         popGesture: true,
       );
 
@@ -197,6 +201,7 @@ class AppPages {
       binding: ChatBinding(),
       preventDuplicates: false,
     ),
+    _pageBuilder(name: AppRoutes.liveRoom, page: () => LiveRoomPage(),binding: LiveRoomBinding(),transition: Transition.zoom)
     // _pageBuilder(
     //   name: AppRoutes.chatSetup,
     //   page: () => ChatSetupPage(),

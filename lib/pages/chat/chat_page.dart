@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_im_sdk/owl_im_sdk.dart';
 import 'package:owlpro_app/pages/chat/widgets/user_network_status.dart';
+import 'package:owlpro_app/routes/app_navigator.dart';
 import 'chat_logic.dart';
 import 'widgets/navbar.dart';
 
@@ -111,7 +112,9 @@ class ChatPage extends StatelessWidget {
         ),
         right: Row(
           children: [
-            IconButton(onPressed: () {}, icon: "nvbar_ico_fire_phone".svg.toSvg..width = 24.w..height = 24.w..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
+            IconButton(onPressed: () {
+              AppNavigator.startLiveRoom();
+            }, icon: "nvbar_ico_fire_phone".svg.toSvg..width = 24.w..height = 24.w..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
             16.gaph
           ],
         ),

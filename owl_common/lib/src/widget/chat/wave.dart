@@ -38,7 +38,7 @@ class WavePainter extends CustomPainter {
     });
 
     final paint = Paint()
-      ..color = Colors.grey
+      ..color = Colors.white
       ..style = PaintingStyle.fill;
 
     // 中间值

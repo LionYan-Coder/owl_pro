@@ -132,6 +132,8 @@ class RecordingStatusMaskView extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Text( SoundsMessageStatus.canceling.title , style: data.maskTxtStyle),
+                    const SizedBox(height: 16),
                     Visibility(
                       visible: value == SoundsMessageStatus.recording,
                       child: Text(value.title, style: data.maskTxtStyle),

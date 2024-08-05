@@ -34,4 +34,5 @@ abstract class AppRoutes {
 
   static const chat = '/chat';
   static const chatSetup = '/chat_setup';
+  static const liveRoom = '/live_room';
 }
