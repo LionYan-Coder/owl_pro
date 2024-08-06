@@ -7,20 +7,27 @@ import 'package:owlpro_app/pages/account/edit/account_edit_binding.dart';
 import 'package:owlpro_app/pages/account/edit/account_edit_page.dart';
 import 'package:owlpro_app/pages/chat/chat_binding.dart';
 import 'package:owlpro_app/pages/chat/chat_page.dart';
+import 'package:owlpro_app/pages/chat/group_chat_setup/group_chat_setup_binding.dart';
+import 'package:owlpro_app/pages/chat/group_chat_setup/group_chat_setup_page.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_binding.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_page.dart';
+import 'package:owlpro_app/pages/contacts/add_group/add_group_binding.dart';
+import 'package:owlpro_app/pages/contacts/add_group/add_group_page.dart';
 import 'package:owlpro_app/pages/contacts/black_list/black_list_binding.dart';
 import 'package:owlpro_app/pages/contacts/black_list/black_list_page.dart';
 import 'package:owlpro_app/pages/contacts/group_list/group_list_binding.dart';
 import 'package:owlpro_app/pages/contacts/group_list/group_list_page.dart';
 import 'package:owlpro_app/pages/contacts/new_friend/new_friend_binding.dart';
 import 'package:owlpro_app/pages/contacts/new_friend/new_friend_page.dart';
+import 'package:owlpro_app/pages/contacts/select_contacts/friend_list/friend_list_binding.dart';
+import 'package:owlpro_app/pages/contacts/select_contacts/friend_list/friend_list_view.dart';
+import 'package:owlpro_app/pages/contacts/select_contacts/select_contacts_binding.dart';
+import 'package:owlpro_app/pages/contacts/select_contacts/select_contacts_view.dart';
 import 'package:owlpro_app/pages/guide/guide_binding.dart';
 import 'package:owlpro_app/pages/guide/guide_page.dart';
 import 'package:owlpro_app/pages/home/home_binding.dart';
 import 'package:owlpro_app/pages/home/home_page.dart';
 import 'package:owlpro_app/pages/live_room/live_room_binding.dart';
-import 'package:owlpro_app/pages/live_room/live_room_logic.dart';
 import 'package:owlpro_app/pages/live_room/live_room_page.dart';
 import 'package:owlpro_app/pages/login/login_binding.dart';
 import 'package:owlpro_app/pages/login/login_create_page.dart';
@@ -54,6 +61,8 @@ import 'package:owlpro_app/pages/user_profile/user_profile_binding.dart';
 import 'package:owlpro_app/pages/user_profile/user_profile_page.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
+import '../pages/chat/group_chat_setup/group_member_list/group_member_list_binding.dart';
+import '../pages/chat/group_chat_setup/group_member_list/group_member_list_view.dart';
 import '../pages/transfer/trade_list/trade_list_page.dart';
 
 class AppPages {
@@ -69,7 +78,7 @@ class AppPages {
         page: page,
         binding: binding,
         preventDuplicates: preventDuplicates,
-        transition: transition ??  Transition.cupertino,
+        transition: transition ?? Transition.cupertino,
         popGesture: true,
       );
 
@@ -184,6 +193,10 @@ class AppPages {
         page: () => AddBySearchPage(),
         binding: AddBySearchBinding()),
     _pageBuilder(
+        name: AppRoutes.startAddGroup,
+        page: () => AddGroupPage(),
+        binding: AddGroupBinding()),
+    _pageBuilder(
         name: AppRoutes.startFriendRequests,
         page: () => NewFriendPage(),
         binding: NewFriendBinding()),
@@ -196,12 +209,36 @@ class AppPages {
         page: () => GroupListPage(),
         binding: GroupListBinding()),
     _pageBuilder(
+      name: AppRoutes.groupMemberList,
+      page: () => GroupMemberListPage(),
+      binding: GroupMemberListBinding(),
+    ),
+    _pageBuilder(
       name: AppRoutes.chat,
       page: () => ChatPage(),
       binding: ChatBinding(),
       preventDuplicates: false,
     ),
-    _pageBuilder(name: AppRoutes.liveRoom, page: () => LiveRoomPage(),binding: LiveRoomBinding(),transition: Transition.zoom)
+    _pageBuilder(
+        name: AppRoutes.liveRoom,
+        page: () => LiveRoomPage(),
+        binding: LiveRoomBinding(),
+        transition: Transition.zoom),
+    _pageBuilder(
+      name: AppRoutes.groupChatSetup,
+      page: () => GroupChatSetupPage(),
+      binding: GroupChatSetupBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.selectContacts,
+      page: () => SelectContactsPage(),
+      binding: SelectContactsBinding(),
+    ),
+    _pageBuilder(
+      name: AppRoutes.selectContactsFromFriends,
+      page: () => SelectContactsFromFriendsPage(),
+      binding: SelectContactsFromFriendsBinding(),
+    ),
     // _pageBuilder(
     //   name: AppRoutes.chatSetup,
     //   page: () => ChatSetupPage(),

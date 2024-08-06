@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -11,7 +11,7 @@ class Config {
   static late String cachePath;
   static const uiW = 375.0;
   static const uiH = 812.0;
-  static const String deptName = "OwlIM";
+  static const String deptName = "OpenIM";
   static const String deptID = '0';
   static const double textScaleFactor = 1.0;
   static const secret = '21j32k6jkgnds89123';
@@ -79,7 +79,7 @@ class Config {
 
   static Future init(Function() runApp) async {
     WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+    // await Firebase.initializeApp();
     try {
       final path = (await getApplicationDocumentsDirectory()).path;
       cachePath = '$path/';

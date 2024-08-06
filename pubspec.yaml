@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,7 +43,6 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   shared_preferences: ^2.2.3
-  talker_dio_logger: ^4.3.4
   uuid: ^4.4.2
   path_provider: ^2.1.3
   android_path_provider: ^0.3.0
@@ -78,7 +79,6 @@ dependencies:
   device_info_plus: ^10.1.0
   visibility_detector: ^0.4.0+2
   emoji_picker_flutter: ^2.1.1
-  record: ^5.1.2
   mime: ^1.0.5
   video_player: ^2.9.1
   flutter_cache_manager: ^3.3.3
@@ -97,29 +97,27 @@ dependencies:
   flutter_form_builder: ^9.3.0
   form_builder_validators: ^11.0.0
   pull_to_refresh: 2.0.0
-  owl_common:
-    path: owl_common
-  owl_im_sdk:
-    path: owl_im_sdk
-  owl_live:
-    path: owl_live
-  flutter_localizations:
-    sdk: flutter
   flutter_dotenv: ^5.1.0
   pretty_qr_code: ^3.3.0
   screenshot: ^3.0.0
   share_plus: ^10.0.0
-  connectivity_plus: ^6.0.4
   flutter_slidable: ^3.1.1
   animate_do: ^3.3.4
   wechat_camera_picker: ^4.1.2
-  wechat_assets_picker: ^8.8.1+1
   audio_waveforms: ^1.0.5
+
+  owl_common:
+    path: owl_common
+  owl_live:
+    path: owl_live
+  eva_icons_flutter: ^3.1.0
+  font_awesome_flutter: ^10.7.0
 
 dependency_overrides:
   wechat_assets_picker: ^8.9.0-dev.1
   photo_manager: ^3.0.0-dev.2
   intl: ^0.18.0
+  flutter_openim_sdk: 3.5.1
 
 dev_dependencies:
   flutter_test:

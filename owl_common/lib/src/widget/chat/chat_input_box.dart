@@ -98,8 +98,9 @@ class _ChatInputBoxState extends State<ChatInputBox> {
                 constraints: BoxConstraints(minHeight: kInputBoxMinHeight),
                 margin: EdgeInsets.only(top: 6.0.w),
                 padding: EdgeInsets.only(
-                    bottom: context.mediaQueryPadding.bottom,
+                    bottom: context.mediaQueryPadding.bottom + 12.h,
                     top: 12.h,
+
                     right: 20.w,
                     left: 20.w),
                 decoration: BoxDecoration(

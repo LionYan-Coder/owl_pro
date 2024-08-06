@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owl_common/owl_common.dart';
 
 class TagNotification {

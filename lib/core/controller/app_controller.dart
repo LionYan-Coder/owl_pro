@@ -7,7 +7,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart' as im;
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart' as im;
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/utils/upgrade_manager.dart';
 import 'package:vibration/vibration.dart';
@@ -140,18 +141,18 @@ class AppController extends GetxController with UpgradeManger {
       {bool showNotification = true}) async {
     if (_isGlobalNotDisturb() ||
             message.attachedInfoElem?.notSenderNotificationPush == true ||
-            message.contentType == im.MessageType.typing ||
+            message.contentType == MessageType.typing ||
             message.sendID ==
-                im.OwlIM.iMManager
+                OpenIM.iMManager
                     .userID /* ||
         message.contentType! >= 1000*/
         ) return;
 
-    var sourceID = message.sessionType == im.ConversationType.single
+    var sourceID = message.sessionType == ConversationType.single
         ? message.sendID
         : message.groupID;
     if (sourceID != null && message.sessionType != null) {
-      var i = await im.OwlIM.iMManager.conversationManager.getOneConversation(
+      var i = await OpenIM.iMManager.conversationManager.getOneConversation(
         sourceID: sourceID,
         sessionType: message.sessionType!,
       );
@@ -180,8 +181,8 @@ class AppController extends GetxController with UpgradeManger {
         final id = seq;
 
         const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-            'chat', 'OwlIM chat message',
-            channelDescription: 'Information from OwlIM',
+            'OWLPro', 'OWLPro chat message',
+            channelDescription: 'Information from OWLPro',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');
@@ -199,7 +200,7 @@ class AppController extends GetxController with UpgradeManger {
 
   void showBadge(count) {
     if (isAppBadgeSupported) {
-      im.OwlIM.iMManager.messageManager.setAppBadge(count);
+      OpenIM.iMManager.messageManager.setAppBadge(count);
 
       if (count == 0) {
         removeBadge();

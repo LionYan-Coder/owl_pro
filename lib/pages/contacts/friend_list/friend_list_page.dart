@@ -39,7 +39,7 @@ class FriendListPage extends StatelessWidget {
                 AvatarView(
                   tag: info.nickname,
                   url: info.faceURL,
-                  text: info.showName,
+                  text: info.nickname,
                 ),
                 12.horizontalSpace,
                 info.showName.toText

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:azlistview/azlistview.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class ISGroupInfo extends GroupInfo with ISuspensionBean {
   String? tagIndex;

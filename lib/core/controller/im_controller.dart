@@ -4,16 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owl_live/owl_live.dart';
 import 'package:owlpro_app/core/im_callback.dart';
 
-class IMController extends GetxController with IMCallback,OpenIMLive {
+class IMController extends GetxController with IMCallback, OpenIMLive {
   // ignore: non_constant_identifier_names
   static IMController get IMState => Get.find<IMController>();
 
   final userInfo = UserFullInfo().obs;
   late String atAllTag;
+
+  @override
+  void onClose() {
+    super.close();
+    super.onClose();
+    onCloseLive();
+  }
 
   @override
   void onInit() async {
@@ -24,7 +31,7 @@ class IMController extends GetxController with IMCallback,OpenIMLive {
   }
 
   void initOwlIM() async {
-    final initialized = await OwlIM.iMManager.initSDK(
+    final initialized = await OpenIM.iMManager.initSDK(
         platformID: IMUtils.getPlatform(),
         apiAddr: Config.imApiUrl,
         wsAddr: Config.imWsUrl,
@@ -46,7 +53,7 @@ class IMController extends GetxController with IMCallback,OpenIMLive {
           onUserTokenExpired: kickedOffline,
         ));
 
-    OwlIM.iMManager
+    OpenIM.iMManager
       ..userManager.setUserListener(OnUserListener(
         onSelfInfoUpdated: (u) {
           Logger.print("onSelfInfoUpdated user = ${u.toJson()}");
@@ -54,9 +61,9 @@ class IMController extends GetxController with IMCallback,OpenIMLive {
             val?.nickname = u.nickname;
             val?.faceURL = u.faceURL;
             val?.remark = u.remark;
-            val?.about = u.about;
-            val?.account = u.account;
-            val?.coverURL = u.coverURL;
+            // val?.about = u.about;
+            // val?.account = u.account;
+            // val?.coverURL = u.coverURL;
             val?.ex = u.ex;
             val?.globalRecvMsgOpt = u.globalRecvMsgOpt;
           });
@@ -163,7 +170,7 @@ class IMController extends GetxController with IMCallback,OpenIMLive {
 
   Future login(String userID, String token) async {
     try {
-      var user = await OwlIM.iMManager.login(
+      var user = await OpenIM.iMManager.login(
         userID: userID,
         token: token,
         defaultValue: () async => UserInfo(userID: userID),
@@ -182,11 +189,11 @@ class IMController extends GetxController with IMCallback,OpenIMLive {
   }
 
   Future logout() {
-    return OwlIM.iMManager.logout();
+    return OpenIM.iMManager.logout();
   }
 
   void _queryAtAllTag() async {
-    atAllTag = OwlIM.iMManager.conversationManager.atAllTag;
+    atAllTag = OpenIM.iMManager.conversationManager.atAllTag;
   }
 
   Future<void> _queryMyFullInfo() async {

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/pages/home/home_logic.dart';
 import 'package:owlpro_app/routes/app_navigator.dart';
@@ -43,7 +43,7 @@ class ContactLogic extends GetxController implements ViewUserProfileBridge {
   }
 
   _getFriendList() async {
-    final list = await OwlIM.iMManager.friendshipManager
+    final list = await OpenIM.iMManager.friendshipManager
         .getFriendListMap()
         .then((list) => list.where(_filterBlacklist))
         .then((list) => list.map((e) {

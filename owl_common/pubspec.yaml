@@ -66,8 +66,6 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   chewie: ^1.8.0
   firebase_core: ^3.2.0
-  owl_im_sdk:
-    path: ../owl_im_sdk
   provider: ^6.1.2
   flutter_svg: ^2.0.10+1
   flutter_bitcoin: ^1.0.1
@@ -88,6 +86,8 @@ dependencies:
   extended_text_field: ^15.0.0
   wechat_camera_picker: ^4.1.2
   audio_waveforms: ^1.0.5
+  flutter_openim_sdk: 3.5.1
+  font_awesome_flutter: ^10.7.0
 
 dependency_overrides:
   wechat_assets_picker: ^8.9.0-dev.1

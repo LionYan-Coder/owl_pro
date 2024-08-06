@@ -60,6 +60,8 @@ export 'src/widget/azlist_view.dart';
 export 'src/widget/un_read_count_view.dart';
 export 'src/widget/bottom_bar.dart';
 export 'src/widget/custom_popup_menu.dart';
+export 'src/widget/tag.dart';
+export 'src/widget/dialog.dart';
 
 export 'src/widget/chat/chat_picture_preview.dart';
 export 'src/widget/chat/chat_item_view.dart';

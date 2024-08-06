@@ -3,9 +3,8 @@ import 'dart:typed_data';
 
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
-import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:web3dart/crypto.dart';
 
@@ -39,6 +38,7 @@ class AccountListLogic extends GetxController {
       if (signature != null && signature.isNotEmpty) {
         LoadingView.singleton.wrap(asyncFunction: () async {
           final data = await Apis.login(
+              publicKey: wallet?.publicKey ?? '',
               address: wallet?.address ?? '',
               nonce: bytesToHex(nonceHash, include0x: true),
               sign: signature);
@@ -46,8 +46,9 @@ class AccountListLogic extends GetxController {
           if (data.userID != null && data.userID.isNotEmpty) {
             await DataSp.addAccounts(data.userID);
             await DataSp.putLoginCertificate(data);
-            if (OwlIM.iMManager.isLogined) {
+            if (OpenIM.iMManager.isLogined) {
               await imLogic.logout();
+              await DataSp.removeLoginCertificate();
             }
             await imLogic.login(data.userID, data.imToken);
             await Get.forceAppUpdate();

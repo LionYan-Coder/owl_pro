@@ -1,7 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
+
+import 'widgets/ripple_effect_button.dart';
 
 class LiveRoomPage extends StatelessWidget {
   const LiveRoomPage({super.key});
@@ -10,7 +14,77 @@ class LiveRoomPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
+        // alignment: Alignment.center,
         children: [
+          Container(
+            color: Colors.transparent,
+          ),
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+            child: Container(
+              color: Color.fromRGBO(240, 249, 255, 0.6).adapterDark(Color.fromRGBO(13, 13, 13, 0.6)),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF0C8CE9),
+                  Color(0xFF427BA5),
+                  Color(0xFF274B65),
+                  Color(0xFF5486AC),
+                  Color(0xFF3B86BD),
+                  Color(0xFFFFFFFF),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(80.r), // 可以调整边角圆滑度
+            ),
+            child: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 60.0, sigmaY: 60.0),
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            top: 72.h,
+            child: Container(
+              width: 1.sw,
+              margin: EdgeInsets.only(top: 72.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  RippleEffectButton(),
+                  48.gapv,
+                  "chat_live_title".tr.toText..style = Styles.ts_FFFFFF_20_medium,
+                  8.gapv,
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 96.w),
+                    height: 24.h,
+                    decoration: BoxDecoration(
+                      color: Styles.c_0C8CE9.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(15.r)
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          "videocall_ico_request".svg.toSvg..width = 14.w..height = 14.w,
+                          4.gaph,
+                          "chat_live_hint".tr.toText..style = Styles.ts_0C8CE9_12
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

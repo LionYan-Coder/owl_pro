@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -23,6 +23,7 @@ class ConversationPage extends StatelessWidget {
     return Column(
       children: [
         Navbar(),
+        24.gapv,
         Expanded(
             child: SlidableAutoCloseBehavior(
           child: SmartRefresher(
@@ -52,7 +53,6 @@ class ConversationPage extends StatelessWidget {
   }
 
   Widget _buildConversationItemView(ConversationInfo info) => Slidable(
-
         endActionPane: ActionPane(
           motion: const ScrollMotion(),
           extentRatio: logic.existUnreadMsg(info)
@@ -96,8 +96,8 @@ class ConversationPage extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                height: 50.h,
-                margin: EdgeInsets.symmetric(vertical: 16.w),
+                // height: 50.h,
+                margin: EdgeInsets.only(bottom: 16.w),
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Row(
                   children: [
@@ -106,8 +106,9 @@ class ConversationPage extends StatelessWidget {
                       height: 48.h,
                       text: logic.getShowName(info),
                       url: info.faceURL,
-                      isGroup: logic.isGroupChat(info),
-                      textStyle: Styles.ts_FFFFFF_14_medium.adapterDark(Styles.ts_333333_14_medium),
+                      // isGroup: logic.isGroupChat(info),
+                      textStyle: Styles.ts_FFFFFF_14_medium
+                          .adapterDark(Styles.ts_333333_14_medium),
                     ),
                     12.gaph,
                     Expanded(
@@ -119,13 +120,15 @@ class ConversationPage extends StatelessWidget {
                               ConstrainedBox(
                                 constraints: BoxConstraints(maxWidth: 180.w),
                                 child: logic.getShowName(info).toText
-                                  ..style = Styles.ts_333333_14_medium.adapterDark(Styles.ts_CCCCCC_14_medium)
+                                  ..style = Styles.ts_333333_14_medium
+                                      .adapterDark(Styles.ts_CCCCCC_14_medium)
                                   ..maxLines = 1
                                   ..overflow = TextOverflow.ellipsis,
                               ),
                               const Spacer(),
                               logic.getTime(info).toText
-                                ..style = Styles.ts_999999_12.adapterDark(Styles.ts_555555_12),
+                                ..style = Styles.ts_999999_12
+                                    .adapterDark(Styles.ts_555555_12),
                             ],
                           ),
                           5.verticalSpace,
@@ -133,7 +136,8 @@ class ConversationPage extends StatelessWidget {
                             children: [
                               MatchTextView(
                                 text: logic.getContent(info),
-                                textStyle: Styles.ts_999999_12.adapterDark(Styles.ts_666666_12),
+                                textStyle: Styles.ts_999999_12
+                                    .adapterDark(Styles.ts_666666_12),
                                 allAtMap: logic.getAtUserMap(info),
                                 prefixSpan: TextSpan(
                                   text: '',
@@ -163,9 +167,11 @@ class ConversationPage extends StatelessWidget {
                               ),
                               const Spacer(),
                               if (logic.isNotDisturb(info))
-                                ImageRes.notDisturb.toImage
-                                  ..width = 13.63.w
-                                  ..height = 14.07.h
+                                "chat_ico_remind_not".svg.toSvg
+                                  ..width = 12.w
+                                  ..height = 12.h
+                                  ..color = Styles.c_999999
+                                      .adapterDark(Styles.c_666666)
                               else
                                 UnreadCountView(
                                     count: logic.getUnreadCount(info)),

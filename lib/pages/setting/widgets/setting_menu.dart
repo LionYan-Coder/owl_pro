@@ -7,8 +7,9 @@ class SettingMenu extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? extra;
   final Widget? hint;
+  final Widget? right;
   const SettingMenu(
-      {super.key, required this.label, this.extra, this.hint, this.onTap});
+      {super.key, required this.label, this.extra, this.hint, this.onTap,this.right});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class SettingMenu extends StatelessWidget {
                   ..style = Styles.ts_333333_16
                       .adapterDark(Styles.ts_CCCCCC_16)
                       .copyWith(letterSpacing: 1.w),
-                Row(
+                right ?? Row(
                   children: [
                     extra ?? const SizedBox.shrink(),
                     "arrow_right".svg.toSvg

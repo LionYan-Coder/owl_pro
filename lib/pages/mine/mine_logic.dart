@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
@@ -6,6 +9,7 @@ import 'package:owlpro_app/widgets/dialog.dart';
 class MineLogic extends GetxController {
   static get to => Get.find<MineLogic>();
   final im = Get.find<IMController>();
+  late StreamSubscription kickedOfflineSub;
 
   final loadingBalance = false.obs;
 
@@ -62,6 +66,8 @@ class MineLogic extends GetxController {
       savePassword(newPwd);
       saveLastVerifyPwdTime();
     } else {
+      Logger.print(
+          "currentPassword = ${EncryptionHelper.decrypt64(currentPassword)}");
       if (lastVerifyPwdTime > 0) {
         var lastChecked =
             DateTime.fromMillisecondsSinceEpoch(lastVerifyPwdTime);
@@ -78,17 +84,25 @@ class MineLogic extends GetxController {
     }
   }
 
-  // @override
-  // void onReady() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     checkPassword();
-  //   });
-  //   super.onReady();
-  // }
+  void kickedOffline() async {
+    Get.snackbar(StrRes.accountWarn, StrRes.accountException);
+    PackageBridge.rtcBridge?.dismiss();
+    await DataSp.removeLoginCertificate();
+  }
+
+  @override
+  void onReady() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkPassword();
+    });
+    super.onReady();
+  }
 
   @override
   void onInit() {
-    super.onInit();
+    kickedOfflineSub = im.onKickedOfflineSubject.listen((value) {
+      kickedOffline();
+    });
     _worker = ever(im.userInfo, (userInfo) {
       loadedWalletBalance(userInfo);
       if (userInfo.address != null) {
@@ -103,10 +117,12 @@ class MineLogic extends GetxController {
     loadedWalletBalance(im.userInfo.value);
     verifyPwdGapTime.value =
         DataSp.verifyPwdGap ?? const Duration(days: 1).inMilliseconds;
+    super.onInit();
   }
 
   @override
   void onClose() {
+    kickedOfflineSub.cancel();
     _worker.dispose();
     super.onClose();
   }

@@ -46,6 +46,8 @@ class DropdownAdd extends StatelessWidget {
             if (val == 'newfriend') {
               AppNavigator.startAddBySearch();
               // context.push(AppRouter.userSearchPath);
+            }else if (val == 'group'){
+              AppNavigator.startAddGroup();
             }
           },
           items: [

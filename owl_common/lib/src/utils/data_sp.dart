@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:uuid/uuid.dart';
 
@@ -33,7 +33,7 @@ class DataSp {
   }
 
   static String getKey(String key) {
-    return sprintf(key, [OwlIM.iMManager.userID]);
+    return sprintf(key, [OpenIM.iMManager.userID]);
   }
 
   static String? get imToken => getLoginCertificate()?.imToken;

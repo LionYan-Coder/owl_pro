@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class Apis {
   static Options get imTokenOptions =>
@@ -10,14 +10,15 @@ class Apis {
   static Options get chatTokenOptions =>
       Options(headers: {'token': DataSp.chatToken});
 
-  static Future<LoginCertificate> login({
-    required String address,
-    required String nonce,
-    required String sign,
-  }) async {
+  static Future<LoginCertificate> login(
+      {required String address,
+      required String nonce,
+      required String sign,
+      required String publicKey}) async {
     try {
       var data = await HttpUtil.post(Urls.login,
           data: {
+            "publicKey": publicKey,
             "address": address,
             "nonce": nonce,
             "signature": sign,
@@ -186,7 +187,7 @@ class Apis {
 
   static Future<UserFullInfo?> queryMyFullInfo() async {
     final list = await Apis.getUserFullInfo(
-      userIDList: [OwlIM.iMManager.userID],
+      userIDList: [OpenIM.iMManager.userID],
     );
     return list?.firstOrNull;
   }

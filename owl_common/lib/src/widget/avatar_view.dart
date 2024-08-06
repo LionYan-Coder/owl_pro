@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:uuid/uuid.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 typedef CustomAvatarBuilder = Widget? Function();
 
@@ -103,18 +104,18 @@ class AvatarView extends StatelessWidget {
           shape: BoxShape.rectangle,
           color: _textAvatarBgColor,
         ),
-        child: Text(_showName!, style: _textStyle),
-        // child: null == _showName
-        //     ? (showDefaultAvatar
-        //         ? FaIcon(
-        //             isGroup
-        //                 ? FontAwesomeIcons.userGroup
-        //                 : FontAwesomeIcons.solidUser,
-        //             color: Colors.white,
-        //             size: _avatarSize / 2,
-        //           )
-        //         : null)
-        //     : Text(_showName!, style: _textStyle),
+        // child: Text(_showName!, style: _textStyle),
+        child: null == _showName
+            ? (showDefaultAvatar
+                ? FaIcon(
+                    isGroup
+                        ? FontAwesomeIcons.userGroup
+                        : FontAwesomeIcons.solidUser,
+                    color: Colors.white,
+                    size: _avatarSize / 2,
+                  )
+                : null)
+            : Text(_showName!, style: _textStyle),
       );
 
   Widget _networkImageAvatar() => ImageUtil.networkImage(

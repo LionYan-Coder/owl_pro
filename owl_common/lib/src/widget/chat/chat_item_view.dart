@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'chat_vocie_view.dart';
@@ -114,7 +114,6 @@ class ChatItemView extends StatefulWidget {
   final bool showRightNickname;
   final bool showTime;
 
-
   final Color? highlightColor;
   final Map<String, String> allAtMap;
   final List<MatchPattern> patterns;
@@ -134,7 +133,7 @@ class ChatItemView extends StatefulWidget {
 class _ChatItemViewState extends State<ChatItemView> {
   Message get _message => widget.message;
 
-  bool get _isISend => _message.sendID == OwlIM.iMManager.userID;
+  bool get _isISend => _message.sendID == OpenIM.iMManager.userID;
 
   late StreamSubscription<bool> _keyboardSubs;
 
@@ -158,7 +157,7 @@ class _ChatItemViewState extends State<ChatItemView> {
     return FocusDetector(
       child: Container(
         color: widget.highlightColor,
-        margin: EdgeInsets.only(top: widget.showTime  ? 20.h : 0.h),
+        margin: EdgeInsets.only(top: widget.showTime ? 20.h : 0.h),
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Center(child: _child),
       ),
@@ -167,7 +166,8 @@ class _ChatItemViewState extends State<ChatItemView> {
     );
   }
 
-  Widget get _child => widget.itemViewBuilder?.call(context, _message) ?? _buildChildView();
+  Widget get _child =>
+      widget.itemViewBuilder?.call(context, _message) ?? _buildChildView();
 
   Widget _buildChildView() {
     Widget? child;
@@ -200,15 +200,14 @@ class _ChatItemViewState extends State<ChatItemView> {
         message: _message,
         sendProgressStream: widget.sendProgressSubject,
       );
-    } else if (_message.isVoiceType){
+    } else if (_message.isVoiceType) {
       isBubbleBg = true;
       child = ChatVoiceView(
         message: _message,
         isISend: _isISend,
         sendProgressStream: widget.sendProgressSubject,
       );
-    }
-    else if (_message.isVideoType) {
+    } else if (_message.isVideoType) {
       final video = _message.videoElem;
       child = ChatVideoView(
         isISend: _isISend,
@@ -225,7 +224,8 @@ class _ChatItemViewState extends State<ChatItemView> {
         }
       }
     } else if (_message.isNotificationType) {
-      if (_message.contentType == MessageType.groupInfoSetAnnouncementNotification) {
+      if (_message.contentType ==
+          MessageType.groupInfoSetAnnouncementNotification) {
       } else {
         return ConstrainedBox(
           constraints: BoxConstraints(maxWidth: maxWidth),
@@ -240,8 +240,8 @@ class _ChatItemViewState extends State<ChatItemView> {
       isISend: _isISend,
       leftNickname: senderNickname,
       leftFaceUrl: senderFaceURL,
-      rightNickname: widget.rightNickname ?? OwlIM.iMManager.userInfo.nickname,
-      rightFaceUrl: widget.rightFaceUrl ?? OwlIM.iMManager.userInfo.faceURL,
+      rightNickname: widget.rightNickname ?? OpenIM.iMManager.userInfo.nickname,
+      rightFaceUrl: widget.rightFaceUrl ?? OpenIM.iMManager.userInfo.faceURL,
       showLeftNickname: widget.showLeftNickname,
       showRightNickname: widget.showRightNickname,
       showTime: widget.showTime,
@@ -262,7 +262,7 @@ class _ChatItemViewState extends State<ChatItemView> {
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: widget.onClickItemView,
-        child: child ?? ChatText(text: StrRes.unsupportedMessage),
+        child: child ?? ChatText(text: StrRes.unsupportedMessage,isISend: _isISend),
       ),
     );
   }

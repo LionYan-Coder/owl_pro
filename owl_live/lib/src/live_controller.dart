@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:owl_common/owl_common.dart';
@@ -88,76 +88,78 @@ mixin OpenIMLive {
   Stream<CallEvent> get _stream => signalingSubject
       .stream /*.where((event) => LiveClient.dispatchSignaling(event))*/;
 
-  _signalingListener() => _stream.listen(
-        (event) async {
-          _beCalledEvent = null;
-          if (event.state == CallState.beCalled) {
-            _playSound();
-            final mediaType = event.data.invitation!.mediaType;
-            final sessionType = event.data.invitation!.sessionType;
-            final callType =
-                mediaType == 'audio' ? CallType.audio : CallType.video;
-            final callObj = sessionType == ConversationType.single
-                ? CallObj.single
-                : CallObj.group;
+  _signalingListener() {
+    return _stream.listen(
+          (event) async {
+        _beCalledEvent = null;
+        if (event.state == CallState.beCalled) {
+          _playSound();
+          final mediaType = event.data.invitation!.mediaType;
+          final sessionType = event.data.invitation!.sessionType;
+          final callType =
+          mediaType == 'audio' ? CallType.audio : CallType.video;
+          final callObj = sessionType == ConversationType.single
+              ? CallObj.single
+              : CallObj.group;
 
-            if (Platform.isAndroid && _isRunningBackground) {
-              _beCalledEvent = event;
-              if (await Permissions.checkSystemAlertWindow()) {
-                return;
-              }
-            }
-            _beCalledEvent = null;
-            OpenIMLiveClient().start(
-              Get.overlayContext!,
-              callEventSubject: signalingSubject,
-              roomID: event.data.invitation!.roomID!,
-              inviteeUserIDList: event.data.invitation!.inviteeUserIDList!,
-              inviterUserID: event.data.invitation!.inviterUserID!,
-              groupID: event.data.invitation!.groupID,
-              callType: callType,
-              callObj: callObj,
-              initState: CallState.beCalled,
-              onSyncUserInfo: onSyncUserInfo,
-              onSyncGroupInfo: onSyncGroupInfo,
-              onSyncGroupMemberInfo: onSyncGroupMemberInfo,
-              autoPickup: _autoPickup,
-              onTapPickup: () => onTapPickup(
-                event.data..userID = OwlIM.iMManager.userID,
-              ),
-              onTapReject: () => onTapReject(
-                event.data..userID = OwlIM.iMManager.userID,
-              ),
-              onTapHangup: (duration, isPositive) => onTapHangup(
-                event.data..userID = OwlIM.iMManager.userID,
-                duration,
-                isPositive,
-              ),
-              onError: onError,
-              onRoomDisconnected: () => onRoomDisconnected(event.data),
-            );
-          } else if (event.state == CallState.beRejected) {
-            _stopSound();
-          } else if (event.state == CallState.beHangup) {
-            _stopSound();
-          } else if (event.state == CallState.beCanceled) {
-            if (_isRunningBackground) {}
-            _stopSound();
-          } else if (event.state == CallState.beAccepted) {
-            _stopSound();
-          } else if (event.state == CallState.otherReject ||
-              event.state == CallState.otherAccepted) {
-            _stopSound();
-          } else if (event.state == CallState.timeout) {
-            _stopSound();
-            final sessionType = event.data.invitation!.sessionType;
-
-            if (sessionType == 1) {
-              onTimeoutCancelled(event.data);
+          if (Platform.isAndroid && _isRunningBackground) {
+            _beCalledEvent = event;
+            if (await Permissions.checkSystemAlertWindow()) {
+              return;
             }
           }
-        },
-      );
+          _beCalledEvent = null;
+          OpenIMLiveClient().start(
+            Get.overlayContext!,
+            callEventSubject: signalingSubject,
+            roomID: event.data.invitation!.roomID!,
+            inviteeUserIDList: event.data.invitation!.inviteeUserIDList!,
+            inviterUserID: event.data.invitation!.inviterUserID!,
+            groupID: event.data.invitation!.groupID,
+            callType: callType,
+            callObj: callObj,
+            initState: CallState.beCalled,
+            onSyncUserInfo: onSyncUserInfo,
+            onSyncGroupInfo: onSyncGroupInfo,
+            onSyncGroupMemberInfo: onSyncGroupMemberInfo,
+            autoPickup: _autoPickup,
+            onTapPickup: () => onTapPickup(
+              event.data..userID = OpenIM.iMManager.userID,
+            ),
+            onTapReject: () => onTapReject(
+              event.data..userID = OpenIM.iMManager.userID,
+            ),
+            onTapHangup: (duration, isPositive) => onTapHangup(
+              event.data..userID = OpenIM.iMManager.userID,
+              duration,
+              isPositive,
+            ),
+            onError: onError,
+            onRoomDisconnected: () => onRoomDisconnected(event.data),
+          );
+        } else if (event.state == CallState.beRejected) {
+          _stopSound();
+        } else if (event.state == CallState.beHangup) {
+          _stopSound();
+        } else if (event.state == CallState.beCanceled) {
+          if (_isRunningBackground) {}
+          _stopSound();
+        } else if (event.state == CallState.beAccepted) {
+          _stopSound();
+        } else if (event.state == CallState.otherReject ||
+            event.state == CallState.otherAccepted) {
+          _stopSound();
+        } else if (event.state == CallState.timeout) {
+          _stopSound();
+          final sessionType = event.data.invitation!.sessionType;
+
+          if (sessionType == 1) {
+            onTimeoutCancelled(event.data);
+          }
+        }
+      },
+    );
+  }
 
   _insertSignalingMessageListener() {}
 
@@ -173,7 +175,7 @@ mixin OpenIMLive {
   }) async {
     final mediaType = callType == CallType.audio ? 'audio' : 'video';
     final sessionType = callObj == CallObj.single ? 1 : 3;
-    inviterUserID ??= OwlIM.iMManager.userID;
+    inviterUserID ??= OpenIM.iMManager.userID;
 
     final signal = SignalingInfo(
       userID: inviterUserID,
@@ -242,14 +244,14 @@ mixin OpenIMLive {
       'customType': CustomMessageType.callingInvite,
       'data': signaling.invitation!.toJson()
     };
-    final message = await OwlIM.iMManager.messageManager.createCustomMessage(
+    final message = await OpenIM.iMManager.messageManager.createCustomMessage(
         data: jsonEncode(data), extension: '', description: '');
-    OwlIM.iMManager.messageManager.sendMessage(
+    OpenIM.iMManager.messageManager.sendMessage(
         message: message,
         offlinePushInfo: OfflinePushInfo(),
         userID: signaling.invitation!.inviteeUserIDList!.first);
     final certificate = await Apis.getTokenForRTC(
-        signaling.invitation!.roomID!, OwlIM.iMManager.userID);
+        signaling.invitation!.roomID!, OpenIM.iMManager.userID);
 
     return certificate;
   }
@@ -262,14 +264,14 @@ mixin OpenIMLive {
       'customType': CustomMessageType.callingAccept,
       'data': signaling.invitation!.toJson()
     };
-    final message = await OwlIM.iMManager.messageManager.createCustomMessage(
+    final message = await OpenIM.iMManager.messageManager.createCustomMessage(
         data: jsonEncode(data), extension: '', description: '');
-    OwlIM.iMManager.messageManager.sendMessage(
+    OpenIM.iMManager.messageManager.sendMessage(
         message: message,
         offlinePushInfo: OfflinePushInfo(),
         userID: signaling.invitation!.inviterUserID);
     final certificate = await Apis.getTokenForRTC(
-        signaling.invitation!.roomID!, OwlIM.iMManager.userID);
+        signaling.invitation!.roomID!, OpenIM.iMManager.userID);
 
     return certificate;
   }
@@ -280,13 +282,13 @@ mixin OpenIMLive {
       'customType': CustomMessageType.callingReject,
       'data': signaling.invitation!.toJson()
     };
-    final message = await OwlIM.iMManager.messageManager.createCustomMessage(
+    final message = await OpenIM.iMManager.messageManager.createCustomMessage(
         data: jsonEncode(data), extension: '', description: '');
     final recvUserID =
-        signaling.invitation!.inviterUserID == OwlIM.iMManager.userID
+        signaling.invitation!.inviterUserID == OpenIM.iMManager.userID
             ? signaling.invitation!.inviteeUserIDList!.first
             : signaling.invitation!.inviterUserID;
-    return OwlIM.iMManager.messageManager.sendMessage(
+    return OpenIM.iMManager.messageManager.sendMessage(
         message: message,
         offlinePushInfo: OfflinePushInfo(),
         userID: recvUserID);
@@ -298,13 +300,13 @@ mixin OpenIMLive {
       'customType': CustomMessageType.callingCancel,
       'data': signaling.invitation!.toJson()
     };
-    final message = await OwlIM.iMManager.messageManager.createCustomMessage(
+    final message = await OpenIM.iMManager.messageManager.createCustomMessage(
         data: jsonEncode(data), extension: '', description: '');
     final recvUserID =
-        signaling.invitation!.inviterUserID == OwlIM.iMManager.userID
+        signaling.invitation!.inviterUserID == OpenIM.iMManager.userID
             ? signaling.invitation!.inviteeUserIDList!.first
             : signaling.invitation!.inviterUserID;
-    OwlIM.iMManager.messageManager.sendMessage(
+    OpenIM.iMManager.messageManager.sendMessage(
         message: message,
         offlinePushInfo: OfflinePushInfo(),
         userID: recvUserID);
@@ -316,10 +318,10 @@ mixin OpenIMLive {
       'customType': CustomMessageType.callingCancel,
       'data': signaling.invitation!.toJson()
     };
-    final message = await OwlIM.iMManager.messageManager.createCustomMessage(
+    final message = await OpenIM.iMManager.messageManager.createCustomMessage(
         data: jsonEncode(data), extension: '', description: '');
 
-    OwlIM.iMManager.messageManager.sendMessage(
+    OpenIM.iMManager.messageManager.sendMessage(
         message: message,
         offlinePushInfo: OfflinePushInfo(),
         userID: signaling.invitation!.inviterUserID);
@@ -333,13 +335,13 @@ mixin OpenIMLive {
         'customType': CustomMessageType.callingHungup,
         'data': signaling.invitation!.toJson()
       };
-      final message = await OwlIM.iMManager.messageManager.createCustomMessage(
+      final message = await OpenIM.iMManager.messageManager.createCustomMessage(
           data: jsonEncode(data), extension: '', description: '');
       final recvUserID =
-          signaling.invitation!.inviterUserID == OwlIM.iMManager.userID
+          signaling.invitation!.inviterUserID == OpenIM.iMManager.userID
               ? signaling.invitation!.inviteeUserIDList!.first
               : signaling.invitation!.inviterUserID;
-      OwlIM.iMManager.messageManager.sendMessage(
+      OpenIM.iMManager.messageManager.sendMessage(
           message: message,
           offlinePushInfo: OfflinePushInfo(),
           userID: recvUserID);
@@ -355,7 +357,7 @@ mixin OpenIMLive {
   onJoin() {}
 
   Future<UserInfo?> onSyncUserInfo(userID) async {
-    var list = await OwlIM.iMManager.userManager.getUsersInfo(
+    var list = await OpenIM.iMManager.userManager.getUsersInfo(
       userIDList: [userID],
     );
 
@@ -363,7 +365,7 @@ mixin OpenIMLive {
   }
 
   Future<GroupInfo?> onSyncGroupInfo(groupID) async {
-    var list = await OwlIM.iMManager.groupManager.getGroupsInfo(
+    var list = await OpenIM.iMManager.groupManager.getGroupsInfo(
       groupIDList: [groupID],
     );
     return list.firstOrNull;
@@ -371,7 +373,7 @@ mixin OpenIMLive {
 
   Future<List<GroupMembersInfo>> onSyncGroupMemberInfo(
       groupID, userIDList) async {
-    var list = await OwlIM.iMManager.groupManager.getGroupMembersInfo(
+    var list = await OpenIM.iMManager.groupManager.getGroupMembersInfo(
       groupID: groupID,
       userIDList: userIDList,
     );

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/app_controller.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/core/controller/push_controller.dart';
@@ -28,7 +28,7 @@ class HomeLogic extends GetxController {
   }
 
   _getUnreadMsgCount() {
-    OwlIM.iMManager.conversationManager.getTotalUnreadMsgCount().then((count) {
+    OpenIM.iMManager.conversationManager.getTotalUnreadMsgCount().then((count) {
       unreadMsgCount.value = int.tryParse(count) ?? 0;
       initLogic.showBadge(unreadMsgCount.value);
     });
@@ -36,7 +36,7 @@ class HomeLogic extends GetxController {
 
   void getUnhandledFriendApplicationCount() async {
     var i = 0;
-    var list = await OwlIM.iMManager.friendshipManager
+    var list = await OpenIM.iMManager.friendshipManager
         .getFriendApplicationListAsRecipient();
     var haveReadList = DataSp.getHaveReadUnHandleFriendApplication();
     haveReadList ??= <String>[];
@@ -52,8 +52,8 @@ class HomeLogic extends GetxController {
 
   void getUnhandledGroupApplicationCount() async {
     var i = 0;
-    var list =
-        await OwlIM.iMManager.groupManager.getGroupApplicationListAsRecipient();
+    var list = await OpenIM.iMManager.groupManager
+        .getGroupApplicationListAsRecipient();
     var haveReadList = DataSp.getHaveReadUnHandleGroupApplication();
     haveReadList ??= <String>[];
     for (var info in list) {

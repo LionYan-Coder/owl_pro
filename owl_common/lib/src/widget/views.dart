@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:uuid/uuid.dart';
 
@@ -28,9 +28,9 @@ class IMViews {
   }
 
   static openIMCallSheet(
-      String label,
-      Function(int index) onTapSheetItem,
-      ) {
+    String label,
+    Function(int index) onTapSheetItem,
+  ) {
     return Get.bottomSheet(
       BottomSheetView(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -54,9 +54,9 @@ class IMViews {
   }
 
   static openIMGroupCallSheet(
-      String groupID,
-      Function(int index) onTapSheetItem,
-      ) {
+    String groupID,
+    Function(int index) onTapSheetItem,
+  ) {
     return Get.bottomSheet(
       BottomSheetView(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -234,7 +234,7 @@ class IMViews {
         final image =
             await IMUtils.compressImageAndGetFile(File(cropFile!.path));
 
-        result = await OwlIM.iMManager.uploadFile(
+        result = await OpenIM.iMManager.uploadFile(
           id: putID,
           filePath: image!.path,
           fileName: image.path.split('/').last,
@@ -243,7 +243,7 @@ class IMViews {
         Logger.print('-----------source path: $path');
         final image = await IMUtils.compressImageAndGetFile(File(path));
 
-        result = await OwlIM.iMManager.uploadFile(
+        result = await OpenIM.iMManager.uploadFile(
           id: putID,
           filePath: image!.path,
           fileName: image.path,

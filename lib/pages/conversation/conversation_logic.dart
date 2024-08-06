@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/im_callback.dart';
 import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -14,7 +13,6 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../core/controller/app_controller.dart';
 import '../../core/controller/im_controller.dart';
 import '../home/home_logic.dart';
-import 'widgets/user_online_status.dart';
 
 class ConversationLogic extends GetxController {
   final popCtrl = CustomPopupMenuController();
@@ -54,7 +52,7 @@ class ConversationLogic extends GetxController {
     if (imLogic.userInfo.value.globalRecvMsgOpt == 0 &&
         info.recvMsgOpt == 0 &&
         info.unreadCount > 0 &&
-        info.latestMsg?.sendID != OwlIM.iMManager.userID) {
+        info.latestMsg?.sendID != OpenIM.iMManager.userID) {
       appLogic.promptSoundOrNotification(info.latestMsg!.seq!);
     }
   }
@@ -74,14 +72,15 @@ class ConversationLogic extends GetxController {
   }
 
   void pinConversation(ConversationInfo info) async {
-    OwlIM.iMManager.conversationManager.pinConversation(
+    OpenIM.iMManager.conversationManager.pinConversation(
       conversationID: info.conversationID,
       isPinned: !info.isPinned!,
     );
   }
 
   void deleteConversation(ConversationInfo info) async {
-    await OwlIM.iMManager.conversationManager.deleteConversationAndDeleteAllMsg(
+    await OpenIM.iMManager.conversationManager
+        .deleteConversationAndDeleteAllMsg(
       conversationID: info.conversationID,
     );
     list.remove(info);
@@ -92,7 +91,7 @@ class ConversationLogic extends GetxController {
   }
 
   void setConversationDraft({required String cid, required String draftText}) {
-    OwlIM.iMManager.conversationManager.setConversationDraft(
+    OpenIM.iMManager.conversationManager.setConversationDraft(
       conversationID: cid,
       draftText: draftText,
     );
@@ -146,7 +145,9 @@ class ConversationLogic extends GetxController {
 
       final text = IMUtils.parseNtf(info.latestMsg!, isConversation: true);
       if (text != null) return text;
-      if (info.isSingleChat || info.latestMsg!.sendID == OwlIM.iMManager.userID) return IMUtils.parseMsg(info.latestMsg!, isConversation: true);
+      if (info.isSingleChat ||
+          info.latestMsg!.sendID == OpenIM.iMManager.userID)
+        return IMUtils.parseMsg(info.latestMsg!, isConversation: true);
 
       return "${info.latestMsg!.senderNickname}: ${IMUtils.parseMsg(info.latestMsg!, isConversation: true)} ";
     } catch (e, s) {
@@ -228,7 +229,7 @@ class ConversationLogic extends GetxController {
   void _markMessageHasRead({
     String? conversationID,
   }) {
-    OwlIM.iMManager.conversationManager.markConversationMessageAsRead(
+    OpenIM.iMManager.conversationManager.markConversationMessageAsRead(
       conversationID: conversationID!,
     );
   }
@@ -243,7 +244,7 @@ class ConversationLogic extends GetxController {
     }
 
     Logger.print('draftText:$newDraftText');
-    OwlIM.iMManager.conversationManager.setConversationDraft(
+    OpenIM.iMManager.conversationManager.setConversationDraft(
       conversationID: conversationID,
       draftText: newDraftText,
     );
@@ -266,9 +267,12 @@ class ConversationLogic extends GetxController {
     }
   }
 
-  bool get isFailedSdkStatus => imStatus.value == IMSdkStatus.connectionFailed || imStatus.value == IMSdkStatus.syncFailed;
+  bool get isFailedSdkStatus =>
+      imStatus.value == IMSdkStatus.connectionFailed ||
+      imStatus.value == IMSdkStatus.syncFailed;
 
-  void _sortConversationList() => OwlIM.iMManager.conversationManager.simpleSort(list);
+  void _sortConversationList() =>
+      OpenIM.iMManager.conversationManager.simpleSort(list);
 
   void onRefresh() async {
     late List<ConversationInfo> list;
@@ -299,10 +303,11 @@ class ConversationLogic extends GetxController {
     }
   }
 
-  _request(int offset) => OwlIM.iMManager.conversationManager.getConversationListSplit(
-    offset: offset,
-    count: pageSize,
-  );
+  _request(int offset) =>
+      OpenIM.iMManager.conversationManager.getConversationListSplit(
+        offset: offset,
+        count: pageSize,
+      );
 
   bool isValidConversation(ConversationInfo info) {
     return info.isValid;
@@ -312,8 +317,10 @@ class ConversationLogic extends GetxController {
     int itemCount = list.length;
     double scrollOffset = scrollController.position.pixels;
     double viewportHeight = scrollController.position.viewportDimension;
-    double scrollRange = scrollController.position.maxScrollExtent - scrollController.position.minScrollExtent;
-    int firstVisibleItemIndex = (scrollOffset / (scrollRange + viewportHeight) * itemCount).floor();
+    double scrollRange = scrollController.position.maxScrollExtent -
+        scrollController.position.minScrollExtent;
+    int firstVisibleItemIndex =
+        (scrollOffset / (scrollRange + viewportHeight) * itemCount).floor();
     return firstVisibleItemIndex;
   }
 
@@ -332,7 +339,8 @@ class ConversationLogic extends GetxController {
     }
 
     if (start > list.length - 1) return;
-    final unreadItem = list.sublist(start).firstWhereOrNull((e) => e.unreadCount! > 0);
+    final unreadItem =
+        list.sublist(start).firstWhereOrNull((e) => e.unreadCount! > 0);
     if (null == unreadItem) {
       if (start > 0) {
         scrollController.scrollToIndex(
@@ -354,10 +362,11 @@ class ConversationLogic extends GetxController {
     required int sessionType,
   }) =>
       LoadingView.singleton.wrap(
-          asyncFunction: () => OwlIM.iMManager.conversationManager.getOneConversation(
-            sourceID: sourceID,
-            sessionType: sessionType,
-          ));
+          asyncFunction: () =>
+              OpenIM.iMManager.conversationManager.getOneConversation(
+                sourceID: sourceID,
+                sessionType: sessionType,
+              ));
 
   Future<bool> _jumpOANtf(ConversationInfo info) async {
     if (info.conversationType == ConversationType.notification) {
@@ -412,10 +421,9 @@ class ConversationLogic extends GetxController {
 
     var groupAtType = list.firstWhereOrNull(equal)?.groupAtType;
     if (groupAtType != GroupAtType.atNormal) {
-      OwlIM.iMManager.conversationManager.resetConversationGroupAtType(
+      OpenIM.iMManager.conversationManager.resetConversationGroupAtType(
         conversationID: conversationInfo.conversationID,
       );
     }
   }
-
 }

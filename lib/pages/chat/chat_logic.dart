@@ -2,14 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 // import 'dart:developer';
 import 'dart:io';
-
 import 'package:common_utils/common_utils.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owl_live/owl_live.dart';
 import 'package:owlpro_app/core/controller/app_controller.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
@@ -20,7 +19,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
-
 
 class ChatLogic extends GetxController {
   final imLogic = Get.find<IMController>();
@@ -79,7 +77,6 @@ class ChatLogic extends GetxController {
 
   late StreamSubscription connectionSub;
 
-
   final syncStatus = IMSdkStatus.syncEnded.obs;
 
   int? lastMinSeq;
@@ -102,20 +99,24 @@ class ChatLogic extends GetxController {
 
   bool get rtcIsBusy => rtcBridge?.hasConnection == true;
 
-  bool hiddenTime(Message message,Message? prevMessage){
-    if (prevMessage != null && message.sendTime != null && prevMessage.sendTime != null){
-
-      if (prevMessage.sendID == message.sendID && prevMessage.sendTime!.dateTime.addMinutes(1).compareTo(message.sendTime!.dateTime) >=0 ){
+  bool hiddenTime(Message message, Message? prevMessage) {
+    if (prevMessage != null &&
+        message.sendTime != null &&
+        prevMessage.sendTime != null) {
+      if (prevMessage.sendID == message.sendID &&
+          prevMessage.sendTime!.dateTime
+                  .addMinutes(1)
+                  .compareTo(message.sendTime!.dateTime) >=
+              0) {
         return true;
       }
     }
     return false;
   }
 
-  bool hiddenAvatar(Message? message,Message? prevMessage){
-    if (prevMessage != null && message != null){
-
-      if (prevMessage.sendID == message.sendID){
+  bool hiddenAvatar(Message? message, Message? prevMessage) {
+    if (prevMessage != null && message != null) {
+      if (prevMessage.sendID == message.sendID) {
         return true;
       }
     }
@@ -130,7 +131,7 @@ class ChatLogic extends GetxController {
     var isCurSingleChat = message.isSingleChat &&
         isSingleChat &&
         (senderId == userID ||
-            senderId == OwlIM.iMManager.userID && receiverId == userID);
+            senderId == OpenIM.iMManager.userID && receiverId == userID);
     var isCurGroupChat =
         message.isGroupChat && isGroupChat && groupID == groupId;
     return isCurSingleChat || isCurGroupChat;
@@ -251,7 +252,7 @@ class ChatLogic extends GetxController {
     });
 
     memberDelSub = imLogic.memberDeletedSubject.listen((info) {
-      if (info.groupID == groupID && info.userID == OwlIM.iMManager.userID) {
+      if (info.groupID == groupID && info.userID == OpenIM.iMManager.userID) {
         isInGroup.value = false;
         inputCtrl.clear();
       }
@@ -259,7 +260,7 @@ class ChatLogic extends GetxController {
 
     memberInfoChangedSub = imLogic.memberInfoChangedSubject.listen((info) {
       if (info.groupID == groupID) {
-        if (info.userID == OwlIM.iMManager.userID) {
+        if (info.userID == OpenIM.iMManager.userID) {
           groupMemberRoleLevel.value = info.roleLevel ?? GroupRoleLevel.member;
         }
         _putMemberInfo([info]);
@@ -297,9 +298,9 @@ class ChatLogic extends GetxController {
     super.onInit();
   }
 
-  // void chatSetup() => isSingleChat
-  //     ? AppNavigator.startChatSetup(conversationInfo: conversationInfo)
-  //     : AppNavigator.startGroupChatSetup(conversationInfo: conversationInfo);
+  void chatSetup() => isSingleChat
+      ? AppNavigator.startUserProfile(UserFullInfo()..userID = conversationInfo.userID..faceURL = conversationInfo.faceURL..nickname = conversationInfo.showName)
+      : AppNavigator.startGroupChatSetup(conversationInfo: conversationInfo);
 
   void clearCurAtMap() {
     curMsgAtUser.removeWhere((uid) => !inputCtrl.text.contains('@$uid '));
@@ -316,8 +317,8 @@ class ChatLogic extends GetxController {
     });
 
     messageList.refresh();
-    atUserNameMappingMap[OwlIM.iMManager.userID] = StrRes.you;
-    atUserInfoMappingMap[OwlIM.iMManager.userID] = OwlIM.iMManager.userInfo;
+    atUserNameMappingMap[OpenIM.iMManager.userID] = StrRes.you;
+    atUserInfoMappingMap[OpenIM.iMManager.userID] = OpenIM.iMManager.userInfo;
   }
 
   void sendTextMsg() async {
@@ -330,19 +331,19 @@ class ChatLogic extends GetxController {
             groupNickname: atUserNameMappingMap[id],
           );
 
-      message = await OwlIM.iMManager.messageManager.createTextAtMessage(
+      message = await OpenIM.iMManager.messageManager.createTextAtMessage(
         text: content,
         atUserIDList: curMsgAtUser,
         atUserInfoList: curMsgAtUser.map(createAtInfoByID).toList(),
         quoteMessage: quoteMsg,
       );
     } else if (quoteMsg != null) {
-      message = await OwlIM.iMManager.messageManager.createQuoteMessage(
+      message = await OpenIM.iMManager.messageManager.createQuoteMessage(
         text: content,
         quoteMsg: quoteMsg!,
       );
     } else {
-      message = await OwlIM.iMManager.messageManager.createTextMessage(
+      message = await OpenIM.iMManager.messageManager.createTextMessage(
         text: content,
       );
     }
@@ -353,7 +354,7 @@ class ChatLogic extends GetxController {
     final file = await IMUtils.compressImageAndGetFile(File(path));
 
     var message =
-        await OwlIM.iMManager.messageManager.createImageMessageFromFullPath(
+        await OpenIM.iMManager.messageManager.createImageMessageFromFullPath(
       imagePath: file!.path,
     );
     _sendMessage(message);
@@ -367,7 +368,7 @@ class ChatLogic extends GetxController {
   }) async {
     var d = duration > 1000.0 ? duration / 1000.0 : duration;
     var message =
-        await OwlIM.iMManager.messageManager.createVideoMessageFromFullPath(
+        await OpenIM.iMManager.messageManager.createVideoMessageFromFullPath(
       videoPath: videoPath,
       videoType: mimeType,
       duration: d.toInt(),
@@ -381,7 +382,7 @@ class ChatLogic extends GetxController {
     required int duration,
   }) async {
     var message =
-    await OwlIM.iMManager.messageManager.createSoundMessageFromFullPath(
+        await OpenIM.iMManager.messageManager.createSoundMessageFromFullPath(
       soundPath: videoPath,
       duration: duration,
     );
@@ -390,7 +391,7 @@ class ChatLogic extends GetxController {
 
   void sendTypingMsg({bool focus = false}) async {
     if (isSingleChat) {
-      OwlIM.iMManager.messageManager.typingStatusUpdate(
+      OpenIM.iMManager.messageManager.typingStatusUpdate(
         userID: userID!,
         msgTip: focus ? 'yes' : 'no',
       );
@@ -418,7 +419,7 @@ class ChatLogic extends GetxController {
     _reset(message);
 
     bool useOuterValue = null != userId || null != groupId;
-    OwlIM.iMManager.messageManager
+    OpenIM.iMManager.messageManager
         .sendMessage(
           message: message,
           userID: useOuterValue ? userId : userID,
@@ -457,15 +458,15 @@ class ChatLogic extends GetxController {
           customType = CustomMessageType.deletedByFriend;
         }
         if (null != customType) {
-          final hintMessage = (await OwlIM.iMManager.messageManager
+          final hintMessage = (await OpenIM.iMManager.messageManager
               .createFailedHintMessage(type: customType))
             ..status = 2
             ..isRead = true;
           messageList.add(hintMessage);
-          OwlIM.iMManager.messageManager.insertSingleMessageToLocalStorage(
+          OpenIM.iMManager.messageManager.insertSingleMessageToLocalStorage(
             message: hintMessage,
             receiverID: userID,
-            senderID: OwlIM.iMManager.userID,
+            senderID: OpenIM.iMManager.userID,
           );
         }
       } else {
@@ -473,7 +474,7 @@ class ChatLogic extends GetxController {
                 code == SDKErrorCode.groupDisbanded) &&
             null == groupId) {
           final status = groupInfo?.status;
-          final hintMessage = (await OwlIM.iMManager.messageManager
+          final hintMessage = (await OpenIM.iMManager.messageManager
               .createFailedHintMessage(
                   type: status == 2
                       ? CustomMessageType.groupDisbanded
@@ -481,10 +482,10 @@ class ChatLogic extends GetxController {
             ..status = 2
             ..isRead = true;
           messageList.add(hintMessage);
-          OwlIM.iMManager.messageManager.insertGroupMessageToLocalStorage(
+          OpenIM.iMManager.messageManager.insertGroupMessageToLocalStorage(
             message: hintMessage,
             groupID: groupID,
-            senderID: OwlIM.iMManager.userID,
+            senderID: OpenIM.iMManager.userID,
           );
         }
       }
@@ -573,32 +574,31 @@ class ChatLogic extends GetxController {
     IMUtils.parseClickEvent(
       msg,
       messageList: messageList,
-      onViewUserInfo: viewUserInfo,
+      // onViewUserInfo: viewUserInfo,
     );
   }
 
   void onLongPressLeftAvatar(Message message) {}
 
   void onTapLeftAvatar(Message message) {
-    viewUserInfo(UserInfo()
+    viewUserInfo(UserFullInfo()
       ..userID = message.sendID
       ..nickname = message.senderNickname
       ..faceURL = message.senderFaceUrl);
   }
 
-  void onTapRightAvatar() {
-    viewUserInfo(OwlIM.iMManager.userInfo);
-  }
+  // void onTapRightAvatar() {
+  //   viewUserInfo(OpenIM.iMManager.userInfo);
+  // }
 
-  void viewUserInfo(UserInfo userInfo) {
-    AppNavigator.startUserProfile(
-        userInfo as UserFullInfo
-      // userID: userInfo.userID!,
-      // nickname: userInfo.nickname,
-      // faceURL: userInfo.faceURL,
-      // groupID: groupID,
-      // offAllWhenDelFriend: isSingleChat,
-    );
+  void viewUserInfo(UserFullInfo userInfo) {
+    AppNavigator.startUserProfile(userInfo
+        // userID: userInfo.userID!,
+        // nickname: userInfo.nickname,
+        // faceURL: userInfo.faceURL,
+        // groupID: groupID,
+        // offAllWhenDelFriend: isSingleChat,
+        );
   }
 
   String createDraftText() {
@@ -684,22 +684,22 @@ class ChatLogic extends GetxController {
 
   void _queryMyGroupMemberInfo() async {
     if (isGroupChat) {
-      var list = await OwlIM.iMManager.groupManager.getGroupMembersInfo(
+      var list = await OpenIM.iMManager.groupManager.getGroupMembersInfo(
         groupID: groupID!,
-        userIDList: [OwlIM.iMManager.userID],
+        userIDList: [OpenIM.iMManager.userID],
       );
       groupMembersInfo = list.firstOrNull;
       groupMemberRoleLevel.value =
           groupMembersInfo?.roleLevel ?? GroupRoleLevel.member;
       if (null != groupMembersInfo) {
-        memberUpdateInfoMap[OwlIM.iMManager.userID] = groupMembersInfo!;
+        memberUpdateInfoMap[OpenIM.iMManager.userID] = groupMembersInfo!;
       }
     }
   }
 
   void _isJoinedGroup() async {
     if (isGroupChat) {
-      isInGroup.value = await OwlIM.iMManager.groupManager.isJoinedGroup(
+      isInGroup.value = await OpenIM.iMManager.groupManager.isJoinedGroup(
         groupID: groupID!,
       );
       if (isInGroup.value) _queryGroupInfo();
@@ -708,7 +708,7 @@ class ChatLogic extends GetxController {
 
   void _queryGroupInfo() async {
     if (isGroupChat) {
-      var list = await OwlIM.iMManager.groupManager.getGroupsInfo(
+      var list = await OpenIM.iMManager.groupManager.getGroupsInfo(
         groupIDList: [groupID!],
       );
       groupInfo = list.firstOrNull;
@@ -719,7 +719,7 @@ class ChatLogic extends GetxController {
   }
 
   bool get havePermissionMute =>
-      isGroupChat && (groupInfo?.ownerUserID == OwlIM.iMManager.userID);
+      isGroupChat && (groupInfo?.ownerUserID == OpenIM.iMManager.userID);
 
   bool isNotificationType(Message message) => message.contentType! >= 1000;
 
@@ -731,7 +731,7 @@ class ChatLogic extends GetxController {
 
   void _checkInBlacklist() async {
     if (userID != null) {
-      var list = await OwlIM.iMManager.friendshipManager.getBlacklist();
+      var list = await OpenIM.iMManager.friendshipManager.getBlacklist();
       var user = list.firstWhereOrNull((e) => e.userID == userID);
       isInBlacklist.value = user != null;
     }
@@ -798,9 +798,9 @@ class ChatLogic extends GetxController {
     // if (phoneNumber != null) {
     //   int start = phoneNumber.length > 4 ? phoneNumber.length - 4 : 0;
     //   final sub = phoneNumber.substring(start);
-    //   return "${OwlIM.iMManager.userInfo.nickname!}$sub";
+    //   return "${OpenIM.iMManager.userInfo.nickname!}$sub";
     // }
-    return OwlIM.iMManager.userInfo.nickname ?? '';
+    return OpenIM.iMManager.userInfo.nickname ?? '';
   }
 
   bool isFailedHintMessage(Message message) {
@@ -855,7 +855,7 @@ class ChatLogic extends GetxController {
   }
 
   Future<AdvancedMessage> _requestHistoryMessage() =>
-      OwlIM.iMManager.messageManager.getAdvancedHistoryMessageList(
+      OpenIM.iMManager.messageManager.getAdvancedHistoryMessageList(
         conversationID: conversationInfo.conversationID,
         count: 20,
         startMsg: _isFirstLoad ? null : messageList.firstOrNull,
@@ -895,11 +895,7 @@ class ChatLogic extends GetxController {
           var map = json.decode(element.customElem!.data!);
           var customType = map['customType'];
 
-          final result = customType == CustomMessageType.callingInvite ||
-              customType == CustomMessageType.callingAccept ||
-              customType == CustomMessageType.callingReject ||
-              customType == CustomMessageType.callingHungup ||
-              customType == CustomMessageType.callingCancel;
+          final result = customType == CustomMessageType.callingInvite;
 
           return result;
         }

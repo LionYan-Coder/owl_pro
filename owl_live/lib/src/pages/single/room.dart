@@ -56,6 +56,7 @@ class _SingleRoomViewState extends SignalState<SingleRoomView> {
 
   @override
   Future<void> connect() async {
+    Logger.print("certificate.liveURL: ${certificate.liveURL}");
     final url = certificate.liveURL!;
     final token = certificate.token!;
     final busyLineUsers = certificate.busyLineUserIDList ?? [];

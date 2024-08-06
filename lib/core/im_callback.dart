@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/app_controller.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -17,7 +17,7 @@ enum IMSdkStatus {
 mixin IMCallback {
   final initLogic = Get.find<AppController>();
 
-    Function(RevokedInfo info)? onRecvMessageRevoked;
+  Function(RevokedInfo info)? onRecvMessageRevoked;
 
   Function(List<ReadReceiptInfo> list)? onRecvC2CReadReceipt;
 
@@ -37,7 +37,8 @@ mixin IMCallback {
 
   final unreadMsgCountEventSubject = PublishSubject<int>();
 
-  final friendApplicationChangedSubject = BehaviorSubject<FriendApplicationInfo>();
+  final friendApplicationChangedSubject =
+      BehaviorSubject<FriendApplicationInfo>();
 
   final friendAddSubject = BehaviorSubject<FriendInfo>();
 
@@ -49,7 +50,8 @@ mixin IMCallback {
 
   final groupInfoUpdatedSubject = BehaviorSubject<GroupInfo>();
 
-  final groupApplicationChangedSubject = BehaviorSubject<GroupApplicationInfo>();
+  final groupApplicationChangedSubject =
+      BehaviorSubject<GroupApplicationInfo>();
 
   final initializedSubject = PublishSubject<bool>();
 

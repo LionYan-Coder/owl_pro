@@ -119,18 +119,19 @@ class AuthDialog {
                 ..style = Styles.ts_333333_18_bold
                     .adapterDark(Styles.ts_CCCCCC_18_bold),
             ),
-            close
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 16).w,
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back(result: false);
-                      },
-                      icon: "close".svg.toSvg
-                        ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
-                    ),
-                  )
-                : const SizedBox.shrink(),
+            Visibility(
+              visible: close,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16).w,
+                child: GestureDetector(
+                  onTap: () {
+                    Get.back(result: false);
+                  },
+                  child: "close".svg.toSvg
+                    ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
+                ),
+              ),
+            ),
           ],
         ),
         content: SingleChildScrollView(
@@ -152,8 +153,9 @@ class AuthDialog {
                             (val) {
                               if (val != null &&
                                   val.isNotEmpty &&
-                                  EncryptionHelper.encrypted64(val) !=
-                                      password) {
+                                  val !=
+                                      EncryptionHelper.decrypt64(
+                                          password ?? '')) {
                                 return "sign_dialog_password_invalid_error".tr;
                               }
 
@@ -230,5 +232,71 @@ class WillPopDialog {
     ); // user must tap button!
 
     return pop == true;
+  }
+}
+
+
+class ConfirmDialog {
+
+  static Future<bool> showConfirmDialog({required String title,required String desc}) async {
+    final b = await Get.dialog<bool>(
+      AlertDialog(
+        insetPadding: const EdgeInsets.all(24).w,
+        titlePadding: const EdgeInsets.only(left: 24, right: 24).w,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 32).w,
+              child: title.tr.toText
+                ..style = Styles.ts_333333_18_bold
+                    .adapterDark(Styles.ts_CCCCCC_18_bold),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.back(result: false);
+              },
+              child: "close".svg.toSvg
+                ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
+            )
+          ],
+        ),
+        backgroundColor: Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12.0))),
+        content: SizedBox(
+          width: 0.85.sw,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              18.gapv,
+              desc.toText..style = Styles.ts_333333_16.adapterDark(Styles.ts_CCCCCC_16),
+              18.gapv,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8).w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                        child: "cancel".tr.toButton
+                          ..variants = ButtonVariants.outline
+                          ..onPressed = () => Get.back(result: false)),
+                    8.gaph,
+                    Flexible(
+                        child: "confirm".tr.toButton
+                          ..onPressed = () {
+                            Get.back(result: true);
+                          }),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      )
+    );
+
+    return b == true;
   }
 }

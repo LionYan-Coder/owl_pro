@@ -94,6 +94,9 @@ PODS:
     - Flutter
   - flutter_native_splash (0.0.1):
     - Flutter
+  - flutter_openim_sdk (0.0.1):
+    - Flutter
+    - OpenIMSDKCore (= 3.5.1)
   - flutter_webrtc (0.11.3):
     - Flutter
     - WebRTC-SDK (= 125.6422.04)
@@ -205,9 +208,6 @@ PODS:
   - open_filex (0.0.2):
     - Flutter
   - OpenIMSDKCore (3.5.1)
-  - owl_im_sdk (0.0.1):
-    - Flutter
-    - OpenIMSDKCore (= 3.5.1)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -275,6 +275,7 @@ DEPENDENCIES:
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - flutter_openim_sdk (from `.symlinks/plugins/flutter_openim_sdk/ios`)
   - flutter_webrtc (from `.symlinks/plugins/flutter_webrtc/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
@@ -284,7 +285,6 @@ DEPENDENCIES:
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - open_filex (from `.symlinks/plugins/open_filex/ios`)
-  - owl_im_sdk (from `.symlinks/plugins/owl_im_sdk/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -366,6 +366,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
+  flutter_openim_sdk:
+    :path: ".symlinks/plugins/flutter_openim_sdk/ios"
   flutter_webrtc:
     :path: ".symlinks/plugins/flutter_webrtc/ios"
   image_cropper:
@@ -384,8 +386,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mobile_scanner/ios"
   open_filex:
     :path: ".symlinks/plugins/open_filex/ios"
-  owl_im_sdk:
-    :path: ".symlinks/plugins/owl_im_sdk/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -443,6 +443,7 @@ SPEC CHECKSUMS:
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
+  flutter_openim_sdk: 81a70127bb8523bc3dd4f4b8198c24a5a5596b19
   flutter_webrtc: 75b868e4f9e817c7a9a42ca4b6169063de4eec9f
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -467,7 +468,6 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   open_filex: 6e26e659846ec990262224a12ef1c528bb4edbe4
   OpenIMSDKCore: 002ccd940d261619d117eedcb8e6236aae718aaa
-  owl_im_sdk: ee13d671efffe02e502830e93e47aee17e0ddef2
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
@@ -491,6 +491,6 @@ SPEC CHECKSUMS:
   wakelock_plus: 78ec7c5b202cab7761af8e2b2b3d0671be6c4ae1
   WebRTC-SDK: c3d69a87e7185fad3568f6f3cff7c9ac5890acf3
 
-PODFILE CHECKSUM: 486ce52c5e59762003877b7c28b463fabbaa77c3
+PODFILE CHECKSUM: b05110a0cde7e653e540a300b527fe2b17929fcb
 
 COCOAPODS: 1.15.2

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:owlpro_app/widgets/dialog.dart';
@@ -16,11 +16,12 @@ class AccountLogic extends GetxController {
   void delAccount() async {
     try {
       loading.value = true;
-      if (OwlIM.iMManager.isLogined) {
+      if (OpenIM.iMManager.isLogined) {
         await imLogic.logout();
       }
       if (imLogic.userInfo.value.address != null &&
           imLogic.userInfo.value.userID != null) {
+        await DataSp.removeLoginCertificate();
         await DataSp.removeAccounts(imLogic.userInfo.value.userID!);
         await Wallet.deleteWallet(imLogic.userInfo.value.address!);
         Get.offAllNamed(AppRoutes.accountList);

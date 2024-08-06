@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
+import 'package:owlpro_app/pages/chat/group_chat_setup/group_member_list/group_member_list_logic.dart';
+import 'package:owlpro_app/pages/contacts/select_contacts/select_contacts_logic.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 
 class AppNavigator {
@@ -110,6 +112,10 @@ class AppNavigator {
         AppRoutes.contactAddBySearch,
       );
 
+  static void startAddGroup() => Get.toNamed(
+        AppRoutes.startAddGroup,
+      );
+
   static void startFriendRequests() => Get.toNamed(
         AppRoutes.startFriendRequests,
       );
@@ -120,6 +126,36 @@ class AppNavigator {
         AppRoutes.startBlackList,
       );
 
+  static Future<T?>? startGroupMemberList<T>({
+    required GroupInfo groupInfo,
+    GroupMemberOpType opType = GroupMemberOpType.view,
+  }) =>
+      Get.toNamed(AppRoutes.groupMemberList, arguments: {
+        'groupInfo': groupInfo,
+        'opType': opType,
+      });
+
+  static startSelectContacts({
+    required SelAction action,
+    List<String>? defaultCheckedIDList,
+    List<dynamic>? checkedList,
+    List<String>? excludeIDList,
+    bool openSelectedSheet = false,
+    String? groupID,
+    String? ex,
+  }) =>
+      Get.toNamed(AppRoutes.selectContacts, arguments: {
+        'action': action,
+        'defaultCheckedIDList': defaultCheckedIDList,
+        'checkedList': IMUtils.convertCheckedListToMap(checkedList),
+        'excludeIDList': excludeIDList,
+        'openSelectedSheet': openSelectedSheet,
+        'groupID': groupID,
+        'ex': ex,
+      });
+
+  static startSelectContactsFromFriends() =>
+      Get.toNamed(AppRoutes.selectContactsFromFriends);
 
   static Future<T?>? startChat<T>({
     required ConversationInfo conversationInfo,
@@ -137,17 +173,16 @@ class AppNavigator {
 
     return offUntilHome
         ? Get.offNamedUntil(
-      AppRoutes.chat,
-          (route) => route.settings.name == AppRoutes.home,
-      arguments: arguments,
-    )
+            AppRoutes.chat,
+            (route) => route.settings.name == AppRoutes.home,
+            arguments: arguments,
+          )
         : Get.toNamed(
-      AppRoutes.chat,
-      arguments: arguments,
-      preventDuplicates: false,
-    );
+            AppRoutes.chat,
+            arguments: arguments,
+            preventDuplicates: false,
+          );
   }
-
 
   static startLiveRoom() {
     return Get.toNamed(AppRoutes.liveRoom);
@@ -160,7 +195,12 @@ class AppNavigator {
         'conversationInfo': conversationInfo,
       });
 
-
+  static startGroupChatSetup({
+    required ConversationInfo conversationInfo,
+  }) =>
+      Get.toNamed(AppRoutes.groupChatSetup, arguments: {
+        'conversationInfo': conversationInfo,
+      });
 
   static startOANtfList({required ConversationInfo info}) {}
 }

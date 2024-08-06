@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dart_date/dart_date.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/pages/home/home_logic.dart';
 
@@ -38,8 +38,8 @@ class NewFriendLogic extends GetxController {
 
   void _getFriendRequestsList() async {
     final list = await Future.wait([
-      OwlIM.iMManager.friendshipManager.getFriendApplicationListAsRecipient(),
-      OwlIM.iMManager.friendshipManager.getFriendApplicationListAsApplicant(),
+      OpenIM.iMManager.friendshipManager.getFriendApplicationListAsRecipient(),
+      OpenIM.iMManager.friendshipManager.getFriendApplicationListAsApplicant(),
     ]);
 
     final allList = <FriendApplicationInfo>[];
@@ -69,7 +69,7 @@ class NewFriendLogic extends GetxController {
   }
 
   bool isISendRequest(FriendApplicationInfo info) =>
-      info.fromUserID == OwlIM.iMManager.userID;
+      info.fromUserID == OpenIM.iMManager.userID;
 
   String status(FriendApplicationInfo info) {
     final prefix = isISendRequest(info) ? 'request' : 'receive';
@@ -93,7 +93,7 @@ class NewFriendLogic extends GetxController {
   void acceptFriendApplication(FriendApplicationInfo info) async {
     LoadingView.singleton
         .wrap(
-            asyncFunction: () => OwlIM.iMManager.friendshipManager
+            asyncFunction: () => OpenIM.iMManager.friendshipManager
                 .acceptFriendApplication(userID: info.fromUserID!))
         .then(_addSuccessfully)
         .catchError((_) => IMViews.showToast(StrRes.addFailed));
@@ -102,7 +102,7 @@ class NewFriendLogic extends GetxController {
   void refuseFriendApplication(FriendApplicationInfo info) async {
     LoadingView.singleton
         .wrap(
-            asyncFunction: () => OwlIM.iMManager.friendshipManager
+            asyncFunction: () => OpenIM.iMManager.friendshipManager
                 .refuseFriendApplication(userID: info.fromUserID!))
         .then(_rejectSuccessfully)
         .catchError((_) => IMViews.showToast(StrRes.rejectFailed));

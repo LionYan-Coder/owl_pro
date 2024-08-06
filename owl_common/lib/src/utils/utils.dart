@@ -18,7 +18,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:mime/mime.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_im_sdk/owl_im_sdk.dart';
+import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:uri_to_file/uri_to_file.dart';
@@ -511,14 +511,14 @@ class IMUtils {
   }
 
   static String getGroupMemberShowName(GroupMembersInfo membersInfo) {
-    return membersInfo.userID == OwlIM.iMManager.userID
+    return membersInfo.userID == OpenIM.iMManager.userID
         ? StrRes.you
         : membersInfo.nickname!;
   }
 
   static String getShowName(String? userID, String? nickname) {
-    return (userID == OwlIM.iMManager.userID
-            ? OwlIM.iMManager.userInfo.nickname
+    return (userID == OpenIM.iMManager.userID
+            ? OpenIM.iMManager.userInfo.nickname
             : nickname) ??
         '';
   }
@@ -741,7 +741,7 @@ class IMUtils {
           content = message.quoteElem?.text ?? '';
           break;
         case MessageType.revokeMessageNotification:
-          var isSelf = message.sendID == OwlIM.iMManager.userID;
+          var isSelf = message.sendID == OpenIM.iMManager.userID;
           var map = json.decode(message.notificationElem!.detail!);
           var info = RevokedInfo.fromJson(map);
           if (message.isSingleChat) {
@@ -760,12 +760,12 @@ class IMUtils {
             } else {
               late String revoker;
               late String sender;
-              if (info.revokerID == OwlIM.iMManager.userID) {
+              if (info.revokerID == OpenIM.iMManager.userID) {
                 revoker = StrRes.you;
               } else {
                 revoker = info.revokerNickname!;
               }
-              if (info.sourceMessageSendID == OwlIM.iMManager.userID) {
+              if (info.sourceMessageSendID == OpenIM.iMManager.userID) {
                 sender = StrRes.you;
               } else {
                 sender = info.sourceMessageSenderNickname!;
@@ -790,12 +790,12 @@ class IMUtils {
             case CustomMessageType.callingReject:
               var type = map['data']['mediaType'];
               content =
-                  '[${type == 'video' ? StrRes.callVideo : StrRes.callVoice}]';
+                  type == 'video' ? StrRes.callVideo : StrRes.callVoice;
               break;
             case CustomMessageType.call:
               var type = map['data']['type'];
               content =
-                  '[${type == 'video' ? StrRes.callVideo : StrRes.callVoice}]';
+                  type == 'video' ? StrRes.callVideo : StrRes.callVoice;
               break;
             case CustomMessageType.emoji:
               content = '[${StrRes.emoji}]';
@@ -862,10 +862,16 @@ class IMUtils {
               case CustomMessageType.callingAccept:
               case CustomMessageType.callingHungup:
               case CustomMessageType.callingCancel:
+                var type = map['data']['mediaType'];
+                return {
+                  'viewType': CustomMessageType.call,
+                  'type': type,
+                  'content': StrRes.cancelled,
+                };
               case CustomMessageType.callingReject:
                 var type = map['data']['mediaType'];
                 final content =
-                    '[${type == 'video' ? StrRes.callVideo : StrRes.callVoice}]';
+                    type == 'video' ? StrRes.callVideo : StrRes.callVoice;
                 return {
                   'viewType': CustomMessageType.call,
                   'type': type,
