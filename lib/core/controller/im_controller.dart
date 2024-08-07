@@ -66,6 +66,7 @@ class IMController extends GetxController with IMCallback, OpenIMLive {
             val?.globalRecvMsgOpt = u.globalRecvMsgOpt;
           });
         },
+        onUserStatusChanged: userStatusChanged
       ))
       // Add message listener (remove when not in use)
       ..messageManager.setAdvancedMsgListener(OnAdvancedMsgListener(

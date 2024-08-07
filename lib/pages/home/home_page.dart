@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
       ) ,
       body: IndexedStack(
         index: logic.tab.value,
-        children: [ConversationPage(), ContactPage(), Text("home"), MinePage()],
+        children: [ConversationPage(), const ContactPage(), Text("home"), MinePage()],
       ),
     ));
   }

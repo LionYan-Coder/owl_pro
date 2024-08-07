@@ -84,7 +84,7 @@ dependencies:
   extended_text_field: ^15.0.0
   wechat_camera_picker: ^4.1.2
   audio_waveforms: ^1.0.5
-  flutter_openim_sdk: 3.5.1
+  flutter_openim_sdk: 3.8.0
 
 dependency_overrides:
   wechat_assets_picker: ^8.9.0-dev.1

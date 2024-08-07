@@ -26,7 +26,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "$dir/libs" }
+//        maven { url "$dir/libs" }
         google()
         mavenCentral()
     }

@@ -751,10 +751,10 @@ packages:
     dependency: "direct overridden"
     description:
       name: flutter_openim_sdk
-      sha256: b9519961a1ca6b74825a1ebf00d2728c5adb3e9335469c87b4e761bf84a95ad8
+      sha256: "4a04410afa5b91ae0086bb389f3a1fbf0958a55066f84a1168897d8990a78635"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.1"
+    version: "3.8.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:

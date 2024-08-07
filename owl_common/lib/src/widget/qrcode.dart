@@ -34,7 +34,7 @@ class QRcodeState extends State<QRcode> {
   }
 
   Future<void> _saveQrCodeToGallery() async {
-    if (await Permission.storage.request().isGranted) {
+    if (await Permission.photos.request().isGranted) {
       screenshotController.capture().then((Uint8List? image) async {
         if (image != null) {
           await ImageGallerySaver.saveImage(image);

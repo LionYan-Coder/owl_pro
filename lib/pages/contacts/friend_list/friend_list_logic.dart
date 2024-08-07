@@ -5,22 +5,25 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
+import 'package:owlpro_app/core/controller/user_status_controller.dart';
 
 class FriendListLogic extends GetxController {
-  final imLoic = Get.find<IMController>();
-  final friendList = <ISUserInfo>[].obs;
+  final imLogic = Get.find<IMController>();
+  final userStatusLogic = Get.find<UserStatusController>();
   final userIDList = <String>[];
   late StreamSubscription delSub;
   late StreamSubscription addSub;
   late StreamSubscription infoChangedSub;
+  final friendList = <ISUserInfo>[].obs;
+
 
   @override
   void onInit() {
-    delSub = imLoic.friendDelSubject.listen(_delFriend);
-    addSub = imLoic.friendAddSubject.listen(_addFriend);
-    infoChangedSub = imLoic.friendInfoChangedSubject.listen(_friendInfoChanged);
-    imLoic.onBlacklistAdd = _delFriend;
-    imLoic.onBlacklistDeleted = _addFriend;
+    delSub = imLogic.friendDelSubject.listen(_delFriend);
+    addSub = imLogic.friendAddSubject.listen(_addFriend);
+    infoChangedSub = imLogic.friendInfoChangedSubject.listen(_friendInfoChanged);
+    imLogic.onBlacklistAdd = _delFriend;
+    imLogic.onBlacklistDeleted = _addFriend;
     super.onInit();
   }
 
@@ -53,9 +56,12 @@ class FriendListLogic extends GetxController {
 
     onUserIDList(userIDList);
     friendList.assignAll(list.cast<ISUserInfo>());
+    friendList.insert(0, ISUserInfo.fromJson({"tagIndex": "↑"}));
   }
 
-  void onUserIDList(List<String> userIDList) {}
+  void onUserIDList(List<String> userIDList) async {
+    await OpenIM.iMManager.userManager.subscribeUsersStatus(userIDList);
+  }
 
   bool _filterBlacklist(e) {
     final user = FullUserInfo.fromJson(e);
@@ -71,12 +77,14 @@ class FriendListLogic extends GetxController {
 
   _addFriend(dynamic user) {
     if (user is FriendInfo || user is BlacklistInfo) {
+      userStatusLogic.subUserStatus([user.userID]);
       _addUser(user.toJson());
     }
   }
 
   _delFriend(dynamic user) {
     if (user is FriendInfo || user is BlacklistInfo) {
+      userStatusLogic.unSubUserStatus([user.userID]);
       friendList.removeWhere((e) => e.userID == user.userID);
     }
   }

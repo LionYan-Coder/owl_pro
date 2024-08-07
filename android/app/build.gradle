@@ -74,5 +74,5 @@ flutter {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation 'io.openim:core-sdk:0.0.1@aar'
+//    implementation 'io.openim:core-sdk:0.0.1@aar'
 }

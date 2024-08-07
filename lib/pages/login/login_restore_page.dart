@@ -130,6 +130,7 @@ class FormContent extends StatelessWidget {
             PasteInput(
               name: fromKey,
               maxLines: 8,
+              gapLine: -28.h,
               validator: (val) {
                 if (val != null && val.isNotEmpty) {
                   if (fromKey == 'mnemonic') {

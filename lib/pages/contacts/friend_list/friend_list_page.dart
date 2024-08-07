@@ -3,27 +3,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/contacts/contact_logic.dart';
+import 'package:owlpro_app/pages/contacts/friend_list/friend_list_logic.dart';
 import 'package:owlpro_app/pages/contacts/widgets/contact_menu.dart';
 
 class FriendListPage extends StatelessWidget {
   FriendListPage({super.key});
 
-  final logic = Get.find<ContactLogic>();
+  final logic = Get.find<FriendListLogic>();
+  final contactLogic = Get.find<ContactLogic>();
 
   @override
   Widget build(BuildContext context) {
+
     return Obx(
-      () => WrapAzListView<ISUserInfo>(
-        data: logic.friendList,
-        itemCount: logic.friendList.length,
-        itemBuilder: (_, data, index) {
-          if (index == 0) {
-            return ContactMenus();
-          } else {
-            return _buildItemView(data);
-          }
-        },
-      ),
+      () {
+
+        return WrapAzListView<ISUserInfo>(
+          data: logic.friendList,
+          itemCount: logic.friendList.length ,
+          itemBuilder: (_, data, index) {
+            if (index == 0) {
+              return ContactMenus();
+            } else {
+              return _buildItemView(data);
+            }
+          },
+        );
+      },
     );
   }
 
@@ -31,7 +37,7 @@ class FriendListPage extends StatelessWidget {
         height: 64.h,
         color: Styles.c_FFFFFF,
         child: InkWell(
-          onTap: () => logic.viewUserProfile(info),
+          onTap: () => contactLogic.viewUserProfile(info),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Row(

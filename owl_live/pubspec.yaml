@@ -28,7 +28,7 @@ dependencies:
 
   owl_common:
     path: ../owl_common
-  flutter_openim_sdk: 3.5.1
+  flutter_openim_sdk: 3.8.0
 
 dev_dependencies:
   flutter_test:

@@ -7,7 +7,9 @@ class PermissionController extends GetxController {
     final permissions = [
       Permission.notification,
       Permission.microphone,
-      Permission.storage
+      Permission.photos,
+      Permission.videos,
+
     ];
 
     for (var permission in permissions) {

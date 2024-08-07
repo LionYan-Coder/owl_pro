@@ -64,7 +64,7 @@ class UserQrcodePage extends StatelessWidget {
                                   onSave: (fn) {
                                     logic.saveFunction = fn;
                                   },
-                                  code: logic.user.value?.address?.toOc ?? ''),
+                                  code: logic.user.value.address?.toOc ?? ''),
                               16.gapv,
                               Container(
                                 height: 1,

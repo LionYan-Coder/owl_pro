@@ -14,65 +14,25 @@ class ContactLogic extends GetxController implements ViewUserProfileBridge {
   int get groupApplicationCount =>
       homeLogic.unhandledGroupApplicationCount.value;
 
-  final friendList = <ISUserInfo>[
-    ISUserInfo.fromJson({"tagIndex": "↑"})
-  ].obs;
   final userIDList = <String>[];
 
   @override
   void onInit() {
     // PackageBridge.selectContactsBridge = this;
-    // PackageBridge.viewUserProfileBridge = this;
+    PackageBridge.viewUserProfileBridge = this;
     // PackageBridge.scanBridge = this;
 
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    _getFriendList();
-    super.onReady();
-  }
 
   @override
   void onClose() {
     // PackageBridge.selectContactsBridge = null;
-    // PackageBridge.viewUserProfileBridge = null;
+    PackageBridge.viewUserProfileBridge = null;
     // PackageBridge.scanBridge = null;
     super.onClose();
   }
-
-  _getFriendList() async {
-    final list = await OpenIM.iMManager.friendshipManager
-        .getFriendListMap()
-        .then((list) => list.where(_filterBlacklist))
-        .then((list) => list.map((e) {
-              final fullUser = FullUserInfo.fromJson(e);
-              final user = fullUser.friendInfo != null
-                  ? ISUserInfo.fromJson(fullUser.friendInfo!.toJson())
-                  : ISUserInfo.fromJson(fullUser.publicInfo!.toJson());
-              return user;
-            }).toList())
-        .then((list) => IMUtils.convertToAZList(list));
-
-    onUserIDList(userIDList);
-
-    friendList.insertAll(1, list.cast<ISUserInfo>());
-  }
-
-  bool _filterBlacklist(e) {
-    final user = FullUserInfo.fromJson(e);
-    final isBlack = user.blackInfo != null;
-
-    if (isBlack) {
-      return false;
-    } else {
-      userIDList.add(user.userID);
-      return true;
-    }
-  }
-
-  void onUserIDList(List<String> userIDList) {}
 
   void newFriend() => AppNavigator.startFriendRequests();
 

@@ -31,6 +31,8 @@ mixin IMCallback {
 
   Function(BlacklistInfo u)? onBlacklistDeleted;
 
+  Function(UserStatusInfo u)? onUserStatusSubject;
+
   final conversationAddedSubject = BehaviorSubject<List<ConversationInfo>>();
 
   final conversationChangedSubject = BehaviorSubject<List<ConversationInfo>>();
@@ -68,6 +70,13 @@ mixin IMCallback {
   final onKickedOfflineSubject = PublishSubject();
 
   final imSdkStatusSubject = BehaviorSubject<IMSdkStatus>();
+
+  final userStatusSubject = BehaviorSubject<UserStatusInfo>();
+
+  void userStatusChanged(UserStatusInfo u){
+    onUserStatusSubject?.call(u);
+  }
+
 
   void imSdkStatus(IMSdkStatus status) {
     imSdkStatusSubject.add(status);
@@ -211,5 +220,6 @@ mixin IMCallback {
     imSdkStatusSubject.close();
     joinedGroupDeletedSubject.close();
     joinedGroupAddedSubject.close();
+    userStatusSubject.close();
   }
 }
