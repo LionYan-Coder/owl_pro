@@ -7,12 +7,10 @@ import 'package:owl_common/owl_common.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owl_live/owl_live.dart';
 import 'package:owlpro_app/core/im_callback.dart';
+import 'package:owlpro_app/pages/conversation/conversation_logic.dart';
 
 class IMController extends GetxController with IMCallback, OpenIMLive {
-  // ignore: non_constant_identifier_names
-  static IMController get IMState => Get.find<IMController>();
-
-  final userInfo = UserFullInfo().obs;
+  late Rx<UserFullInfo> userInfo;
   late String atAllTag;
 
   @override
@@ -90,23 +88,23 @@ class IMController extends GetxController with IMCallback, OpenIMLive {
                     invitation: InvitationInfo.fromJson(map['data']));
                 signaling.userID = signaling.invitation?.inviterUserID;
 
-                // switch (customType) {
-                //   case CustomMessageType.callingInvite:
-                //     receiveNewInvitation(signaling);
-                //     break;
-                //   case CustomMessageType.callingAccept:
-                //     inviteeAccepted(signaling);
-                //     break;
-                //   case CustomMessageType.callingReject:
-                //     inviteeRejected(signaling);
-                //     break;
-                //   case CustomMessageType.callingCancel:
-                //     invitationCancelled(signaling);
-                //     break;
-                //   case CustomMessageType.callingHungup:
-                //     beHangup(signaling);
-                //     break;
-                // }
+                switch (customType) {
+                  case CustomMessageType.callingInvite:
+                    receiveNewInvitation(signaling);
+                    break;
+                  case CustomMessageType.callingAccept:
+                    inviteeAccepted(signaling);
+                    break;
+                  case CustomMessageType.callingReject:
+                    inviteeRejected(signaling);
+                    break;
+                  case CustomMessageType.callingCancel:
+                    invitationCancelled(signaling);
+                    break;
+                  case CustomMessageType.callingHungup:
+                    beHangup(signaling);
+                    break;
+                }
               }
             }
 
@@ -175,12 +173,9 @@ class IMController extends GetxController with IMCallback, OpenIMLive {
         token: token,
         defaultValue: () async => UserInfo(userID: userID),
       );
-
-      userInfo.value = UserFullInfo.fromJson(user.toJson());
-      await _queryMyFullInfo();
+      userInfo = UserFullInfo.fromJson(user.toJson()).obs;
+      _queryMyFullInfo();
       _queryAtAllTag();
-
-      return;
     } catch (e, s) {
       Logger.print('e: $e  s:$s');
       await _handleLoginRepeatError(e);

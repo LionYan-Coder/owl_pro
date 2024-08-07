@@ -28,7 +28,7 @@ class ThemeController extends GetxController {
 
       await DataSp.putTheme(theme);
       var brightness =
-          theme == ThemeMode.dark ? Brightness.dark : Brightness.light;
+          theme == ThemeMode.dark ? Brightness.light : Brightness.dark;
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: brightness,

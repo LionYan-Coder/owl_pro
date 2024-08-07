@@ -70,6 +70,11 @@ class LoginLogic extends GetxController {
       String publicKey = registerWallet.publicKey;
       String address = registerWallet.address;
 
+      if (OpenIM.iMManager.isLogined) {
+        await imLogic.logout();
+        await DataSp.removeLoginCertificate();
+      }
+
       await registerWallet.saveWalletToHive();
       final nonce = WalletUtil.generateRandomHex(32);
       final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
@@ -85,11 +90,6 @@ class LoginLogic extends GetxController {
 
       await DataSp.addAccounts(data.userID);
       await DataSp.putLoginCertificate(data);
-      if (OpenIM.iMManager.isLogined) {
-        await imLogic.logout();
-        await DataSp.removeLoginCertificate();
-      }
-
       await imLogic.login(data.userID, data.imToken);
       AppNavigator.startMain();
     } catch (e) {
@@ -107,6 +107,10 @@ class LoginLogic extends GetxController {
       final nonce = WalletUtil.generateRandomHex(32);
       final nonceHash = keccak256(Uint8List.fromList(utf8.encode(nonce)));
       final signature = restoreWallet.sign(nonceHash);
+      if (OpenIM.iMManager.isLogined) {
+        await imLogic.logout();
+        await DataSp.removeLoginCertificate();
+      }
       final data = await Apis.login(
           publicKey: publicKey,
           address: restoreWallet.address,
@@ -117,10 +121,6 @@ class LoginLogic extends GetxController {
         await restoreWallet.saveWalletToHive();
         await DataSp.addAccounts(data.userID);
         await DataSp.putLoginCertificate(data);
-        if (OpenIM.iMManager.isLogined) {
-          await imLogic.logout();
-          await DataSp.removeLoginCertificate();
-        }
         await imLogic.login(data.userID, data.imToken);
         AppNavigator.startMain();
       } else {

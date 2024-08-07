@@ -98,6 +98,8 @@ class GetTags {
 
   static String get userMoments => _userMomentsTags.last;
 
+  static List<String> get userMomentList => _userMomentsTags;
+
   static String get momentsDetail => _momentsDetailTags.last;
 
   static String get userProfile => _userProfileTags.last;

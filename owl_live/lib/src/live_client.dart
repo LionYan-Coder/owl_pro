@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'pages/single/room.dart';
 
@@ -88,7 +87,7 @@ class OpenIMLiveClient implements RTCBridge {
     isBusy = false;
     currentRoomID = null;
     // The next line disables the wakelock again.
-    WakelockPlus.disable();
+    // WakelockPlus.disable();
   }
 
   start(
@@ -161,6 +160,6 @@ class OpenIMLiveClient implements RTCBridge {
 
     Overlay.of(ctx).insert(_holder!);
     // The following line will enable the Android and iOS wakelock.
-    WakelockPlus.enable();
+    // WakelockPlus.enable();
   }
 }

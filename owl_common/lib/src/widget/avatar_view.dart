@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:uuid/uuid.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 typedef CustomAvatarBuilder = Widget? Function();
 
@@ -72,7 +71,7 @@ class AvatarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var rTag =  Uuid().v4();
+    var rTag = Uuid().v4();
     var child = GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap ??
@@ -107,13 +106,8 @@ class AvatarView extends StatelessWidget {
         // child: Text(_showName!, style: _textStyle),
         child: null == _showName
             ? (showDefaultAvatar
-                ? FaIcon(
-                    isGroup
-                        ? FontAwesomeIcons.userGroup
-                        : FontAwesomeIcons.solidUser,
-                    color: Colors.white,
-                    size: _avatarSize / 2,
-                  )
+                ? Icon(isGroup ? Icons.group : Icons.person,
+                    color: Colors.white, size: _avatarSize / 2)
                 : null)
             : Text(_showName!, style: _textStyle),
       );

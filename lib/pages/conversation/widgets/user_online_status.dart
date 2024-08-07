@@ -6,7 +6,7 @@ import 'package:owlpro_app/core/im_callback.dart';
 import 'package:owlpro_app/pages/conversation/conversation_logic.dart';
 
 class UserOnlineStatus extends StatelessWidget {
-   UserOnlineStatus({super.key});
+  UserOnlineStatus({super.key});
 
   final logic = Get.find<ConversationLogic>();
 

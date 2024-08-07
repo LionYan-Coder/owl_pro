@@ -182,6 +182,7 @@ class SettingPasswordPage extends StatelessWidget {
           PasteInput(
               name: "privkey",
               maxLines: 4,
+              gapLine: -12.h,
               validator: (val) {
                 if (val != null && val.isNotEmpty) {
                   if (!WalletUtil.validPrivateKey(val)) {
@@ -211,6 +212,7 @@ class SettingPasswordPage extends StatelessWidget {
           PasteInput(
               name: "mnemonic",
               maxLines: 4,
+              gapLine: -12.h,
               validator: (val) {
                 if (val != null && val.isNotEmpty) {
                   if (!WalletUtil.validPrivateKey(val)) {

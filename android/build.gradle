@@ -1,5 +1,32 @@
+def dir = getCurrentProjectDir()
+
+// 将aar放到libs，本地仓库替换远程仓库
+def getCurrentProjectDir() {
+    String result = ""
+    rootProject.allprojects { project ->
+        if (project.properties.get("name").toString() == "flutter_openim_sdk") {
+            result = project.properties.get("projectDir").toString()
+        }
+    }
+    return result
+}
+
+buildscript {
+    ext.kotlin_version = '1.9.0'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 allprojects {
     repositories {
+        maven { url "$dir/libs" }
         google()
         mavenCentral()
     }

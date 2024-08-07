@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_common/src/widget/chat/sounds_button.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emoji;
+import 'package:flutter/foundation.dart' as foundation;
 
 import 'at_special_text_span_builder.dart';
 import 'chat_disable_input_box.dart';
@@ -52,25 +54,26 @@ class ChatInputBox extends StatefulWidget {
 class _ChatInputBoxState extends State<ChatInputBox> {
   bool _toolsVisible = true;
   bool _isSpeak = false;
-  // bool _emojiVisible = false;
+  bool _emojiVisible = false;
   // bool _leftKeyboardButton = false;
   // bool _rightKeyboardButton = false;
   bool _sendButtonVisible = false;
+  final _scrollController = ScrollController();
 
   double get _opacity => (widget.enabled ? 1 : .4);
 
   @override
   void initState() {
-    // widget.focusNode?.addListener(() {
-    //   if (widget.focusNode!.hasFocus) {
-    //     setState(() {
-    //       _toolsVisible = false;
-    //       // _emojiVisible = false;
-    //       // _leftKeyboardButton = false;
-    //       // _rightKeyboardButton = false;
-    //     });
-    //   }
-    // });
+    widget.focusNode?.addListener(() {
+      if (widget.focusNode!.hasFocus) {
+        setState(() {
+          // _toolsVisible = false;
+          _emojiVisible = false;
+          // _leftKeyboardButton = false;
+          // _rightKeyboardButton = false;
+        });
+      }
+    });
 
     widget.controller?.addListener(() {
       setState(() {
@@ -94,67 +97,100 @@ class _ChatInputBoxState extends State<ChatInputBox> {
         ? const ChatDisableInputBox()
         : widget.isMultiModel
             ? const SizedBox()
-            : Container(
-                constraints: BoxConstraints(minHeight: kInputBoxMinHeight),
-                margin: EdgeInsets.only(top: 6.0.w),
-                padding: EdgeInsets.only(
-                    bottom: context.mediaQueryPadding.bottom + 12.h,
-                    top: 12.h,
-
-                    right: 20.w,
-                    left: 20.w),
-                decoration: BoxDecoration(
-                    color: Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
-                    border: Border(
-                        top: BorderSide(
-                            color:
-                                Styles.c_F6F6F6.adapterDark(Styles.c_161616)))),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 200),
-                            child: _isSpeak ?  SoundsMessageButton(
-                              onSendSounds: (type,content) {
-                                widget.onSendVoice!(type,content);
-                                Logger.print("content: ${content}");
-                              },
-                            ) : _textFiled)),
-                    Visibility(
-                      visible: _toolsVisible,
-                      child: FadeIn(
-                        child: Row(
-                          children: [
-                            12.gaph,
-                            GestureDetector(
-                                // onPressed: () {},
-                                child: "chat_ico_tool_attachment".svg.toSvg
-                                  ..width = 24
-                                  ..height = 24.w
-                                  ..color = Styles.c_333333
-                                      .adapterDark(Styles.c_CCCCCC)),
-                            12.gaph,
-                            GestureDetector(
-                                onTap: () {
-                                  if (!_isSpeak) {
-                                    onTapSpeak();
-                                  } else {
-                                    setState(() {
-                                      _isSpeak = false;
-                                    });
-                                  }
-                                },
-                                child: "chat_ico_tool_vioce".svg.toSvg
-                                  ..width = 24
-                                  ..height = 24.w
-                                  ..color =_isSpeak ? Styles.c_0C8CE9 :  Styles.c_333333
-                                      .adapterDark(Styles.c_CCCCCC))
-                          ],
+            : Column(
+                children: [
+                  Container(
+                    constraints: BoxConstraints(minHeight: kInputBoxMinHeight),
+                    margin: EdgeInsets.only(top: 6.0.w),
+                    padding: EdgeInsets.only(
+                        bottom: context.mediaQueryPadding.bottom + 12.h,
+                        top: 12.h,
+                        right: 20.w,
+                        left: 20.w),
+                    decoration: BoxDecoration(
+                        color: Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
+                        border: Border(
+                            top: BorderSide(
+                                color: Styles.c_F6F6F6
+                                    .adapterDark(Styles.c_161616)))),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 200),
+                                child: _isSpeak
+                                    ? SoundsMessageButton(
+                                        onSendSounds: (type, content) {
+                                          widget.onSendVoice!(type, content);
+                                        },
+                                      )
+                                    : _textFiled)),
+                        Visibility(
+                          visible: _toolsVisible,
+                          child: FadeIn(
+                            child: Row(
+                              children: [
+                                12.gaph,
+                                GestureDetector(
+                                    child: "chat_ico_tool_attachment".svg.toSvg
+                                      ..width = 24
+                                      ..height = 24.w
+                                      ..color = Styles.c_333333
+                                          .adapterDark(Styles.c_CCCCCC)),
+                                12.gaph,
+                                GestureDetector(
+                                    onTap: () {
+                                      if (!_isSpeak) {
+                                        onTapSpeak();
+                                      } else {
+                                        setState(() {
+                                          _isSpeak = false;
+                                        });
+                                      }
+                                    },
+                                    child: "chat_ico_tool_vioce".svg.toSvg
+                                      ..width = 24
+                                      ..height = 24.w
+                                      ..color = _isSpeak
+                                          ? Styles.c_0C8CE9
+                                          : Styles.c_333333
+                                              .adapterDark(Styles.c_CCCCCC))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Offstage(
+                    offstage: !_emojiVisible,
+                    child: FadeInUp(
+                      duration: const Duration(milliseconds: 300),
+                      child: emoji.EmojiPicker(
+                        textEditingController: widget.controller,
+                        scrollController: _scrollController,
+                        config: emoji.Config(
+                          height: 260.h,
+                          checkPlatformCompatibility: true,
+                          emojiViewConfig: emoji.EmojiViewConfig(
+                            // Issue: https://github.com/flutter/flutter/issues/28894
+                            emojiSizeMax: 28 *
+                                (foundation.defaultTargetPlatform ==
+                                        TargetPlatform.iOS
+                                    ? 1.2
+                                    : 1.0),
+                          ),
+                          swapCategoryAndBottomBar: false,
+                          skinToneConfig: const emoji.SkinToneConfig(),
+                          categoryViewConfig: const emoji.CategoryViewConfig(),
+                          bottomActionBarConfig:
+                              const emoji.BottomActionBarConfig(),
+                          searchViewConfig: const emoji.SearchViewConfig(),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
   }
 
@@ -171,10 +207,13 @@ class _ChatInputBoxState extends State<ChatInputBox> {
           children: [
             Padding(
               padding: EdgeInsets.only(bottom: 12.w),
-              child: "chat_ico_tool_emoji".svg.toSvg
-                ..width = 22.w
-                ..height = 22.w
-                ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
+              child: GestureDetector(
+                onTap: () => onTapEmoji(),
+                child: "chat_ico_tool_emoji".svg.toSvg
+                  ..width = 22.w
+                  ..height = 22.w
+                  ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
+              ),
             ),
             Expanded(
               child: ChatTextField(
@@ -206,7 +245,7 @@ class _ChatInputBoxState extends State<ChatInputBox> {
 
   void send() {
     if (!widget.enabled) return;
-    // if (!_emojiVisible) focus();
+    if (!_emojiVisible) focus();
     if (null != widget.onSend && null != widget.controller) {
       widget.onSend!(widget.controller!.text.toString().trim());
     }
@@ -234,7 +273,7 @@ class _ChatInputBoxState extends State<ChatInputBox> {
       // _leftKeyboardButton = true;
       // _rightKeyboardButton = false;
       // _toolsVisible = false;
-      // _emojiVisible = false;
+      _emojiVisible = false;
       unfocus();
     });
   }
@@ -264,7 +303,7 @@ class _ChatInputBoxState extends State<ChatInputBox> {
     setState(() {
       // _rightKeyboardButton = true;
       // _leftKeyboardButton = false;
-      // _emojiVisible = true;
+      _emojiVisible = !_emojiVisible;
       _toolsVisible = false;
       unfocus();
     });

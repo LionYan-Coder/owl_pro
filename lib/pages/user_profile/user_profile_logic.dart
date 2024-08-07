@@ -5,13 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/app_controller.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/pages/conversation/conversation_logic.dart';
-import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:owlpro_app/widgets/dialog.dart';
 
@@ -29,7 +27,6 @@ class UserProfileLogic extends GetxController {
 
   String? groupID;
   bool? offAllWhenDelFriend = false;
-
 
   bool get isGroupMemberPage => null != groupID && groupID!.isNotEmpty;
   bool get isMyself => userInfo.value.userID == OpenIM.iMManager.userID;
@@ -117,7 +114,6 @@ class UserProfileLogic extends GetxController {
     );
   }
 
-
   void showRemarkInputDialog() async {
     final b = await Get.dialog<bool>(
       AlertDialog(
@@ -151,9 +147,7 @@ class UserProfileLogic extends GetxController {
             children: [
               18.gapv,
               FormBuilder(
-                initialValue: {
-                  "remark":getShowName()
-                },
+                  initialValue: {"remark": getShowName()},
                   key: remarkFormKey,
                   child: Input(
                     name: "remark",
@@ -192,7 +186,8 @@ class UserProfileLogic extends GetxController {
     );
 
     if (b == true) {
-      final remark = remarkFormKey.currentState?.getRawValue("remark") as String;
+      final remark =
+          remarkFormKey.currentState?.getRawValue("remark") as String;
       await LoadingView.singleton.wrap(
         asyncFunction: () => OpenIM.iMManager.friendshipManager.setFriendRemark(
           userID: userInfo.value.userID!,
@@ -203,7 +198,8 @@ class UserProfileLogic extends GetxController {
   }
 
   Future<void> toggleBlacklist() async {
-    final result = await OpenIM.iMManager.friendshipManager.checkFriend(userIDList: [userInfo.value.userID ?? '']);
+    final result = await OpenIM.iMManager.friendshipManager
+        .checkFriend(userIDList: [userInfo.value.userID ?? '']);
     if (result.first.result == 1) {
       addBlacklist();
     } else {
@@ -230,7 +226,9 @@ class UserProfileLogic extends GetxController {
   }
 
   void deleteFromFriendList() async {
-    var confirm = await ConfirmDialog.showConfirmDialog(title: "delete_friend_confirm_title".tr,desc: "delete_friend_confirm_warning".tr);
+    var confirm = await ConfirmDialog.showConfirmDialog(
+        title: "delete_friend_confirm_title".tr,
+        desc: "delete_friend_confirm_warning".tr);
     if (confirm) {
       await LoadingView.singleton.wrap(asyncFunction: () async {
         await OpenIM.iMManager.friendshipManager.deleteFriend(
@@ -247,9 +245,11 @@ class UserProfileLogic extends GetxController {
         userIDList.sort();
         final conversationID = 'si_${userIDList.join('_')}';
 
-        await OpenIM.iMManager.conversationManager.deleteConversationAndDeleteAllMsg(conversationID: conversationID);
+        await OpenIM.iMManager.conversationManager
+            .deleteConversationAndDeleteAllMsg(conversationID: conversationID);
 
-        conversationLogic.list.removeWhere((e) => e.conversationID == conversationID);
+        conversationLogic.list
+            .removeWhere((e) => e.conversationID == conversationID);
       });
 
       if (offAllWhenDelFriend == true) {
@@ -259,7 +259,6 @@ class UserProfileLogic extends GetxController {
       }
     }
   }
-
 
   @override
   void onReady() {

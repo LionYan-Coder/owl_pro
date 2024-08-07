@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
+import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:owlpro_app/widgets/dialog.dart';
 
 class MineLogic extends GetxController {
@@ -88,6 +89,7 @@ class MineLogic extends GetxController {
     Get.snackbar(StrRes.accountWarn, StrRes.accountException);
     PackageBridge.rtcBridge?.dismiss();
     await DataSp.removeLoginCertificate();
+    Get.offAllNamed(AppRoutes.accountList);
   }
 
   @override

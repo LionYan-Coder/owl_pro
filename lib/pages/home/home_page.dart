@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
+
       bottomNavigationBar: BottomBar(
         index: logic.tab.value,
         items: [

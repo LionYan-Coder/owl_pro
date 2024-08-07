@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:get/get.dart';
+import 'package:owl_common/owl_common.dart';
 
 import '../../conversation/conversation_logic.dart';
 
@@ -31,12 +32,10 @@ class GroupListLogic extends GetxController {
     );
   }
 
-
   _search() {
     var key = searchCtrl.text.trim();
     searchKey.value = key;
   }
-
 
   @override
   void onInit() {

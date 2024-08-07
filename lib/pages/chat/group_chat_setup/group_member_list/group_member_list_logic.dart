@@ -51,6 +51,7 @@ class GroupMemberListLogic extends GetxController {
 
   @override
   void onClose() {
+    controller.dispose();
     mISub.cancel();
     super.onClose();
   }

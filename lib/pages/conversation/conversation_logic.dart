@@ -29,6 +29,11 @@ class ConversationLogic extends GetxController {
   int scrollIndex = -1;
 
   @override
+  void onClose() {
+    super.onClose();
+  }
+
+  @override
   void onInit() {
     scrollController = AutoScrollController(axis: Axis.vertical);
     imLogic.conversationAddedSubject.listen(onChanged);

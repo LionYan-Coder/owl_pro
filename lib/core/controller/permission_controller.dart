@@ -6,6 +6,8 @@ class PermissionController extends GetxController {
   void onInit() async {
     final permissions = [
       Permission.notification,
+      Permission.microphone,
+      Permission.storage
     ];
 
     for (var permission in permissions) {
