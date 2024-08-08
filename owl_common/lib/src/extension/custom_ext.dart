@@ -34,6 +34,7 @@ extension TextEdCtrlExt on TextEditingController {
   }
 }
 
+
 extension StrExt on String {
   ImageView get toImage {
     return ImageView(name: this);

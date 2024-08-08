@@ -1,8 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
-
-import '../voice/voice_message_package.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ChatVoiceView extends StatefulWidget {
   final bool isISend;
@@ -20,52 +25,116 @@ class ChatVoiceView extends StatefulWidget {
   State<ChatVoiceView> createState() => _ChatVoiceViewState();
 }
 
-class _ChatVoiceViewState extends State<ChatVoiceView> {
+class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveClientMixin{
   Message get _message => widget.message;
 
-  /// URL address
-  String? sourceUrl;
+  late PlayerController controller;
+  late StreamSubscription<PlayerState> playerStateSubscription;
+  late StreamSubscription<double> extractionProgressSubscription;
 
-  int? duration;
+  ValueNotifier<bool> loading = ValueNotifier(true);
+
+  @override
+  bool get wantKeepAlive => true; // 保持状态
 
   @override
   void initState() {
-    final sound = _message.soundElem;
-    sourceUrl = sound?.sourceUrl;
+    controller = PlayerController();
+    extractionProgressSubscription = controller.onExtractionProgress.listen((progress) {
+      loading.value = progress < 1;
+    });
+    playerStateSubscription = controller.onPlayerStateChanged.listen((d) {
+      setState(() {});
+    });
+    _initializeAudio();
     super.initState();
   }
 
+
+  final playerWaveStyle = const PlayerWaveStyle(
+    fixedWaveColor: Colors.white38,
+    liveWaveColor: Colors.white,
+    spacing: 6,
+  );
+
+  Future<void> _initializeAudio() async {
+    try {
+
+      final soundPath = _message.soundElem?.soundPath ?? '';
+      final soundUrl = _message.soundElem?.sourceUrl ?? '';
+
+
+      if (soundPath.isEmpty && soundUrl.isEmpty){
+        Logger.print("audio is empty ${_message.sendID}");
+        return;
+      }
+      var _audioFilePath = soundPath;
+      await HttpUtil.download(soundUrl, cachePath: _audioFilePath);
+
+      // 准备播放器并提取波形数据
+      if (_audioFilePath.isNotEmpty) {
+        await controller.preparePlayer(
+          path: _audioFilePath,
+          shouldExtractWaveform: true,
+          noOfSamples: 100, // 根据需要设置采样数量
+        );
+      }
+    } catch (e) {
+      Logger.print(e.toString());
+    }
+  }
+
+  @override
+  void dispose() {
+    extractionProgressSubscription.cancel();
+    playerStateSubscription.cancel();
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return VoiceMessageView(
-        backgroundColor: widget.isISend
-            ? Styles.c_0C8CE9
-            : Styles.c_F1F1F1.adapterDark(Styles.c_262626),
-        controller: VoiceController(
-          audioSrc: sourceUrl ?? '',
-          onComplete: () {
-            /// do something on complete
-          },
-          onPause: () {
-            /// do something on pause
-          },
-          onPlaying: () {
-            /// do something on playing
-          },
-          onError: (err) {
-            /// do somethin on error
-          },
-          maxDuration: const Duration(seconds: 60),
-          isFile: false,
-        ),
-        isReversed: !widget.isISend,
-        circlesColor: Styles.c_0C8CE9,
-        activeSliderColor: widget.isISend ? Styles.c_FFFFFF : Styles.c_0C8CE9,
-        size: 28,
-        circlesTextStyle:
-            widget.isISend ? Styles.ts_0C8CE9_10 : Styles.ts_FFFFFF_10,
-        counterTextStyle: widget.isISend
-            ? Styles.ts_FFFFFF_10
-            : Styles.ts_333333_10.adapterDark(Styles.ts_CCCCCC_10));
+    super.build(context);
+    return ValueListenableBuilder<bool>(
+      valueListenable: loading,
+      builder: (BuildContext context, bool value, Widget? child) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          child: value ?  Center(
+            child: SizedBox(
+              width: 10.w,
+              height: 10.w,
+              child: const CircularProgressIndicator.adaptive(
+                strokeWidth: 1,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ),
+          )  : Row(
+            textDirection: widget.isISend == true ?  TextDirection.ltr : TextDirection.rtl,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  controller.playerState.isPlaying
+                      ? await controller.pausePlayer()
+                      : await controller.startPlayer();
+                },
+                child: Icon(
+                  color: Colors.white,
+                  size: 16.w,
+                  controller.playerState.isPlaying
+                      ? Icons.stop
+                      : Icons.play_arrow,
+                ),
+              ),
+              AudioFileWaveforms(
+                size: Size(48 + (_message.soundElem?.duration?.toDouble() ?? 0) , 24),
+                playerController: controller,
+                waveformType:WaveformType.fitWidth,
+                playerWaveStyle: playerWaveStyle,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

@@ -45,7 +45,7 @@ class ChatInputBox extends StatefulWidget {
   final String? hintText;
   // final Widget toolbox;
   final ValueChanged<String>? onSend;
-  final Function(dynamic type, String content)? onSendVoice;
+  final Function(String content, Duration duration)? onSendVoice;
 
   @override
   State<ChatInputBox> createState() => _ChatInputBoxState();
@@ -120,8 +120,8 @@ class _ChatInputBoxState extends State<ChatInputBox> {
                                 duration: const Duration(milliseconds: 200),
                                 child: _isSpeak
                                     ? SoundsMessageButton(
-                                        onSendSounds: (type, content) {
-                                          widget.onSendVoice!(type, content);
+                                        onSendSounds: (_, content,duration) {
+                                          widget.onSendVoice!(content,duration);
                                         },
                                       )
                                     : _textFiled)),

@@ -60,7 +60,7 @@ class FriendListLogic extends GetxController {
   }
 
   void onUserIDList(List<String> userIDList) async {
-    await OpenIM.iMManager.userManager.subscribeUsersStatus(userIDList);
+    userStatusLogic.subUserStatus(userIDList);
   }
 
   bool _filterBlacklist(e) {

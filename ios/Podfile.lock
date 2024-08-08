@@ -64,7 +64,7 @@ PODS:
     - Flutter
   - flutter_openim_sdk (0.0.1):
     - Flutter
-    - OpenIMSDKCore (= 3.5.1)
+    - OpenIMSDKCore (= 3.8.0)
   - flutter_webrtc (0.11.3):
     - Flutter
     - WebRTC-SDK (= 125.6422.04)
@@ -160,7 +160,7 @@ PODS:
   - nanopb/encode (2.30910.0)
   - open_filex (0.0.2):
     - Flutter
-  - OpenIMSDKCore (3.5.1)
+  - OpenIMSDKCore (3.8.0)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -378,7 +378,7 @@ SPEC CHECKSUMS:
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
-  flutter_openim_sdk: 81a70127bb8523bc3dd4f4b8198c24a5a5596b19
+  flutter_openim_sdk: d3dda0454cc8fa2497decc6b86c75781488f56d7
   flutter_webrtc: 75b868e4f9e817c7a9a42ca4b6169063de4eec9f
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -402,7 +402,7 @@ SPEC CHECKSUMS:
   Mute: 20135a96076f140cc82bfc8b810e2d6150d8ec7e
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   open_filex: 6e26e659846ec990262224a12ef1c528bb4edbe4
-  OpenIMSDKCore: 002ccd940d261619d117eedcb8e6236aae718aaa
+  OpenIMSDKCore: 6df547cf70573adb3688095bcb59e9a4ba3bf433
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2

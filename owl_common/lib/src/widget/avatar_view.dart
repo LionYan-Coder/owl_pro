@@ -17,6 +17,7 @@ class AvatarView extends StatelessWidget {
     this.url,
     this.builder,
     this.text,
+    this.online,
     this.tag,
     this.textStyle,
     this.onLongPress,
@@ -40,6 +41,7 @@ class AvatarView extends StatelessWidget {
   final BorderRadius? borderRadius;
   final bool enabledPreview;
   final String? text;
+  final bool? online;
   final TextStyle? textStyle;
   final bool lowMemory;
   final List<String> nineGridUrl;
@@ -71,7 +73,7 @@ class AvatarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var rTag = Uuid().v4();
+    var rTag = const Uuid().v4();
     var child = GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap ??
@@ -85,7 +87,26 @@ class AvatarView extends StatelessWidget {
     return Hero(
       tag: tag ?? rTag,
       child: isCircle
-          ? ClipOval(child: child)
+          ? Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          ClipOval(child: child),
+          Visibility(
+            visible: online == true,
+            child: Positioned(
+              right: 4.w,
+              bottom: 3.w,
+              child: ClipOval(
+                child: Container(
+                  width: 8.w,
+                  height: 8.w,
+                  color: Styles.c_1ED386,
+                ),
+              ),
+            ),
+          )
+        ],
+      )
           : ClipRRect(
               borderRadius: borderRadius ?? BorderRadius.circular(6.r),
               child: child,

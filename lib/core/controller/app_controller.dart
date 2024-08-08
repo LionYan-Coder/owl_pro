@@ -18,6 +18,7 @@ import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 class AppController extends GetxController with UpgradeManger {
   var isRunningBackground = false;
   var isAppBadgeSupported = false;
+
   late BaseDeviceInfo deviceInfo;
   final clientConfigMap = <String, dynamic>{}.obs;
 

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
+import 'package:owlpro_app/core/controller/user_status_controller.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sprintf/sprintf.dart';
@@ -17,39 +18,40 @@ class ConversationPage extends StatelessWidget {
 
   final imLogic = Get.find<IMController>();
   final logic = Get.find<ConversationLogic>();
+  final statusLogic = Get.find<UserStatusController>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Obx(() => Column(
       children: [
-        Navbar(),
+        Navbar(status: logic.imStatus.value),
         24.gapv,
         Expanded(
             child: SlidableAutoCloseBehavior(
-          child: SmartRefresher(
-            controller: logic.refreshController,
-            header: IMViews.buildHeader(),
-            footer: IMViews.buildFooter(),
-            enablePullUp: true,
-            enablePullDown: true,
-            onRefresh: logic.onRefresh,
-            onLoading: logic.onLoading,
-            child: ListView.builder(
-              itemCount: logic.list.length,
-              controller: logic.scrollController,
-              itemBuilder: (_, index) => AutoScrollTag(
-                key: ValueKey(index),
-                controller: logic.scrollController,
-                index: index,
-                child: _buildConversationItemView(
-                  logic.list.elementAt(index),
+              child: SmartRefresher(
+                controller: logic.refreshController,
+                header: IMViews.buildHeader(),
+                footer: IMViews.buildFooter(),
+                enablePullUp: true,
+                enablePullDown: true,
+                onRefresh: logic.onRefresh,
+                onLoading: logic.onLoading,
+                child: ListView.builder(
+                  itemCount: logic.list.length,
+                  controller: logic.scrollController,
+                  itemBuilder: (_, index) => AutoScrollTag(
+                    key: ValueKey(index),
+                    controller: logic.scrollController,
+                    index: index,
+                    child: _buildConversationItemView(
+                      logic.list.elementAt(index),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ))
+            ))
       ],
-    );
+    ));
   }
 
   Widget _buildConversationItemView(ConversationInfo info) => Slidable(
@@ -106,6 +108,7 @@ class ConversationPage extends StatelessWidget {
                       height: 48.h,
                       text: logic.getShowName(info),
                       url: info.faceURL,
+                      online: statusLogic.getOnline(info.userID!),
                       // isGroup: logic.isGroupChat(info),
                       textStyle: Styles.ts_FFFFFF_14_medium
                           .adapterDark(Styles.ts_333333_14_medium),

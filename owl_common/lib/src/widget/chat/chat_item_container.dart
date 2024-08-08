@@ -17,6 +17,7 @@ class ChatItemContainer extends StatelessWidget {
     required this.isSending,
     required this.isSendFailed,
     required this.isSendSucceeded,
+    required this.isRead,
     this.ignorePointer = false,
     this.showLeftNickname = true,
     this.showLeftAvatar = true,
@@ -40,6 +41,7 @@ class ChatItemContainer extends StatelessWidget {
   final String? timeStr;
   final bool isBubbleBg;
   final bool isISend;
+  final bool isRead;
   final bool isSending;
   final bool isSendFailed;
   final bool isSendSucceeded;
@@ -87,8 +89,10 @@ class ChatItemContainer extends StatelessWidget {
     if (isSendFailed){
       return "chat_ico_sent_fail".svg.toSvg..width = 14.w..height = 14.w;
     }else if (isSending){
-      return "chat_ico_sent_succ".svg.toSvg..width = 14.w..height = 14.w;
+      return const SizedBox(width: 14,height: 14,child: CircularProgressIndicator.adaptive());
     }else if (isSendSucceeded){
+      return "chat_ico_sent_succ".svg.toSvg..width = 14.w..height = 14.w;
+    }else if (isRead){
       return "chat_ico_sent_readreceipt".svg.toSvg..width = 14.w..height = 14.w;
     }
     return const SizedBox.shrink();

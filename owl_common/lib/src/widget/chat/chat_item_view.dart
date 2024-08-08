@@ -251,6 +251,7 @@ class _ChatItemViewState extends State<ChatItemView> {
       isSending: _message.status == MessageStatus.sending,
       isSendFailed: _message.status == MessageStatus.failed,
       isSendSucceeded: _message.status == MessageStatus.succeeded,
+      isRead: _message.isRead ?? false,
       isBubbleBg: child == null ? true : isBubbleBg,
       ignorePointer: widget.ignorePointer,
       sendStatusStream: widget.sendStatusSubject,

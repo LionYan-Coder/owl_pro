@@ -44,7 +44,6 @@ class IMController extends GetxController with IMCallback, OpenIMLive {
             imSdkStatus(IMSdkStatus.connectionFailed);
           },
           onConnectSuccess: () {
-            Logger.print("onConnectSuccess onConnectSuccess");
             imSdkStatus(IMSdkStatus.connectionSucceeded);
           },
           onKickedOffline: kickedOffline,

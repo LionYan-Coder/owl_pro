@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
-import 'package:owlpro_app/pages/chat/widgets/user_network_status.dart';
+import 'package:owlpro_app/core/controller/user_status_controller.dart';
 import 'package:sprintf/sprintf.dart';
-// import 'package:owlpro_app/routes/app_navigator.dart';
 import 'chat_logic.dart';
 import 'widgets/navbar.dart';
 
 class ChatPage extends StatelessWidget {
   final logic = Get.find<ChatLogic>(tag: GetTags.chat);
+  final statusLogic = Get.find<UserStatusController>();
 
   ChatPage({super.key});
 
@@ -114,7 +114,7 @@ class ChatPage extends StatelessWidget {
                         ..style = Styles.ts_333333_14_medium
                             .adapterDark(Styles.ts_CCCCCC_14_medium),
                       2.gapv,
-                      logic.isSingleChat ?  UserOnlineStatus() : Container(      height: 16.h,
+                      logic.isSingleChat ?  UserOnlineDot(online: statusLogic.getOnline(logic.userID!),) : Container(      height: 16.h,
                         padding: const EdgeInsets.symmetric(horizontal: 4).w,
                         decoration: BoxDecoration(
                             color: Styles.c_0C8CE9.withOpacity(0.05),
@@ -148,8 +148,8 @@ class ChatPage extends StatelessWidget {
               focusNode: logic.focusNode,
               isNotInGroup: logic.isInvalidGroup,
               onSend: (v) => logic.sendTextMsg(),
-              onSendVoice: (_, videoPath) =>
-                  logic.sendVoice(videoPath: videoPath, duration: 60),
+              onSendVoice: (videoPath, duration) =>
+                  logic.sendVoice(videoPath: videoPath, duration: duration.inSeconds),
               hintText: "chat_input_hint".tr,
               // toolbox: ChatToolBox(
               //   onTapAlbum: logic.onTapAlbum,
