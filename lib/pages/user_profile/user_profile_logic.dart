@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/app_controller.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
+import 'package:owlpro_app/core/controller/user_status_controller.dart';
 import 'package:owlpro_app/pages/conversation/conversation_logic.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:owlpro_app/widgets/dialog.dart';
@@ -15,8 +16,10 @@ import 'package:owlpro_app/widgets/dialog.dart';
 class UserProfileLogic extends GetxController {
   final appLogic = Get.find<AppController>();
   final imLogic = Get.find<IMController>();
+  final userStatusLogic = Get.find<UserStatusController>();
   final conversationLogic = Get.find<ConversationLogic>();
   late Rx<UserFullInfo> userInfo;
+  final statusInfo = Rx<UserStatusInfo?>(null);
   final groupUserNickname = "".obs;
   final remarkFormKey = GlobalKey<FormBuilderState>();
 
@@ -58,6 +61,15 @@ class UserProfileLogic extends GetxController {
         val?.about = fullInfo.about;
         val?.coverURL = fullInfo.coverURL;
       });
+    }
+  }
+
+  void _getUserStatus()async {
+    if (userInfo.value.userID != null){
+      final list = await userStatusLogic.getUsersStatus([userInfo.value.userID!]);
+      if (list.isNotEmpty){
+        statusInfo.value = list.firstOrNull;
+      }
     }
   }
 

@@ -63,6 +63,7 @@ export 'src/widget/custom_popup_menu.dart';
 export 'src/widget/tag.dart';
 export 'src/widget/dialog.dart';
 export 'src/widget/user_online_status.dart';
+export 'src/widget/empty_data.dart';
 
 export 'src/widget/chat/chat_picture_preview.dart';
 export 'src/widget/chat/chat_item_view.dart';

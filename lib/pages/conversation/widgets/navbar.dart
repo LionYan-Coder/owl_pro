@@ -6,9 +6,12 @@ import 'package:owlpro_app/core/im_callback.dart';
 
 import 'dropdown_add.dart';
 
-class Navbar extends StatelessWidget {
+class Navbar extends StatelessWidget implements PreferredSizeWidget {
   final IMSdkStatus status;
   const Navbar({super.key,required this.status});
+
+  @override
+  Size get preferredSize => Size.fromHeight(64.h);
 
   @override
   Widget build(BuildContext context) {

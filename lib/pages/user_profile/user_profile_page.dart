@@ -49,16 +49,11 @@ class UserProfilePage extends StatelessWidget {
                               ..style = Styles.ts_333333_18_medium
                                   .adapterDark(Styles.ts_CCCCCC_18_medium),
                           ),
-                          Container(
-                            width: 50.w,
-                            padding: EdgeInsets.symmetric(horizontal: 4.w),
-                            decoration: BoxDecoration(
-                                color: Styles.c_0C8CE9.withOpacity(0.05),
-                                borderRadius: BorderRadius.circular(4.r)),
-                            child: Center(
-                                child:
-                                    "user_search_result_user_status".tr.toText
-                                      ..style = Styles.ts_0C8CE9_10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              UserOnlineDot(online: logic.statusInfo.value?.status == 1),
+                            ],
                           ),
                           22.gapv,
                         ],

@@ -252,7 +252,7 @@ abstract class SignalState<T extends SignalView> extends State<T> {
                   Positioned.fill(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 50.0.w, sigmaY: 50.0.h),
-                      child: Container(
+                      child: SizedBox(
                         width: 1.sw,
                         height: 1.sh,
                         child: Stack(

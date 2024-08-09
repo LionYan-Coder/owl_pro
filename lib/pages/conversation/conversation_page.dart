@@ -22,51 +22,53 @@ class ConversationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Column(
-          children: [
-            Navbar(status: logic.imStatus.value),
-            24.gapv,
-            logic.list.isNotEmpty ?  Expanded(
-                child: SlidableAutoCloseBehavior(
-              child: SmartRefresher(
-                controller: logic.refreshController,
-                header: IMViews.buildHeader(),
-                footer: IMViews.buildFooter(),
-                enablePullUp: true,
-                enablePullDown: true,
-                onRefresh: logic.onRefresh,
-                onLoading: logic.onLoading,
-                child: ListView.builder(
-                  itemCount: logic.list.length,
-                  controller: logic.scrollController,
-                  itemBuilder: (_, index) => AutoScrollTag(
-                    key: ValueKey(index),
+    return Obx(() => Scaffold(
+      appBar: Navbar(status: logic.imStatus.value),
+      body: Column(
+            children: [
+              24.gapv,
+              logic.list.isNotEmpty ?  Expanded(
+                  child: SlidableAutoCloseBehavior(
+                child: SmartRefresher(
+                  controller: logic.refreshController,
+                  header: IMViews.buildHeader(),
+                  footer: IMViews.buildFooter(),
+                  enablePullUp: true,
+                  enablePullDown: true,
+                  onRefresh: logic.onRefresh,
+                  onLoading: logic.onLoading,
+                  child: ListView.builder(
+                    itemCount: logic.list.length,
                     controller: logic.scrollController,
-                    index: index,
-                    child: _buildConversationItemView(
-                      logic.list.elementAt(index),
+                    itemBuilder: (_, index) => AutoScrollTag(
+                      key: ValueKey(index),
+                      controller: logic.scrollController,
+                      index: index,
+                      child: _buildConversationItemView(
+                        logic.list.elementAt(index),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            )) : Expanded(
-              child: Center(
-                child: SizedBox(
-                  width: 178.w,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      "chat_ico_empty".svg.toSvg..width=  64.w..height = 64.w..color = Styles.c_999999.adapterDark(Styles.c_333333),
-                      24.gapv,
-                      "chat_list_empty".tr.toText..style = Styles.ts_999999_14.adapterDark(Styles.ts_333333_14)..textAlign = TextAlign.center
-                    ],
+              )) : Expanded(
+                child: Center(
+                  child: SizedBox(
+                    width: 178.w,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        "chat_ico_empty".svg.toSvg..width=  64.w..height = 64.w..color = Styles.c_999999.adapterDark(Styles.c_333333),
+                        24.gapv,
+                        "chat_list_empty".tr.toText..style = Styles.ts_999999_14.adapterDark(Styles.ts_333333_14)..textAlign = TextAlign.center
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
-        ));
+              )
+            ],
+          ),
+    ));
   }
 
   Widget _buildConversationItemView(ConversationInfo info) => Slidable(

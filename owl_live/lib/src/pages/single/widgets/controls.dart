@@ -454,24 +454,29 @@ class _ControlsViewState extends State<ControlsView> {
         8.gapv,
         "chat_live_title".tr.toText..style =_enabledCamera ?  common.Styles.ts_FFFFFF_16_medium : common.Styles.ts_333333_20_medium.adapterDark(common.Styles.ts_FFFFFF_20_medium),
         8.gapv,
-        Container(
-          constraints: BoxConstraints(maxWidth: 120.w),
-          height: 24.h,
-          decoration: BoxDecoration(
-              color: common.Styles.c_0C8CE9.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(15.r)),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ico.svg.toSvg
-                  ..width = 14.w
-                  ..height = 14.w,
-                4.gaph,
-                text.tr.toText..style = common.Styles.ts_0C8CE9_12
-              ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 24.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  color: common.Styles.c_0C8CE9.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(15.r)),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ico.svg.toSvg
+                      ..width = 14.w
+                      ..height = 14.w,
+                    4.gaph,
+                    text.tr.toText..style = common.Styles.ts_0C8CE9_12
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
         )
       ],
     );

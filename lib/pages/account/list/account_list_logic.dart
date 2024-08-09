@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
 import 'package:owlpro_app/core/controller/push_controller.dart';
+import 'package:owlpro_app/routes/app_navigator.dart';
 import 'package:owlpro_app/routes/app_routes.dart';
 import 'package:web3dart/crypto.dart';
 
@@ -54,13 +55,9 @@ class AccountListLogic extends GetxController {
               address: wallet?.address ?? '',
               nonce: bytesToHex(nonceHash, include0x: true),
               sign: signature);
-          // ignore: unnecessary_null_comparison
-          if (data.userID != null && data.userID.isNotEmpty) {
-            await DataSp.putLoginCertificate(data);
-            await imLogic.login(data.userID, data.imToken);
-            await Get.forceAppUpdate();
-            Get.offAndToNamed(AppRoutes.home);
-          }
+          await DataSp.putLoginCertificate(data);
+          await imLogic.login(data.userID, data.imToken);
+          AppNavigator.startMain();
         });
       }
     } catch (e) {

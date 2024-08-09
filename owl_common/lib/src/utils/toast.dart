@@ -53,4 +53,8 @@ class ToastHelper {
       entry.remove();
     });
   }
+
+  static void showComingSoon(){
+    showToast(Get.context!, "wait_version".tr);
+  }
 }

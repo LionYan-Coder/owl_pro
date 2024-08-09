@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/contacts/contact_page.dart';
+import 'package:owlpro_app/pages/discord/discord_view.dart';
 import 'package:owlpro_app/pages/home/home_logic.dart';
 import 'package:owlpro_app/pages/mine/mine_logic.dart';
 import 'package:owlpro_app/pages/mine/mine_page.dart';
@@ -48,7 +49,7 @@ class HomePage extends StatelessWidget {
       ) ,
       body: IndexedStack(
         index: logic.tab.value,
-        children: [ConversationPage(), const ContactPage(), Text("home"), MinePage()],
+        children: [ConversationPage(), const ContactPage(), DiscordPage(), MinePage()],
       ),
     ));
   }
