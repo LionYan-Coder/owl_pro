@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -23,18 +25,11 @@ class ThemeController extends GetxController {
   void _changeSystemUI(ThemeMode theme) async {
     appTheme = theme;
     Get.changeThemeMode(theme);
+    await DataSp.putTheme(theme);
     Future.delayed(const Duration(milliseconds: 250), () async {
       await Get.forceAppUpdate();
-
-      await DataSp.putTheme(theme);
-      var brightness =
-          theme == ThemeMode.dark ? Brightness.light : Brightness.dark;
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: brightness,
-        statusBarIconBrightness: brightness,
-      ));
     });
+    update();
   }
 
   @override

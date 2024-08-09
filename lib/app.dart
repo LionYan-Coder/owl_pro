@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/im_controller.dart';
@@ -18,35 +19,44 @@ class OwlApp extends StatelessWidget {
     return GetBuilder(
         init: ThemeController(),
         builder: (theme) {
-          return AppView(
-              builder: (locale, builder) => GetMaterialApp(
-                    debugShowCheckedModeBanner: true,
-                    // enableLog: true,
-                    builder: builder,
-                    // logWriterCallback: Logger.print,
-                    translations: TranslationService(),
-                    localizationsDelegates: const [
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    fallbackLocale: TranslationService.fallbackLocale,
-                    localeResolutionCallback: (locale, list) {
-                      Get.locale ??= locale;
-                      return locale;
-                    },
-                    locale: locale,
-                    theme: Styles.lightTheme,
-                    darkTheme: Styles.darkTheme,
-                    themeMode: theme.appTheme,
-                    supportedLocales: const [
-                      Locale('zh', 'CN'),
-                      Locale('en', 'US')
-                    ],
-                    getPages: AppPages.routes,
-                    initialBinding: InitBinding(),
-                    initialRoute: AppRoutes.splash,
-                  ));
+          var brightness = theme.appTheme == ThemeMode.dark ? Brightness.light : Brightness.dark;
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarBrightness: brightness,
+                statusBarIconBrightness: brightness,
+                systemNavigationBarColor: Colors.transparent
+            ),
+            child: AppView(
+                builder: (locale, builder) => GetMaterialApp(
+                      debugShowCheckedModeBanner: true,
+                      // enableLog: true,
+                      builder: builder,
+                      // logWriterCallback: Logger.print,
+                      translations: TranslationService(),
+                      localizationsDelegates: const [
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      fallbackLocale: TranslationService.fallbackLocale,
+                      localeResolutionCallback: (locale, list) {
+                        Get.locale ??= locale;
+                        return locale;
+                      },
+                      locale: locale,
+                      theme: Styles.lightTheme,
+                      darkTheme: Styles.darkTheme,
+                      themeMode: theme.appTheme,
+                      supportedLocales: const [
+                        Locale('zh', 'CN'),
+                        Locale('en', 'US')
+                      ],
+                      getPages: AppPages.routes,
+                      initialBinding: InitBinding(),
+                      initialRoute: AppRoutes.splash,
+                    )),
+          );
         });
   }
 }

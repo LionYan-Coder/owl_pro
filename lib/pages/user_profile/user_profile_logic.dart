@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/core/controller/app_controller.dart';
@@ -18,10 +17,6 @@ class UserProfileLogic extends GetxController {
   final imLogic = Get.find<IMController>();
   final conversationLogic = Get.find<ConversationLogic>();
   late Rx<UserFullInfo> userInfo;
-  final iAmOwner = false.obs;
-  final mutedTime = "".obs;
-  final onlineStatus = false.obs;
-  final onlineStatusDesc = ''.obs;
   final groupUserNickname = "".obs;
   final remarkFormKey = GlobalKey<FormBuilderState>();
 
@@ -33,7 +28,6 @@ class UserProfileLogic extends GetxController {
 
   late StreamSubscription _friendAddedSub;
   late StreamSubscription _friendInfoChangedSub;
-  // late StreamSubscription _memberInfoChangedSub;
 
   bool get isFriendship => userInfo.value.isFriendship == true;
 
@@ -114,116 +108,6 @@ class UserProfileLogic extends GetxController {
     );
   }
 
-  void showRemarkInputDialog() async {
-    final b = await Get.dialog<bool>(
-      AlertDialog(
-        insetPadding: const EdgeInsets.all(24).w,
-        titlePadding: const EdgeInsets.only(left: 24, right: 24).w,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 32).w,
-              child: "user_profile_setup_set_remark_title".tr.toText
-                ..style = Styles.ts_333333_18_bold
-                    .adapterDark(Styles.ts_CCCCCC_18_bold),
-            ),
-            GestureDetector(
-              onTap: () {
-                Get.back(result: false);
-              },
-              child: "close".svg.toSvg
-                ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
-            )
-          ],
-        ),
-        backgroundColor: Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12.0))),
-        content: SizedBox(
-          width: 0.85.sw,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              18.gapv,
-              FormBuilder(
-                  initialValue: {"remark": getShowName()},
-                  key: remarkFormKey,
-                  child: Input(
-                    name: "remark",
-                    hintText: "user_profile_setup_set_remark_hint".tr,
-                  )),
-              28.gapv,
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8).w,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Flexible(
-                        child: "cancel".tr.toButton
-                          ..variants = ButtonVariants.outline
-                          ..onPressed = () => Get.back(result: false)),
-                    8.gaph,
-                    Flexible(
-                        child: "save".tr.toButton
-                          ..onPressed = () {
-                            final valid = remarkFormKey.currentState
-                                ?.saveAndValidate(focusOnInvalid: false);
-
-                            if (valid == true) {
-                              Get.back(result: true);
-                            }
-                          }),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-      barrierDismissible: false,
-    );
-
-    if (b == true) {
-      final remark =
-          remarkFormKey.currentState?.getRawValue("remark") as String;
-      await LoadingView.singleton.wrap(
-        asyncFunction: () => OpenIM.iMManager.friendshipManager.setFriendRemark(
-          userID: userInfo.value.userID!,
-          remark: remark.trim(),
-        ),
-      );
-    }
-  }
-
-  Future<void> toggleBlacklist() async {
-    final result = await OpenIM.iMManager.friendshipManager
-        .checkFriend(userIDList: [userInfo.value.userID ?? '']);
-    if (result.first.result == 1) {
-      addBlacklist();
-    } else {
-      removeBlacklist();
-    }
-  }
-
-  void addBlacklist() async {
-    await OpenIM.iMManager.friendshipManager.addBlacklist(
-      userID: userInfo.value.userID!,
-    );
-    userInfo.update((val) {
-      val?.isBlacklist = true;
-    });
-  }
-
-  void removeBlacklist() async {
-    await OpenIM.iMManager.friendshipManager.removeBlacklist(
-      userID: userInfo.value.userID!,
-    );
-    userInfo.update((val) {
-      val?.isBlacklist = false;
-    });
-  }
 
   void deleteFromFriendList() async {
     var confirm = await ConfirmDialog.showConfirmDialog(
@@ -268,7 +152,13 @@ class UserProfileLogic extends GetxController {
 
   @override
   void onInit() {
-    userInfo = Rx<UserFullInfo>(Get.arguments);
+    userInfo = (UserFullInfo()
+      ..userID = Get.arguments['userID']
+      ..nickname = Get.arguments['nickname']
+      ..faceURL = Get.arguments['faceURL'])
+        .obs;
+    groupID = Get.arguments['groupID'];
+    offAllWhenDelFriend = Get.arguments['offAllWhenDelFriend'];
     _friendAddedSub = imLogic.friendAddSubject.listen((user) {
       if (user.userID == userInfo.value.userID) {
         userInfo.update((val) {

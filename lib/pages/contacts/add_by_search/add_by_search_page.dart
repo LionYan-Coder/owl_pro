@@ -80,7 +80,7 @@ class AddBySearchPage extends StatelessWidget {
           child: InkWell(
             onTap: () {
               if (user != null) {
-                AppNavigator.startUserProfile(user);
+                AppNavigator.startUserProfile(userID: user.userID!,nickname: user.nickname,faceURL: user.faceURL);
               }
             },
             child: Padding(

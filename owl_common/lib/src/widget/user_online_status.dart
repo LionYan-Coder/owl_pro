@@ -19,6 +19,7 @@ class UserOnlineDot extends StatelessWidget {
           borderRadius: BorderRadius.circular(4.r)),
       child: Center(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ClipOval(
               child: Container(

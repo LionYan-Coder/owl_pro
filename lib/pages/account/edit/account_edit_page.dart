@@ -27,6 +27,8 @@ class AccountEditPage extends StatelessWidget {
               if (b) {
                 logic.submit();
               }
+            }else {
+              Get.back();
             }
           },
           title: "identity_edit_title".tr,
@@ -101,11 +103,12 @@ class AccountEditPage extends StatelessWidget {
                     hint("identity_edit_nickname_hint".tr),
                     Input(
                         name: "nickname",
+                        inputType: InputType2.name,
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
                               errorText:
                                   "identity_edit_nickname_hint".tr), // 必须输入
-                          FormBuilderValidators.minLength(4,
+                          FormBuilderValidators.minLength(1,
                               errorText: "identity_edit_nickname_hint".tr),
                           FormBuilderValidators.maxLength(16,
                               errorText: "identity_edit_nickname_hint".tr),
@@ -116,6 +119,7 @@ class AccountEditPage extends StatelessWidget {
                     const Input(
                       name: "about",
                       maxLines: 4,
+                      inputType: InputType2.name,
                     ),
                     24.gapv,
                     label("identity_edit_account_label".tr),

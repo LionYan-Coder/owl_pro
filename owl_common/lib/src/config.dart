@@ -103,7 +103,7 @@ class Config {
         const SystemUiOverlayStyle(
             systemNavigationBarColor: Colors.transparent),
       );
-      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     }
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 }

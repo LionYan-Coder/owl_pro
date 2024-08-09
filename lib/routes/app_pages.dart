@@ -7,6 +7,8 @@ import 'package:owlpro_app/pages/account/edit/account_edit_binding.dart';
 import 'package:owlpro_app/pages/account/edit/account_edit_page.dart';
 import 'package:owlpro_app/pages/chat/chat_binding.dart';
 import 'package:owlpro_app/pages/chat/chat_page.dart';
+import 'package:owlpro_app/pages/chat/chat_setup/chat_setup_binding.dart';
+import 'package:owlpro_app/pages/chat/chat_setup/chat_setup_view.dart';
 import 'package:owlpro_app/pages/chat/group_chat_setup/group_chat_setup_binding.dart';
 import 'package:owlpro_app/pages/chat/group_chat_setup/group_chat_setup_page.dart';
 import 'package:owlpro_app/pages/contacts/add_by_search/add_by_search_binding.dart';
@@ -27,8 +29,6 @@ import 'package:owlpro_app/pages/guide/guide_binding.dart';
 import 'package:owlpro_app/pages/guide/guide_page.dart';
 import 'package:owlpro_app/pages/home/home_binding.dart';
 import 'package:owlpro_app/pages/home/home_page.dart';
-import 'package:owlpro_app/pages/live_room/live_room_binding.dart';
-import 'package:owlpro_app/pages/live_room/live_room_page.dart';
 import 'package:owlpro_app/pages/login/login_binding.dart';
 import 'package:owlpro_app/pages/login/login_create_page.dart';
 import 'package:owlpro_app/pages/login/login_ready_page.dart';
@@ -220,11 +220,6 @@ class AppPages {
       preventDuplicates: false,
     ),
     _pageBuilder(
-        name: AppRoutes.liveRoom,
-        page: () => LiveRoomPage(),
-        binding: LiveRoomBinding(),
-        transition: Transition.zoom),
-    _pageBuilder(
       name: AppRoutes.groupChatSetup,
       page: () => GroupChatSetupPage(),
       binding: GroupChatSetupBinding(),
@@ -239,10 +234,10 @@ class AppPages {
       page: () => SelectContactsFromFriendsPage(),
       binding: SelectContactsFromFriendsBinding(),
     ),
-    // _pageBuilder(
-    //   name: AppRoutes.chatSetup,
-    //   page: () => ChatSetupPage(),
-    //   binding: ChatSetupBinding(),
-    // ),
+    _pageBuilder(
+      name: AppRoutes.chatSetup,
+      page: () => ChatSetupPage(),
+      binding: ChatSetupBinding(),
+    ),
   ];
 }

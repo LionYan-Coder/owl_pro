@@ -1,6 +1,6 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="videocall_ico_loudspeaker_nor">
-<path id="Vector" d="M14 3V21C10.5 21 7.89925 16.4195 7.89925 16.4195H5C4.44771 16.4195 4 15.9718 4 15.4195V8.5054C4 7.9531 4.44771 7.5054 5 7.5054H7.89925C7.89925 7.5054 10.5 3 14 3Z" fill="#333333" stroke="#333333" stroke-width="2" stroke-linejoin="round"/>
-<path id="Vector_2" d="M18 7.5C18.3116 7.77825 18.5941 8.08985 18.8421 8.4294C19.5694 9.4252 20 10.6611 20 12C20 13.3273 19.5768 14.5534 18.8609 15.5447C18.6084 15.8943 18.3196 16.2147 18 16.5" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector" d="M14 3V21C10.5 21 7.89925 16.4195 7.89925 16.4195H5C4.44771 16.4195 4 15.9718 4 15.4195V8.5054C4 7.9531 4.44771 7.5054 5 7.5054H7.89925C7.89925 7.5054 10.5 3 14 3Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path id="Vector_2" d="M18 7.5C18.3116 7.77825 18.5941 8.08985 18.8421 8.4294C19.5694 9.4252 20 10.6611 20 12C20 13.3273 19.5768 14.5534 18.8609 15.5447C18.6084 15.8943 18.3196 16.2147 18 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

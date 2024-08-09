@@ -23,11 +23,11 @@ class ConversationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Column(
-      children: [
-        Navbar(status: logic.imStatus.value),
-        24.gapv,
-        Expanded(
-            child: SlidableAutoCloseBehavior(
+          children: [
+            Navbar(status: logic.imStatus.value),
+            24.gapv,
+            logic.list.isNotEmpty ?  Expanded(
+                child: SlidableAutoCloseBehavior(
               child: SmartRefresher(
                 controller: logic.refreshController,
                 header: IMViews.buildHeader(),
@@ -49,9 +49,24 @@ class ConversationPage extends StatelessWidget {
                   ),
                 ),
               ),
-            ))
-      ],
-    ));
+            )) : Expanded(
+              child: Center(
+                child: SizedBox(
+                  width: 178.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      "chat_ico_empty".svg.toSvg..width=  64.w..height = 64.w..color = Styles.c_999999.adapterDark(Styles.c_333333),
+                      24.gapv,
+                      "chat_list_empty".tr.toText..style = Styles.ts_999999_14.adapterDark(Styles.ts_333333_14)..textAlign = TextAlign.center
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ));
   }
 
   Widget _buildConversationItemView(ConversationInfo info) => Slidable(
@@ -109,9 +124,6 @@ class ConversationPage extends StatelessWidget {
                       text: logic.getShowName(info),
                       url: info.faceURL,
                       online: statusLogic.getOnline(info.userID!),
-                      // isGroup: logic.isGroupChat(info),
-                      textStyle: Styles.ts_FFFFFF_14_medium
-                          .adapterDark(Styles.ts_333333_14_medium),
                     ),
                     12.gaph,
                     Expanded(

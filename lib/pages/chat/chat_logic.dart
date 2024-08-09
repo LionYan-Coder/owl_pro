@@ -299,10 +299,7 @@ class ChatLogic extends GetxController {
   }
 
   void chatSetup() => isSingleChat
-      ? AppNavigator.startUserProfile(UserFullInfo()
-        ..userID = conversationInfo.userID
-        ..faceURL = conversationInfo.faceURL
-        ..nickname = conversationInfo.showName)
+      ? AppNavigator.startChatSetup(conversationInfo: conversationInfo)
       : AppNavigator.startGroupChatSetup(conversationInfo: conversationInfo);
 
   void clearCurAtMap() {
@@ -577,14 +574,14 @@ class ChatLogic extends GetxController {
     IMUtils.parseClickEvent(
       msg,
       messageList: messageList,
-      // onViewUserInfo: viewUserInfo,
+      onViewUserInfo: viewUserInfo,
     );
   }
 
   void onLongPressLeftAvatar(Message message) {}
 
   void onTapLeftAvatar(Message message) {
-    viewUserInfo(UserFullInfo()
+    viewUserInfo(UserInfo()
       ..userID = message.sendID
       ..nickname = message.senderNickname
       ..faceURL = message.senderFaceUrl);
@@ -594,15 +591,17 @@ class ChatLogic extends GetxController {
   //   viewUserInfo(OpenIM.iMManager.userInfo);
   // }
 
-  void viewUserInfo(UserFullInfo userInfo) {
-    AppNavigator.startUserProfile(userInfo
-        // userID: userInfo.userID!,
-        // nickname: userInfo.nickname,
-        // faceURL: userInfo.faceURL,
-        // groupID: groupID,
-        // offAllWhenDelFriend: isSingleChat,
-        );
+
+  void viewUserInfo(UserInfo userInfo) {
+    AppNavigator.startUserProfile(
+      userID: userInfo.userID!,
+      nickname: userInfo.nickname,
+      faceURL: userInfo.faceURL,
+      groupID: groupID,
+      offAllWhenDelFriend: isSingleChat,
+    );
   }
+
 
   String createDraftText() {
     return json.encode({});

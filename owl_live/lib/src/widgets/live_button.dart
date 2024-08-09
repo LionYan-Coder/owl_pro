@@ -31,7 +31,7 @@ class LiveButton extends StatelessWidget {
           glowCount: glow == true ?  3 : 0,
           animate: glow == true,
           glowColor: color ?? Styles.c_1ED386,
-          glowRadiusFactor: 0.3,
+          glowRadiusFactor: 0.2,
           child: InkResponse(
             onTap: onTap,
             child: Container(
@@ -66,7 +66,7 @@ class LiveButton extends StatelessWidget {
     bool on = true,
   })  : text = StrRes.microphone,
 
-        icon = on ? ("videocall_ico_mute_nor".svg.toSvg..width = 24.w..height = 24.w..color =  Styles.c_333333.adapterDark(Styles.c_999999)) : ("videocall_ico_mute_act".svg.toSvg..width = 24.w..height = 24.w);
+        icon = on ? ("videocall_ico_mute_nor".svg.toSvg..width = 24.w..height = 24.w..color =  Styles.c_333333.adapterDark(Styles.c_CCCCCC)) : ("videocall_ico_mute_act".svg.toSvg..width = 24.w..height = 24.w);
 
   LiveButton.speaker({
     super.key,
@@ -77,7 +77,7 @@ class LiveButton extends StatelessWidget {
     this.enabledCamera = false,
     bool on = true,
   })  : text = StrRes.speaker,
-        icon = on ? ("videocall_ico_loudspeaker_nor".svg.toSvg..width = 24.w..height = 24.w..color =  Styles.c_333333.adapterDark(Styles.c_999999)) : ("videocall_ico_loudspeaker_act".svg.toSvg..width = 24.w..height = 24.w);
+        icon = on ? ("videocall_ico_loudspeaker_nor".svg.toSvg..width = 24.w..height = 24.w..color =  Styles.c_333333.adapterDark(Styles.c_CCCCCC)) : ("videocall_ico_loudspeaker_act".svg.toSvg..width = 24.w..height = 24.w);
 
   LiveButton.video({
     super.key,
@@ -88,7 +88,7 @@ class LiveButton extends StatelessWidget {
     this.enabledCamera = false,
     bool on = true,
   })  : text = StrRes.video,
-        icon = on ? ("videocall_ico_video_nor".svg.toSvg..width = 24.w..height = 24.w..color = Styles.c_333333.adapterDark(Styles.c_999999)) : ("videocall_ico_video_act".svg.toSvg..width = 24.w..height = 24.w);
+        icon = on ? ("videocall_ico_video_nor".svg.toSvg..width = 24.w..height = 24.w..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)) : ("videocall_ico_video_act".svg.toSvg..width = 24.w..height = 24.w);
 
 
   LiveButton.hungUp({
@@ -108,7 +108,7 @@ class LiveButton extends StatelessWidget {
     this.color,
     this.enabledCamera = false,
   })  : text = StrRes.giveUp,
-        icon = "videocall_ico_close".svg.toSvg..width = 24.w..height = 24.w..color = Styles.c_333333.adapterDark(Styles.c_999999),
+        icon = "videocall_ico_close".svg.toSvg..width = 24.w..height = 24.w..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC),
         size = 64.w;
 
   LiveButton.reject({

@@ -52,6 +52,7 @@ class AddGroupPage extends StatelessWidget {
                         children: [
                           Input(
                             name: "groupName",
+                            inputType: InputType2.name,
                             hintText: "add_group_name_hint".tr,
                             validator: FormBuilderValidators.required(
                                 errorText: "add_group_name_error".tr),
@@ -59,6 +60,7 @@ class AddGroupPage extends StatelessWidget {
                           16.gapv,
                           Input(
                             name: "introduction",
+                            inputType: InputType2.name,
                             hintText: "add_group_desc_hint".tr,
                             maxLines: 5,
                             validator: FormBuilderValidators.maxLength(100,

@@ -96,6 +96,7 @@ class AddGroupLogic extends GetxController {
                   key: tagFormKey,
                   child: Input(
                     name: "tag",
+                    inputType: InputType2.name,
                     hintText: "add_group_tag_input_error1".tr,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(

@@ -16,9 +16,8 @@ abstract class ScanBridge {
 }
 
 abstract class ViewUserProfileBridge {
-  viewUserProfile(UserFullInfo user);
+  viewUserProfile(String userID, String? nickname, String? faceURL);
 }
-
 abstract class SelectContactsBridge {
   Future<T?>? selectContacts<T>(
     int type, {

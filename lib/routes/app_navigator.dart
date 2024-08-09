@@ -59,9 +59,25 @@ class AppNavigator {
     return Get.toNamed(AppRoutes.userQRcode, arguments: user);
   }
 
-  static Future<dynamic>? startUserProfile(UserFullInfo user) {
+  static Future<dynamic>? startUserProfile({required String userID,
+    String? groupID,
+    String? nickname,
+    String? faceURL,
+    bool offAllWhenDelFriend = false,
+    bool offAndToNamed = false}) {
+    final arguments = {
+      'groupID': groupID,
+      'userID': userID,
+      'nickname': nickname,
+      'faceURL': faceURL,
+      'offAllWhenDelFriend': offAllWhenDelFriend,
+    };
     GetTags.createUserProfileTag();
-    return Get.toNamed(AppRoutes.userProfile, arguments: user);
+    return Get.toNamed(
+      AppRoutes.userProfile,
+      arguments: arguments,
+      preventDuplicates: false,
+    );
   }
 
   static startSetting() => Get.toNamed(

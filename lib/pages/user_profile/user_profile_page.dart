@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owlpro_app/pages/setting/widgets/setting_menu.dart';
 import 'package:owlpro_app/pages/user_profile/user_profile_logic.dart';
-import 'package:owlpro_app/routes/app_navigator.dart';
 
 import 'widgets/add_friend_dialog.dart';
 
@@ -45,29 +43,12 @@ class UserProfilePage extends StatelessWidget {
                             url: user.value.faceURL ?? '',
                             text: user.value.nickname ?? '',
                           ),
-                          12.gapv,
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                                child: (logic.getShowName() ?? '').toText
-                                  ..style = Styles.ts_333333_18_medium
-                                      .adapterDark(Styles.ts_CCCCCC_18_medium),
-                              ),
-                              Positioned(
-                                  right: -10.w,
-                                  top: -10.w,
-                                  child: IconButton(
-                                      onPressed: logic.showRemarkInputDialog,
-                                      icon: "nvbar_edit".svg.toSvg
-                                        ..width = 16.w
-                                        ..height = 16.w
-                                        ..color = Styles.c_333333
-                                            .adapterDark(Styles.c_CCCCCC)))
-                            ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 12.h),
+                            child: (logic.getShowName() ?? '').toText
+                              ..style = Styles.ts_333333_18_medium
+                                  .adapterDark(Styles.ts_CCCCCC_18_medium),
                           ),
-                          12.gapv,
                           Container(
                             width: 50.w,
                             padding: EdgeInsets.symmetric(horizontal: 4.w),
@@ -80,41 +61,6 @@ class UserProfilePage extends StatelessWidget {
                                       ..style = Styles.ts_0C8CE9_10),
                           ),
                           22.gapv,
-                          logic.isFriendship
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                          vertical: 24, horizontal: 40)
-                                      .w,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      _button(
-                                          icon: "info_ico_mute_nor",
-                                          text: "meetingMute".tr),
-                                      _button(
-                                          icon: "info_ico_seach",
-                                          text: "search".tr),
-                                      _button(
-                                          icon: "info_ico_share",
-                                          text: "share_title".tr),
-                                      _button(
-                                          text: "qrcode",
-                                          icon: "me_ico_code",
-                                          onPressed: () =>
-                                              AppNavigator.startUserProfile(
-                                                  user.value)),
-                                    ],
-                                  ),
-                                )
-                              : IconButton(
-                                  onPressed: () =>
-                                      AppNavigator.startUserProfile(user.value),
-                                  icon: "me_ico_code".svg.toSvg
-                                    ..width = 24.w
-                                    ..height = 24.w
-                                    ..color = Styles.c_333333
-                                        .adapterDark(Styles.c_CCCCCC))
                         ],
                       ),
                     ),
@@ -191,37 +137,6 @@ class UserProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Visibility(
-                visible: logic.isFriendship,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Container(
-                    height: 1,
-                    color: Styles.c_F6F6F6.adapterDark(Styles.c_161616),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: logic.isFriendship,
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.w),
-                  child: Column(
-                    children: [
-                      SettingMenu(label: "user_profile_setup_clear_history".tr),
-                      SettingMenu(label: "user_profile_setup_clear_read".tr),
-                      SettingMenu(label: "user_profile_setup_en_method".tr),
-                      SettingMenu(label: "user_profile_setup_ex_destroy".tr),
-                      SettingMenu(
-                        label: "user_profile_setup_add_black".tr,
-                        right: Switch(
-                            value: logic.userInfo.value.isBlacklist,
-                            onChanged: (_) => logic.toggleBlacklist()),
-                      )
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -234,7 +149,7 @@ class UserProfilePage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                "user_search_result_user_button".tr.toButton
+                (logic.isFriendship ?  "user_search_result_user_button" : "applyFriend") .tr.toButton
                   ..onPressed = () async {
                     if (!user.value.isFriendship) {
                       final valid =
@@ -253,42 +168,10 @@ class UserProfilePage extends StatelessWidget {
                     child: "delete".tr.toButton
                       ..variants = ButtonVariants.outline
                       ..textStyle = Styles.ts_DE473E_16_medium
-                      ..onPressed = () => logic.deleteFromFriendList),
+                      ..onPressed = () => logic.deleteFromFriendList()),
               ],
             )),
       );
     });
-  }
-
-  Widget _button(
-      {required String icon, required String text, VoidCallback? onPressed}) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: onPressed,
-          child: Container(
-            width: 40.w,
-            height: 40.w,
-            decoration: BoxDecoration(
-                color: Styles.c_FFFFFF.adapterDark(Styles.c_262626),
-                border: Border.all(
-                    color: Styles.c_EDEDED.adapterDark(Styles.c_161616)),
-                borderRadius: BorderRadius.circular(999)),
-            child: Center(
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: icon.svg.toSvg
-                  ..width = 18.w
-                  ..height = 18.w
-                  ..color = Styles.c_333333.adapterDark(Styles.c_999999),
-              ),
-            ),
-          ),
-        ),
-        7.gapv,
-        text.toText
-          ..style = Styles.ts_666666_12.adapterDark(Styles.ts_999999_12)
-      ],
-    );
   }
 }

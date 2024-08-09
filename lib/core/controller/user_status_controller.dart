@@ -52,4 +52,8 @@ class UserStatusController extends GetxController{
     await OpenIM.iMManager.userManager.unsubscribeUsersStatus(userIds);
     userStatusList.removeWhere((e) => userIds.contains(e.userID));
   }
+
+  Future<List<UserStatusInfo>> getUsersStatus(List<String> userIDs) async{
+    return await OpenIM.iMManager.userManager.getUserStatus(userIDs);
+  }
 }

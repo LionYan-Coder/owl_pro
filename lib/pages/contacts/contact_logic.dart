@@ -63,7 +63,12 @@ class ContactLogic extends GetxController implements ViewUserProfileBridge {
   //     );
 
   @override
-  viewUserProfile(UserFullInfo user) => AppNavigator.startUserProfile(user);
+  viewUserProfile(String userID, String? nickname, String? faceURL, [String? groupID]) => AppNavigator.startUserProfile(
+    userID: userID,
+    nickname: nickname,
+    faceURL: faceURL,
+    groupID: groupID,
+  );
 
   // @override
   // scanOutGroupID(String groupID) => AppNavigator.startGroupProfilePanel(

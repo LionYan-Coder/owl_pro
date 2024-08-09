@@ -13,17 +13,8 @@ import 'package:synchronized/synchronized.dart';
 import 'package:owl_common/owl_common.dart' as common;
 
 import '../../../live_client.dart';
-import '../../../widgets/loading_view.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:livekit_client/livekit_client.dart';
 import 'package:owl_common/owl_common.dart';
-import 'package:owl_live/src/widgets/live_button.dart';
-import 'package:synchronized/synchronized.dart';
-
-import '../../../live_client.dart';
 
 class ControlsView extends StatefulWidget {
   const ControlsView({
@@ -260,7 +251,7 @@ class _ControlsViewState extends State<ControlsView> {
                   icon: "nvbar_ico_shrink_black".svg.toSvg
                     ..width = 24.w
                     ..height = 24.w
-                    ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
+                    ..color = _enabledCamera ? Styles.c_CCCCCC :  Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
             ),
             Positioned(
               top: 86.h,
@@ -325,6 +316,7 @@ class _ControlsViewState extends State<ControlsView> {
   }
 
   List<Widget> get _buttonGroup2 {
+
     if (_callState == CallState.call ||
         _callState == CallState.connecting &&
             widget.initState == CallState.call) {
@@ -437,24 +429,30 @@ class _ControlsViewState extends State<ControlsView> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AvatarGlow(
-          glowRadiusFactor: 0.2,
-          glowCount: 3,
-          child: ClipOval(
-            child: Container(
-              width: 100.w,
-              height: 100.w,
-              color: Colors.white,
-              child: Center(
-                child: "logo".png.toImage
-                  ..width = 45.w
-                  ..height = 50.w,
+        Visibility(
+          visible: !_enabledCamera,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 24).h,
+            child: AvatarGlow(
+              glowRadiusFactor: 0.2,
+              glowCount: 3,
+              child: ClipOval(
+                child: Container(
+                  width: 100.w,
+                  height: 100.w,
+                  color: Colors.white,
+                  child: Center(
+                    child: "logo".png.toImage
+                      ..width = 45.w
+                      ..height = 50.w,
+                  ),
+                ),
               ),
             ),
           ),
         ),
-        48.gapv,
-        "chat_live_title".tr.toText..style = common.Styles.ts_FFFFFF_20_medium,
+        8.gapv,
+        "chat_live_title".tr.toText..style =_enabledCamera ?  common.Styles.ts_FFFFFF_16_medium : common.Styles.ts_333333_20_medium.adapterDark(common.Styles.ts_FFFFFF_20_medium),
         8.gapv,
         Container(
           constraints: BoxConstraints(maxWidth: 120.w),

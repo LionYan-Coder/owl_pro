@@ -244,27 +244,37 @@ abstract class SignalState<T extends SignalView> extends State<T> {
             duration: const Duration(milliseconds: 200),
             onEnd: () {},
             child: Container(
-              color: Styles.c_333333,
+              color: const Color(0xFFF0F9FF)
+                  .withOpacity(0.6)
+                  .adapterDark(const Color(0xFF0D0D0D).withOpacity(0.6)),
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: Container(
-                      color: const Color(0xFFF0F9FF)
-                          .withOpacity(0.6)
-                          .adapterDark(
-                              const Color(0xFF0D0D0D).withOpacity(0.6)),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 50.0.w, sigmaY: 50.0.h),
+                      child: Container(
+                        width: 1.sw,
+                        height: 1.sh,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: "call_img_bg".png.toImage
+                                ..adpaterDark = true,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  // ImageRes.liveBg.toImage
-                  //   ..fit = BoxFit.cover
-                  //   ..width = 1.sw
-                  //   ..height = 1.sh,
                   if (null != remoteParticipantTrack)
                     ParticipantWidget.widgetFor(smallScreenIsRemote
                         ? remoteParticipantTrack!
                         : localParticipantTrack!),
-
-                  if (null != localParticipantTrack && ( localParticipantTrack?.participant.isCameraEnabled() ?? false) )
+                  if (null != localParticipantTrack &&
+                      (localParticipantTrack?.participant.isCameraEnabled() ??
+                          false))
                     Positioned(
                       top: 97.h,
                       right: 12.w,
@@ -285,11 +295,11 @@ abstract class SignalState<T extends SignalView> extends State<T> {
                         },
                       ),
                     ),
-
                   ControlsView(
                     callStateStream: callStateSubject.stream,
                     roomDidUpdateStream: roomDidUpdateSubject.stream,
-                    remoteCameraEnabled: remoteParticipantTrack?.participant.isCameraEnabled(),
+                    remoteCameraEnabled:
+                        remoteParticipantTrack?.participant.isCameraEnabled(),
                     initState: widget.initState,
                     callType: widget.callType,
                     userInfo: userInfo,

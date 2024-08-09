@@ -64,7 +64,6 @@ export 'src/widget/tag.dart';
 export 'src/widget/dialog.dart';
 export 'src/widget/user_online_status.dart';
 
-export 'src/widget/chat/ripple_effect_button.dart';
 export 'src/widget/chat/chat_picture_preview.dart';
 export 'src/widget/chat/chat_item_view.dart';
 export 'src/widget/chat/chat_progress_view.dart';

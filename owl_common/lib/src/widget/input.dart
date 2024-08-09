@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 
-enum InputType2 { text, password, number, tel }
+enum InputType2 { text, password, number, tel,name }
 
 class Input extends StatefulWidget {
   final String name;
@@ -86,6 +86,8 @@ class _InputState extends State<Input> {
       return TextInputType.number;
     } else if (widget.inputType == InputType2.tel) {
       return TextInputType.phone;
+    }else if (widget.inputType == InputType2.name){
+      return TextInputType.name;
     }
 
     return TextInputType.text;

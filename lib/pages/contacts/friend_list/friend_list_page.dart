@@ -11,34 +11,56 @@ class FriendListPage extends StatelessWidget {
   FriendListPage({super.key});
 
   final logic = Get.find<FriendListLogic>();
-  final statusLogic =  Get.find<UserStatusController>();
+  final statusLogic = Get.find<UserStatusController>();
   final contactLogic = Get.find<ContactLogic>();
 
   @override
   Widget build(BuildContext context) {
-
     return Obx(
       () {
-        return WrapAzListView<ISUserInfo>(
-          data: logic.friendList,
-          itemCount: logic.friendList.length ,
-          itemBuilder: (_, data, index) {
-            if (index == 0) {
-              return ContactMenus();
-            } else {
-              return _buildItemView(data);
-            }
-          },
-        );
+        return logic.friendList.length > 1
+            ? WrapAzListView<ISUserInfo>(
+                data: logic.friendList,
+                itemCount: logic.friendList.length,
+                itemBuilder: (_, data, index) {
+                  if (index == 0) {
+                    return ContactMenus();
+                  } else {
+                    return _buildItemView(data);
+                  }
+                },
+              )
+            : Column(
+              children: [
+              ContactMenus(),
+                Expanded(
+                    child: Center(
+                      child: SizedBox(
+                        width: 178.w,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            "chat_ico_newfirend".svg.toSvg..width=  64.w..height = 64.w..color = Styles.c_999999.adapterDark(Styles.c_333333),
+                            24.gapv,
+                            "contact_empty".tr.toText..style = Styles.ts_999999_14.adapterDark(Styles.ts_333333_14)..textAlign = TextAlign.center
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
+              ],
+            );
       },
     );
   }
 
   Widget _buildItemView(ISUserInfo info) => Ink(
         height: 64.h,
-        color: Styles.c_FFFFFF,
+        color: Styles.c_FFFFFF.adapterDark(Styles.c_0D0D0D),
         child: InkWell(
-          onTap: () => contactLogic.viewUserProfile(info),
+          onTap: () => contactLogic.viewUserProfile(
+              info.userID!, info.nickname, info.faceURL),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Row(
