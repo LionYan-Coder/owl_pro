@@ -27,7 +27,7 @@ class UserFullInfo {
 
   String get showName => remark?.isNotEmpty == true
       ? remark!
-      : (nickname?.isNotEmpty == true ? nickname! : account!);
+      : (nickname?.isNotEmpty == true ? nickname! : account ?? '');
 
   UserFullInfo({
     this.userID,

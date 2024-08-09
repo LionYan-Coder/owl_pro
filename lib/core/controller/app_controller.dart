@@ -169,7 +169,7 @@ class AppController extends GetxController with UpgradeManger {
     bool isRegistered = Get.isRegistered<IMController>();
     if (isRegistered) {
       var logic = Get.find<IMController>();
-      return logic.userInfo.value?.globalRecvMsgOpt == 2;
+      return logic.userInfo.value.globalRecvMsgOpt == 2;
     }
     return false;
   }

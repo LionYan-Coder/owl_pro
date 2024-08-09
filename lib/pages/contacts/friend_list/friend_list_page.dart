@@ -69,7 +69,7 @@ class FriendListPage extends StatelessWidget {
                   tag: info.nickname,
                   url: info.faceURL,
                   text: info.nickname,
-                  online: statusLogic.getOnline(info.userID!),
+                  online: statusLogic.getOnline(info.userID ?? "00"),
                 ),
                 12.horizontalSpace,
                 info.showName.toText

@@ -16,7 +16,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 58.h + context.mediaQueryPadding.bottom,
+      height: 64.h + context.mediaQueryPadding.bottom,
       padding: EdgeInsets.only(
           bottom: context.mediaQueryPadding.bottom,
           left: 34.w,

@@ -35,7 +35,7 @@ class SettingPage extends StatelessWidget {
                     extra: Padding(
                       padding: EdgeInsets.only(right: 4.w),
                       child: FutureBuilder(
-                          future: logic.calculateSharedPreferencesSize(),
+                          future: logic.getCacheSize(),
                           builder: (context, state) {
                             if (state.connectionState ==
                                 ConnectionState.waiting) {
@@ -49,7 +49,7 @@ class SettingPage extends StatelessWidget {
                               ..style = Styles.ts_0C8CE9_16;
                           }),
                     ),
-                    onTap: logic.onClearCache,
+                    onTap: logic.clearCache,
                   ),
                   6.gapv,
                   SettingMenu(
@@ -111,8 +111,10 @@ class SettingPage extends StatelessWidget {
                       extra: Padding(
                         padding: const EdgeInsets.only(right: 1).w,
                         child: Text(
-                          DateUtil2.formattedTimes(
-                              mineLogic.verifyPwdGapTime.value.dateTime),
+                          mineLogic.verifyPwdGapTime.value > 0
+                              ? DateUtil2.formattedTimes(
+                                  mineLogic.verifyPwdGapTime.value.dateTime)
+                              : 'never_verify'.tr,
                           style: Styles.ts_0C8CE9_16_medium,
                         ),
                       ))),

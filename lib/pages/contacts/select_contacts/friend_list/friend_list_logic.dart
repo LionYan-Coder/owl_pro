@@ -5,6 +5,7 @@ import 'package:owlpro_app/pages/contacts/friend_list/friend_list_logic.dart';
 import '../select_contacts_logic.dart';
 
 class SelectContactsFromFriendsLogic extends FriendListLogic {
+
   final selectContactsLogic = Get.find<SelectContactsLogic>();
 
 

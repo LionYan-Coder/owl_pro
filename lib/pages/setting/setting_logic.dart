@@ -1,17 +1,21 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owlpro_app/pages/mine/mine_logic.dart';
+import 'package:path_provider/path_provider.dart';
 
 class SettingLogic extends GetxController {
   final mineLogic = Get.find<MineLogic>();
 
   final selectedLockTime = 0.obs;
   List<int> appLockTimeList = [
+    const Duration(microseconds: 0).inMilliseconds,
     const Duration(minutes: 30).inMilliseconds,
     const Duration(hours: 1).inMilliseconds,
     const Duration(hours: 3).inMilliseconds,
@@ -21,45 +25,45 @@ class SettingLogic extends GetxController {
     const Duration(days: 7).inMilliseconds,
   ];
 
-  void onClearCache() async {
-    await SpUtil().clear();
-    calculateSharedPreferencesSize();
+  Future<void> clearCache() async {
+    await LoadingView.singleton
+        .wrap(asyncFunction: () => DefaultCacheManager().emptyCache())
+        .then((_) {
+      ToastHelper.showToast(Get.context!, "clear_cache_success".tr);
+    });
   }
 
-  Future<String> calculateSharedPreferencesSize() async {
-    final keys = SpUtil().getKeys() ?? Set.from({});
+  Future<String> getCacheSize() async {
+    Directory tempDir = await getTemporaryDirectory();
+    int totalSize = await _getDirectorySize(tempDir);
+    return _formatSize(totalSize);
+  }
 
+  Future<int> _getDirectorySize(Directory directory) async {
     int totalSize = 0;
-
-    for (var key in keys) {
-      final value = SpUtil().getSp()?.get(key);
-      final keySize = utf8.encode(key).length;
-      int valueSize;
-
-      if (value is String) {
-        valueSize = utf8.encode(value).length;
-      } else if (value is int) {
-        valueSize = 8; // 64-bit integer
-      } else if (value is double) {
-        valueSize = 8; // 64-bit double
-      } else if (value is bool) {
-        valueSize = 1; // 1 byte for boolean
-      } else if (value is List<String>) {
-        valueSize = value.fold(
-            0, (prev, element) => prev + utf8.encode(element).length);
-      } else {
-        valueSize = 0;
+    if (directory.existsSync()) {
+      try {
+        await for (var file in directory.list(recursive: true)) {
+          if (file is File) {
+            totalSize += await file.length();
+          }
+        }
+      } catch (e) {
+        print('Failed to get directory size: $e');
       }
-
-      totalSize += keySize + valueSize;
     }
+    return totalSize;
+  }
 
-    double sizeInMB = totalSize / (1024 * 1024);
-    if (sizeInMB >= 1) {
-      return '${sizeInMB.toStringAsPrecision(2)}M';
+  String _formatSize(int bytes) {
+    if (bytes >= 1024 * 1024) {
+      // 转换为 MB
+      double mb = bytes / (1024 * 1024);
+      return "${mb.toStringAsFixed(2)} MB";
     } else {
-      double sizeInKB = totalSize / 1024;
-      return '${sizeInKB.toStringAsFixed(2)}KB';
+      // 转换为 KB
+      double kb = bytes / 1024;
+      return "${kb.toStringAsFixed(2)} KB";
     }
   }
 
@@ -106,6 +110,14 @@ class SettingLogic extends GetxController {
                   },
                   children: List<Widget>.generate(appLockTimeList.length,
                       (int index) {
+                    if (appLockTimeList[index]
+                            .dateTime
+                            .millisecondsSinceEpoch ==
+                        0) {
+                      return Center(
+                        child: Text("never_verify".tr),
+                      );
+                    }
                     return Center(
                         child: Text(DateUtil2.formattedTimes(
                             appLockTimeList[index].dateTime)));

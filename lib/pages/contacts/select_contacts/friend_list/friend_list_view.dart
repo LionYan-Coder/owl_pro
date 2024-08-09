@@ -45,8 +45,8 @@ class SelectContactsFromFriendsPage extends StatelessWidget {
           Flexible(
             child: Obx(
               () => WrapAzListView<ISUserInfo>(
-                data: logic.friendList,
-                itemCount: logic.friendList.length,
+                data: logic.friendList.skipWhile((e) => e.userID == null).toList(),
+                itemCount: logic.friendList.length - 1,
                 itemBuilder: (_, data, index) => _buildItemView(data),
               ),
             ),

@@ -28,6 +28,9 @@ class ConversationLogic extends GetxController {
   late AutoScrollController scrollController;
   int scrollIndex = -1;
 
+  List<ConversationInfo> get pinnedList => list.where((e) => isPinned(e)).toList();
+  List<ConversationInfo> get unPinnedList => list.where((e) => !isPinned(e)).toList();
+
   @override
   void onInit() {
     scrollController = AutoScrollController(axis: Axis.vertical);
@@ -80,7 +83,7 @@ class ConversationLogic extends GetxController {
 
   void deleteConversation(ConversationInfo info) async {
     await OpenIM.iMManager.conversationManager
-        .deleteConversationAndDeleteAllMsg(
+        .hideConversation(
       conversationID: info.conversationID,
     );
     list.remove(info);

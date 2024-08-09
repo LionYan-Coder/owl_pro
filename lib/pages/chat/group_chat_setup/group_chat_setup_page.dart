@@ -45,12 +45,14 @@ class GroupChatSetupPage extends StatelessWidget {
       padding: EdgeInsets.only(top: 40.w, bottom: 12.w),
       child: Column(
         children: [
-          AvatarView(
-            radius: 32.w,
-            url: logic.groupInfo.value.faceURL,
-            text: logic.groupInfo.value.groupName,
-            textStyle: Styles.ts_FFFFFF_14,
-            isGroup: true,
+          GestureDetector(
+            onTap: logic.modifyGroupAvatar,
+            child: AvatarView(
+              radius: 32.w,
+              url: logic.groupInfo.value.faceURL,
+              text: logic.groupInfo.value.groupName,
+              textStyle: Styles.ts_FFFFFF_14,
+            ),
           ),
           12.gapv,
           Stack(
@@ -62,17 +64,20 @@ class GroupChatSetupPage extends StatelessWidget {
                   ..style = Styles.ts_333333_18_medium
                       .adapterDark(Styles.ts_CCCCCC_18_medium),
               ),
-              Positioned(
-                  right: -10.w,
-                  top: -10.w,
-                  child: IconButton(
-                      onPressed: () {},
-                      // onPressed: logic.showRemarkInputDialog,
-                      icon: "nvbar_edit".svg.toSvg
-                        ..width = 16.w
-                        ..height = 16.w
-                        ..color =
-                            Styles.c_333333.adapterDark(Styles.c_CCCCCC))),
+              Visibility(
+                visible: logic.isOwnerOrAdmin,
+                child: Positioned(
+                    right: -10.w,
+                    top: -10.w,
+                    child: IconButton(
+                        onPressed: () {},
+                        // onPressed: logic.showRemarkInputDialog,
+                        icon: "nvbar_edit".svg.toSvg
+                          ..width = 16.w
+                          ..height = 16.w
+                          ..color =
+                              Styles.c_333333.adapterDark(Styles.c_CCCCCC))),
+              ),
             ],
           ),
           logic.isOwnerOrAdmin

@@ -28,6 +28,7 @@ class ChatSetupLogic extends GetxController {
   late Rx<ConversationInfo> conversationInfo;
   late Rx<UserFullInfo> userInfo;
   late StreamSubscription _friendInfoChangedSub;
+  late StreamSubscription _conversationSub;
 
   String get conversationID => conversationInfo.value.conversationID;
 
@@ -101,10 +102,11 @@ class ChatSetupLogic extends GetxController {
             children: [
               18.gapv,
               FormBuilder(
-                  initialValue: {"remark": conversationInfo.value.showName},
+                  initialValue: {"remark": userInfo.value.showName},
                   key: remarkFormKey,
                   child: Input(
                     name: "remark",
+                    inputType: InputType2.name,
                     hintText: "user_profile_setup_set_remark_hint".tr,
                   )),
               28.gapv,
@@ -215,6 +217,41 @@ class ChatSetupLogic extends GetxController {
     }
   }
 
+  void pinConversation() async {
+    OpenIM.iMManager.conversationManager.pinConversation(
+      conversationID: conversationInfo.value.conversationID,
+      isPinned: !conversationInfo.value.isPinned!,
+    );
+  }
+
+
+  void setDissmis() async {
+    OpenIM.iMManager.conversationManager.setConversationRecvMessageOpt(
+      conversationID: conversationInfo.value.conversationID,
+      status: isDissmis ? 0 : 2
+    );
+  }
+
+  bool get isDissmis => conversationInfo.value.recvMsgOpt == 2;
+
+  void deleteConversation() async {
+    var confirm = await ConfirmDialog.showConfirmDialog(
+        title: "chat_setup_clear_conversation_title".tr,
+        desc: "chat_setup_clear_conversation_desc".tr);
+
+    if (confirm){
+      await LoadingView.singleton.wrap(
+        asyncFunction: () async {
+          await OpenIM.iMManager.conversationManager
+              .clearConversationAndDeleteAllMsg(
+            conversationID: conversationID,
+          );
+        }
+      ).then((_) => ToastHelper.showToast(Get.context!, "clearSuccessfully".tr) );
+    }
+  }
+
+
   @override
   void onInit() {
     conversationInfo = Rx(Get.arguments['conversationInfo']);
@@ -227,6 +264,21 @@ class ChatSetupLogic extends GetxController {
         });
       }
     });
+
+    _conversationSub =  imLogic.conversationChangedSubject.listen((conversations){
+      final conversation = conversations.firstWhereOrNull((e) => e.conversationID == conversationInfo.value.conversationID );
+      if (conversations.isNotEmpty && conversation != null ){
+        conversationInfo.update((val){
+          val?.recvMsgOpt = conversation.recvMsgOpt;
+          val?.isPinned = conversation.isPinned;
+          val?.burnDuration = conversation.burnDuration;
+          val?.isPrivateChat = conversation.isPrivateChat;
+        });
+      }
+
+   });
+
+
     super.onInit();
   }
 
@@ -241,6 +293,7 @@ class ChatSetupLogic extends GetxController {
   @override
   void onClose() {
     _friendInfoChangedSub.cancel();
+    _conversationSub.cancel();
     super.onClose();
   }
 }

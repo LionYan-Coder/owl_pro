@@ -24,6 +24,7 @@ class ChatSetupPage extends StatelessWidget {
               _buildBaseInfoView(),
               Container(
                 height: 1,
+                margin: EdgeInsets.symmetric(horizontal: 24.w),
                 color: Styles.c_F6F6F6.adapterDark(Styles.c_161616),
               ),
               _buildSettingsView()
@@ -76,7 +77,7 @@ class ChatSetupPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.w),
                       child:
-                      (logic.conversationInfo.value.showName ?? '').toText
+                      (logic.userInfo.value.showName ?? '').toText
                         ..style = Styles.ts_333333_18_medium
                             .adapterDark(Styles.ts_CCCCCC_18_medium),
                     ),
@@ -107,9 +108,9 @@ class ChatSetupPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _button(
-                          icon: "info_ico_mute_nor", text: "meetingMute".tr),
-                      _button(icon: "info_ico_seach", text: "search".tr),
-                      _button(icon: "info_ico_share", text: "share_title".tr),
+                          icon:  "info_ico_mute_nor", text: "meetingMute".tr,onPressed: () => logic.setDissmis(),on: logic.isDissmis),
+                      _button(icon: "info_ico_seach", text: "search".tr, onPressed: () => ToastHelper.showComingSoon()),
+                      _button(icon: "info_ico_share", text: "share_title".tr, onPressed: () => ToastHelper.showComingSoon()),
                     ],
                   ),
                 )
@@ -196,18 +197,36 @@ class ChatSetupPage extends StatelessWidget {
   Widget _buildSettingsView(){
     return Padding(
       padding:
-      EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.w),
+      EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
       child: Column(
         children: [
-          SettingMenu(label: "user_profile_setup_clear_history".tr),
-          SettingMenu(label: "user_profile_setup_clear_read".tr),
-          SettingMenu(label: "user_profile_setup_en_method".tr),
-          SettingMenu(label: "user_profile_setup_ex_destroy".tr),
+          SettingMenu(
+            label: "user_profile_setup_pin".tr,
+            right: SizedBox(
+              height: 24.h,
+              child: Transform.scale(
+                scale: 0.7,
+                child: Switch(
+                    value: logic.conversationInfo.value.isPinned == true,
+                    onChanged: (_) => logic.pinConversation()),
+              ),
+            ),
+          ),
+          SettingMenu(label: "user_profile_setup_clear_history".tr,onTap: logic.deleteConversation,),
+          SettingMenu(label: "user_profile_setup_clear_read".tr,onTap: () => ToastHelper.showComingSoon() ,),
+          SettingMenu(label: "user_profile_setup_en_method".tr,onTap: () => ToastHelper.showComingSoon()),
+          SettingMenu(label: "user_profile_setup_ex_destroy".tr,onTap: () => ToastHelper.showComingSoon()),
           SettingMenu(
             label: "user_profile_setup_add_black".tr,
-            right: Switch(
-                value: logic.userInfo.value.isBlacklist,
-                onChanged: (_) => logic.toggleBlacklist()),
+            right: SizedBox(
+              height: 24.h,
+              child: Transform.scale(
+                scale: 0.7,
+                child: Switch(
+                    value: logic.userInfo.value.isBlacklist,
+                    onChanged: (_) => logic.toggleBlacklist()),
+              ),
+            ),
           )
         ],
       ),
@@ -215,7 +234,7 @@ class ChatSetupPage extends StatelessWidget {
   }
 
   Widget _button(
-      {required String icon, required String text, VoidCallback? onPressed}) {
+      {required String icon,  required String text, VoidCallback? onPressed,bool? on}) {
     return Column(
       children: [
         GestureDetector(
@@ -234,7 +253,7 @@ class ChatSetupPage extends StatelessWidget {
                 child: icon.svg.toSvg
                   ..width = 18.w
                   ..height = 18.w
-                  ..color = Styles.c_333333.adapterDark(Styles.c_999999),
+                  ..color = on == true ? Styles.c_0C8CE9 :  Styles.c_333333.adapterDark(Styles.c_999999),
               ),
             ),
           ),

@@ -45,11 +45,12 @@ class NewFriendPage extends StatelessWidget {
                   DateTime.now().difference(createTime).inDays >= 7;
               if (isOneWeekOld && !oneWeekLabelAdded) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Visibility(
                       visible: index > 0,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
+                        padding: EdgeInsets.symmetric(vertical: 12.h,horizontal: 24.w),
                         child: Container(
                           height: 1,
                           color: Styles.c_F6F6F6.adapterDark(Styles.c_161616),

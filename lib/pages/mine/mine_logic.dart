@@ -69,7 +69,7 @@ class MineLogic extends GetxController {
     } else {
       Logger.print(
           "currentPassword = ${EncryptionHelper.decrypt64(currentPassword)}");
-      if (lastVerifyPwdTime > 0) {
+      if (lastVerifyPwdTime > 0 && verifyPwdGapTime.value > 0) {
         var lastChecked =
             DateTime.fromMillisecondsSinceEpoch(lastVerifyPwdTime);
 
@@ -118,7 +118,7 @@ class MineLogic extends GetxController {
             Wallet(address: '', privKey: '', mnemonic: '');
     loadedWalletBalance(im.userInfo.value);
     verifyPwdGapTime.value =
-        DataSp.verifyPwdGap ?? const Duration(days: 1).inMilliseconds;
+        DataSp.verifyPwdGap ?? const Duration(milliseconds: 0).inMilliseconds;
     super.onInit();
   }
 

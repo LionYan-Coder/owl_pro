@@ -59,7 +59,6 @@ class GroupListPage extends StatelessWidget {
                 AvatarView(
                   url: info.faceURL,
                   text: info.groupName,
-                  isGroup: true,
                 ),
                 12.gaph,
             (info.groupName ?? '').toText

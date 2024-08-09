@@ -4,14 +4,18 @@ import 'package:owl_common/owl_common.dart';
 
 class UnreadCountView extends StatelessWidget {
   const UnreadCountView({
-    Key? key,
+    super.key,
     this.count = 0,
-    this.size = 13,
+    this.size = 16,
     this.margin,
-  }) : super(key: key);
+    this.color,
+    this.borderColor,
+  });
   final int count;
   final double size;
   final EdgeInsetsGeometry? margin;
+  final Color? color;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +42,10 @@ class UnreadCountView extends StatelessWidget {
   );
 
   Decoration get _decoration => BoxDecoration(
-    color: Styles.c_DE473E,
+    color: color ?? Styles.c_DE473E,
     shape: count > 99 ? BoxShape.rectangle : BoxShape.circle,
     borderRadius: count > 99 ? BorderRadius.circular(10.r) : null,
+    border: Border.all(color: borderColor ?? Colors.transparent),
     boxShadow: [
       BoxShadow(
         color: const Color(0x26C61B4A),
