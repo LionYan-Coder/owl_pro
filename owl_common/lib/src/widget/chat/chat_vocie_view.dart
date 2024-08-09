@@ -25,7 +25,7 @@ class ChatVoiceView extends StatefulWidget {
   State<ChatVoiceView> createState() => _ChatVoiceViewState();
 }
 
-class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveClientMixin{
+class _ChatVoiceViewState extends State<ChatVoiceView> {
   Message get _message => widget.message;
 
   late PlayerController controller;
@@ -33,9 +33,6 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
   late StreamSubscription<double> extractionProgressSubscription;
 
   ValueNotifier<bool> loading = ValueNotifier(true);
-
-  @override
-  bool get wantKeepAlive => true; // 保持状态
 
   @override
   void initState() {
@@ -51,12 +48,6 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
   }
 
 
-  final playerWaveStyle = const PlayerWaveStyle(
-    fixedWaveColor: Colors.white38,
-    liveWaveColor: Colors.white,
-    spacing: 6,
-  );
-
   Future<void> _initializeAudio() async {
     try {
 
@@ -68,17 +59,26 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
         Logger.print("audio is empty ${_message.sendID}");
         return;
       }
-      var _audioFilePath = soundPath;
-      await HttpUtil.download(soundUrl, cachePath: _audioFilePath);
 
-      // 准备播放器并提取波形数据
-      if (_audioFilePath.isNotEmpty) {
+      if (widget.isISend){
         await controller.preparePlayer(
-          path: _audioFilePath,
+          path: soundPath,
           shouldExtractWaveform: true,
           noOfSamples: 100, // 根据需要设置采样数量
         );
+        return;
       }
+      var path = await IMUtils.createTempFile(
+        dir: 'm4a',
+        name: '${_message.sendID}.m4a',
+      );
+     await HttpUtil.download(soundUrl, cachePath: path);
+      await controller.preparePlayer(
+        path: path,
+        shouldExtractWaveform: true,
+        noOfSamples: 100, // 根据需要设置采样数量
+      );
+
     } catch (e) {
       Logger.print(e.toString());
     }
@@ -86,6 +86,7 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
 
   @override
   void dispose() {
+    loading.dispose();
     extractionProgressSubscription.cancel();
     playerStateSubscription.cancel();
     controller.dispose();
@@ -93,7 +94,6 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
   }
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return ValueListenableBuilder<bool>(
       valueListenable: loading,
       builder: (BuildContext context, bool value, Widget? child) {
@@ -103,9 +103,9 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
             child: SizedBox(
               width: 10.w,
               height: 10.w,
-              child: const CircularProgressIndicator.adaptive(
+              child:  CircularProgressIndicator.adaptive(
                 strokeWidth: 1,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(widget.isISend ? Colors.white : Styles.c_0C8CE9.withOpacity(0.5)),
               ),
             ),
           )  : Row(
@@ -115,10 +115,12 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
                 onTap: () async {
                   controller.playerState.isPlaying
                       ? await controller.pausePlayer()
-                      : await controller.startPlayer();
+                      : await controller.startPlayer(
+                    finishMode: FinishMode.loop
+                  );
                 },
                 child: Icon(
-                  color: Colors.white,
+                  color:widget.isISend ? Colors.white : Styles.c_0C8CE9,
                   size: 16.w,
                   controller.playerState.isPlaying
                       ? Icons.stop
@@ -126,10 +128,14 @@ class _ChatVoiceViewState extends State<ChatVoiceView> with AutomaticKeepAliveCl
                 ),
               ),
               AudioFileWaveforms(
-                size: Size(48 + (_message.soundElem?.duration?.toDouble() ?? 0) , 24),
+                size: Size(48 + (_message.soundElem?.duration?.toDouble() ?? 0) , 28),
                 playerController: controller,
                 waveformType:WaveformType.fitWidth,
-                playerWaveStyle: playerWaveStyle,
+                playerWaveStyle: PlayerWaveStyle(
+                  fixedWaveColor: widget.isISend ? Colors.white38 : Styles.c_0C8CE9.withOpacity(0.5) ,
+                  liveWaveColor:widget.isISend ? Colors.white : Styles.c_0C8CE9,
+                  spacing: 6,
+                ),
               ),
             ],
           ),

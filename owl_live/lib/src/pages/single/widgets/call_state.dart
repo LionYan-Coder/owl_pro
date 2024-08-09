@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
@@ -246,6 +247,14 @@ abstract class SignalState<T extends SignalView> extends State<T> {
               color: Styles.c_333333,
               child: Stack(
                 children: [
+                  Positioned.fill(
+                    child: Container(
+                      color: const Color(0xFFF0F9FF)
+                          .withOpacity(0.6)
+                          .adapterDark(
+                              const Color(0xFF0D0D0D).withOpacity(0.6)),
+                    ),
+                  ),
                   // ImageRes.liveBg.toImage
                   //   ..fit = BoxFit.cover
                   //   ..width = 1.sw
@@ -255,7 +264,7 @@ abstract class SignalState<T extends SignalView> extends State<T> {
                         ? remoteParticipantTrack!
                         : localParticipantTrack!),
 
-                  if (null != localParticipantTrack)
+                  if (null != localParticipantTrack && ( localParticipantTrack?.participant.isCameraEnabled() ?? false) )
                     Positioned(
                       top: 97.h,
                       right: 12.w,
@@ -280,6 +289,7 @@ abstract class SignalState<T extends SignalView> extends State<T> {
                   ControlsView(
                     callStateStream: callStateSubject.stream,
                     roomDidUpdateStream: roomDidUpdateSubject.stream,
+                    remoteCameraEnabled: remoteParticipantTrack?.participant.isCameraEnabled(),
                     initState: widget.initState,
                     callType: widget.callType,
                     userInfo: userInfo,

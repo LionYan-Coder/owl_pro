@@ -29,6 +29,8 @@ dependencies:
   owl_common:
     path: ../owl_common
   flutter_openim_sdk: 3.8.0
+  wakelock_plus: ^1.2.1
+  avatar_glow: ^3.0.1
 
 dev_dependencies:
   flutter_test:

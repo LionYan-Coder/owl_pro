@@ -1,9 +1,17 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:get/get.dart';
 import 'package:livekit_client/livekit_client.dart';
+import 'package:owl_common/owl_common.dart' as common;
 
 class ParticipantTrack {
-  ParticipantTrack({required this.participant, required this.videoTrack, required this.isScreenShare});
+  ParticipantTrack(
+      {required this.participant,
+      required this.videoTrack,
+      required this.isScreenShare});
 
   VideoTrack? videoTrack;
   Participant participant;
@@ -14,9 +22,15 @@ abstract class ParticipantWidget extends StatefulWidget {
   // Convenience method to return relevant widget for participant
   static ParticipantWidget widgetFor(ParticipantTrack participantTrack) {
     if (participantTrack.participant is LocalParticipant) {
-      return LocalParticipantWidget(participantTrack.participant as LocalParticipant, participantTrack.videoTrack, participantTrack.isScreenShare);
+      return LocalParticipantWidget(
+          participantTrack.participant as LocalParticipant,
+          participantTrack.videoTrack,
+          participantTrack.isScreenShare);
     } else if (participantTrack.participant is RemoteParticipant) {
-      return RemoteParticipantWidget(participantTrack.participant as RemoteParticipant, participantTrack.videoTrack, participantTrack.isScreenShare);
+      return RemoteParticipantWidget(
+          participantTrack.participant as RemoteParticipant,
+          participantTrack.videoTrack,
+          participantTrack.isScreenShare);
     }
     throw UnimplementedError('Unknown participant type');
   }
@@ -72,7 +86,8 @@ class RemoteParticipantWidget extends ParticipantWidget {
   State<StatefulWidget> createState() => _RemoteParticipantWidgetState();
 }
 
-abstract class _ParticipantWidgetState<T extends ParticipantWidget> extends State<T> {
+abstract class _ParticipantWidgetState<T extends ParticipantWidget>
+    extends State<T> {
   VideoTrack? get activeVideoTrack;
 
   TrackPublication? get videoPublication;
@@ -114,31 +129,37 @@ abstract class _ParticipantWidgetState<T extends ParticipantWidget> extends Stat
                 activeVideoTrack!,
                 fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
               )
-            : Container(
-                color: Colors.black,
-              ),
+            : const SizedBox.shrink(),
       );
 }
 
-class _LocalParticipantWidgetState extends _ParticipantWidgetState<LocalParticipantWidget> {
+class _LocalParticipantWidgetState
+    extends _ParticipantWidgetState<LocalParticipantWidget> {
   @override
   LocalTrackPublication<LocalVideoTrack>? get videoPublication =>
-      widget.participant.videoTrackPublications.where((element) => element.sid == widget.videoTrack?.sid).firstOrNull;
+      widget.participant.videoTrackPublications
+          .where((element) => element.sid == widget.videoTrack?.sid)
+          .firstOrNull;
 
   @override
-  LocalTrackPublication<LocalAudioTrack>? get firstAudioPublication => widget.participant.audioTrackPublications.firstOrNull;
+  LocalTrackPublication<LocalAudioTrack>? get firstAudioPublication =>
+      widget.participant.audioTrackPublications.firstOrNull;
 
   @override
   VideoTrack? get activeVideoTrack => widget.videoTrack;
 }
 
-class _RemoteParticipantWidgetState extends _ParticipantWidgetState<RemoteParticipantWidget> {
+class _RemoteParticipantWidgetState
+    extends _ParticipantWidgetState<RemoteParticipantWidget> {
   @override
   RemoteTrackPublication<RemoteVideoTrack>? get videoPublication =>
-      widget.participant.videoTrackPublications.where((element) => element.sid == widget.videoTrack?.sid).firstOrNull;
+      widget.participant.videoTrackPublications
+          .where((element) => element.sid == widget.videoTrack?.sid)
+          .firstOrNull;
 
   @override
-  RemoteTrackPublication<RemoteAudioTrack>? get firstAudioPublication => widget.participant.audioTrackPublications.firstOrNull;
+  RemoteTrackPublication<RemoteAudioTrack>? get firstAudioPublication =>
+      widget.participant.audioTrackPublications.firstOrNull;
 
   @override
   VideoTrack? get activeVideoTrack => widget.videoTrack;

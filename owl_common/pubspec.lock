@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  avatar_glow:
+    dependency: "direct main"
+    description:
+      name: avatar_glow
+      sha256: "848d9a85065e398241d8ffae0dcc50902980c24490aef21fd4c6b6342d4c26b4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   azlistview:
     dependency: "direct main"
     description:
@@ -738,10 +746,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_openim_sdk
-      sha256: b9519961a1ca6b74825a1ebf00d2728c5adb3e9335469c87b4e761bf84a95ad8
+      sha256: "4a04410afa5b91ae0086bb389f3a1fbf0958a55066f84a1168897d8990a78635"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.1"
+    version: "3.8.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:

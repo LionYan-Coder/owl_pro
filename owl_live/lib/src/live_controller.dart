@@ -242,7 +242,7 @@ mixin OpenIMLive {
   Future<SignalingCertificate> onDialSingle(SignalingInfo signaling) async {
     final data = {
       'customType': CustomMessageType.callingInvite,
-      'data': signaling.invitation!.toJson()
+      'data': signaling.invitation!.toJson(),
     };
     final message = await OpenIM.iMManager.messageManager.createCustomMessage(
         data: jsonEncode(data), extension: '', description: '');
@@ -333,6 +333,7 @@ mixin OpenIMLive {
     if (isPositive) {
       final data = {
         'customType': CustomMessageType.callingHungup,
+        'duration': duration,
         'data': signaling.invitation!.toJson()
       };
       final message = await OpenIM.iMManager.messageManager.createCustomMessage(
@@ -351,7 +352,7 @@ mixin OpenIMLive {
 
   onBusyLine() {
     _stopSound();
-    IMViews.showToast('用户正忙，请稍后再试！');
+    IMViews.showToast("busyline".tr);
   }
 
   onJoin() {}

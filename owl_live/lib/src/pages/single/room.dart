@@ -128,12 +128,12 @@ class _SingleRoomViewState extends SignalState<SingleRoomView> {
 
   void _publish() async {
     // video will fail when running in ios simulator
-    try {
-      final enabled = widget.callType == CallType.video;
-      await _room?.localParticipant?.setCameraEnabled(enabled);
-    } catch (error, stackTrace) {
-      Logger.print('could not publish video: $error $stackTrace');
-    }
+    // try {
+    //   final enabled = widget.callType == CallType.video;
+    //   await _room?.localParticipant?.setCameraEnabled(enabled);
+    // } catch (error, stackTrace) {
+    //   Logger.print('could not publish video: $error $stackTrace');
+    // }
     try {
       await _room?.localParticipant?.setMicrophoneEnabled(enabledMicrophone);
     } catch (error, stackTrace) {

@@ -780,13 +780,11 @@ class ChatLogic extends GetxController {
       return;
     }
 
-    IMViews.openIMCallSheet(nickname.value, (index) {
-      imLogic.call(
-        callObj: CallObj.single,
-        callType: index == 0 ? CallType.audio : CallType.video,
-        inviteeUserIDList: [if (isSingleChat) userID!],
-      );
-    });
+    imLogic.call(
+      callObj: CallObj.single,
+      callType: CallType.video,
+      inviteeUserIDList: [if (isSingleChat) userID!],
+    );
   }
 
   void onScrollToTop() {

@@ -1,12 +1,16 @@
 import 'dart:async';
+import 'dart:ui';
 
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:owl_common/owl_common.dart';
 import 'package:owl_live/src/widgets/live_button.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:owl_common/owl_common.dart' as common;
 
 import '../../../live_client.dart';
 import '../../../widgets/loading_view.dart';
@@ -28,6 +32,7 @@ class ControlsView extends StatefulWidget {
     this.callType = CallType.video,
     required this.callStateStream,
     required this.roomDidUpdateStream,
+    this.remoteCameraEnabled,
     this.userInfo,
     this.onMinimize,
     this.onCallingDuration,
@@ -44,6 +49,7 @@ class ControlsView extends StatefulWidget {
   final CallState initState;
   final CallType callType;
   final UserInfo? userInfo;
+  final bool? remoteCameraEnabled;
   final Function()? onMinimize;
   final Function(int duration)? onCallingDuration;
   final Function(bool enabled)? onEnabledMicrophone;
@@ -112,6 +118,7 @@ class _ControlsViewState extends State<ControlsView> {
 
   _roomDidUpdate(Room room) {
     _room ??= room;
+
     if (room.localParticipant != null && _participant == null) {
       _participant = room.localParticipant;
       _participant?.addListener(_onChange);
@@ -248,87 +255,159 @@ class _ControlsViewState extends State<ControlsView> {
             Positioned(
               left: 16.w,
               top: 7.h,
-              child: ImageRes.liveClose.toImage
-                ..width = 30.w
-                ..height = 30.h
-                ..onTap = widget.onMinimize,
+              child: IconButton(
+                  onPressed: widget.onMinimize,
+                  icon: "nvbar_ico_shrink_black".svg.toSvg
+                    ..width = 24.w
+                    ..height = 24.w
+                    ..color = Styles.c_333333.adapterDark(Styles.c_CCCCCC)),
             ),
-            if (null != _participant)
-              Positioned(
-                right: 16.w,
-                top: 7.h,
-                child: Visibility(
-                  visible: isVideo,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      (_participant!.isCameraEnabled()
-                              ? ImageRes.liveCameraOff
-                              : ImageRes.liveCameraOn)
-                          .toImage
-                        ..width = 30.w
-                        ..height = 30.h
-                        ..onTap = (_participant!.isCameraEnabled()
-                            ? _disableVideo
-                            : _enableVideo),
-                      16.horizontalSpace,
-                      ImageRes.liveSwitchCamera.toImage
-                        ..width = 30.w
-                        ..height = 30.h
-                        ..onTap = _toggleCamera,
-                    ],
-                  ),
-                ),
-              ),
-            if (null != widget.userInfo)
-              Positioned(
-                top: 166.h,
-                width: 1.sw,
-                child: _userInfoView,
-              ),
+            Positioned(
+              top: 86.h,
+              width: 1.sw,
+              child: _owlLogoView,
+            ),
             Positioned(
               bottom: 32.h,
               width: 1.sw,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _buttonGroup,
+              child: Column(
+                children: [
+                  Visibility(
+                      visible: isBeCalled || isBeRejected,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 24.w, horizontal: 40),
+                        margin: EdgeInsets.all(24.w),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: Styles.c_F6F6F6
+                                        .adapterDark(Styles.c_161616)))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: _buttonGroup1,
+                        ),
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _buttonGroup2,
+                  ),
+                ],
               ),
             ),
-            Positioned(
-              bottom: 156.h,
-              width: 1.sw,
-              child: Center(child: _videoCallingDurationView),
-            ),
-            if (_callState == CallState.connecting) const LiveLoadingView(),
+            // Positioned(
+            //   bottom: 156.h,
+            //   width: 1.sw,
+            //   child: Center(child: _videoCallingDurationView),
+            // ),
+            // if (_callState == CallState.connecting) const LiveLoadingView(),
           ],
         ),
       );
 
-  List<Widget> get _buttonGroup {
+  List<Widget> get _buttonGroup1 {
+    if (_callState == CallState.beCalled ||
+        _callState == CallState.connecting &&
+            widget.initState == CallState.beCalled) {
+      return [
+        LiveButton.pickUp(onTap: widget.onPickUp),
+        LiveButton.reject(onTap: widget.onReject),
+      ];
+    } else if (_callState == CallState.beRejected ||
+        _callState == CallState.connecting &&
+            widget.initState == CallState.call) {
+      return [
+        LiveButton.callAgain(onTap: widget.onCancel),
+        LiveButton.giveUp(onTap: widget.onCancel)
+      ];
+    }
+    return [];
+  }
+
+  List<Widget> get _buttonGroup2 {
     if (_callState == CallState.call ||
         _callState == CallState.connecting &&
             widget.initState == CallState.call) {
       return [
-        LiveButton.microphone(on: _enabledMicrophone, onTap: _toggleAudio),
-        LiveButton.cancel(onTap: widget.onCancel),
-        LiveButton.speaker(on: _enabledSpeaker, onTap: _toggleSpeaker),
+        LiveButton.speaker(
+          on: _enabledSpeaker,
+          onTap: _toggleSpeaker,
+          enabledCamera: _enabledCamera,
+        ),
+        LiveButton.video(
+            on: _enabledLocalCamera,
+            enabledCamera: _enabledCamera,
+            onTap: (_enabledCamera ? _disableVideo : _enableVideo)),
+        LiveButton.microphone(
+          on: _enabledMicrophone,
+          onTap: _toggleAudio,
+          enabledCamera: _enabledCamera,
+        ),
+        LiveButton.hungUp(
+          onTap: () => widget.onHangUp?.call(true),
+          enabledCamera: _enabledCamera,
+        ),
       ];
     } else if (_callState == CallState.beCalled ||
         _callState == CallState.connecting &&
             widget.initState == CallState.beCalled) {
       return [
-        LiveButton.reject(onTap: widget.onReject),
-        LiveButton.pickUp(onTap: widget.onPickUp),
+        // LiveButton.reject(onTap: widget.onReject),
+        // LiveButton.pickUp(onTap: widget.onPickUp),
+        LiveButton.speaker(
+          on: _enabledSpeaker,
+          onTap: _toggleSpeaker,
+          enabledCamera: _enabledCamera,
+        ),
+        LiveButton.video(
+          on: _enabledLocalCamera,
+          onTap: (_enabledCamera ? _disableVideo : _enableVideo),
+          enabledCamera: _enabledCamera,
+        ),
+        LiveButton.microphone(
+          on: _enabledMicrophone,
+          onTap: _toggleAudio,
+          enabledCamera: _enabledCamera,
+        ),
       ];
     } else if (_callState == CallState.calling) {
       return [
-        LiveButton.microphone(on: _enabledMicrophone, onTap: _toggleAudio),
-        LiveButton.hungUp(onTap: () => widget.onHangUp?.call(true)),
-        LiveButton.speaker(on: _enabledSpeaker, onTap: _toggleSpeaker),
+        LiveButton.speaker(
+          on: _enabledSpeaker,
+          onTap: _toggleSpeaker,
+          enabledCamera: _enabledCamera,
+        ),
+        LiveButton.video(
+          on: _enabledLocalCamera,
+          onTap: (_enabledCamera ? _disableVideo : _enableVideo),
+          enabledCamera: _enabledCamera,
+        ),
+        LiveButton.microphone(
+          on: _enabledMicrophone,
+          onTap: _toggleAudio,
+          enabledCamera: _enabledCamera,
+        ),
+        LiveButton.hungUp(
+          onTap: () => widget.onHangUp?.call(true),
+          enabledCamera: _enabledCamera,
+        ),
       ];
     }
     return [];
   }
+
+  bool get _enabledLocalCamera => _participant?.isCameraEnabled() ?? false;
+
+  bool get _enabledCamera => widget.remoteCameraEnabled ?? false;
+
+  bool get isBeCalled =>
+      _callState == CallState.beCalled ||
+      _callState == CallState.connecting &&
+          widget.initState == CallState.beCalled;
+
+  bool get isBeRejected =>
+      _callState == CallState.beRejected ||
+      _callState == CallState.connecting && widget.initState == CallState.call;
 
   bool get isVideo => widget.callType == CallType.video;
 
@@ -338,6 +417,67 @@ class _ControlsViewState extends State<ControlsView> {
         visible: isVideo && isCalling,
         child: _callingDurationStr.toText..style = Styles.ts_FFFFFF_18,
       );
+
+  Widget get _owlLogoView {
+    String text;
+    String ico;
+    if (_callState == CallState.call) {
+      text = StrRes.waitingVideoCallHint;
+      ico = "videocall_ico_request";
+    } else if (_callState == CallState.beCalled) {
+      text = StrRes.invitedVideoCallHint;
+      ico = "videocall_ico_request";
+    } else if (_callState == CallState.connecting) {
+      ico = "videocall_ico_request";
+      text = StrRes.connecting;
+    } else {
+      ico = "videocall_ico_connected";
+      text = _callingDurationStr;
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AvatarGlow(
+          glowRadiusFactor: 0.2,
+          glowCount: 3,
+          child: ClipOval(
+            child: Container(
+              width: 100.w,
+              height: 100.w,
+              color: Colors.white,
+              child: Center(
+                child: "logo".png.toImage
+                  ..width = 45.w
+                  ..height = 50.w,
+              ),
+            ),
+          ),
+        ),
+        48.gapv,
+        "chat_live_title".tr.toText..style = common.Styles.ts_FFFFFF_20_medium,
+        8.gapv,
+        Container(
+          constraints: BoxConstraints(maxWidth: 120.w),
+          height: 24.h,
+          decoration: BoxDecoration(
+              color: common.Styles.c_0C8CE9.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(15.r)),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ico.svg.toSvg
+                  ..width = 14.w
+                  ..height = 14.w,
+                4.gaph,
+                text.tr.toText..style = common.Styles.ts_0C8CE9_12
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
 
   Widget get _userInfoView {
     String text;

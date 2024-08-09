@@ -51,10 +51,10 @@ class ChatPage extends StatelessWidget {
     final data = IMUtils.parseCustomMessage(message);
     if (null != data) {
       final viewType = data['viewType'];
-      if (viewType == CustomMessageType.call) {
+      if (viewType == CustomMessageType.call || viewType == CustomMessageType.callingCancel || viewType == CustomMessageType.callingReject || viewType == CustomMessageType.callingHungup) {
         final type = data['type'];
         final content = data['content'];
-        final view = ChatCallItemView(type: type, content: content,isISend: OpenIM.iMManager.userID == message.sendID );
+        final view = ChatCallItemView(type: type, viewType: viewType, content: content,isISend: OpenIM.iMManager.userID == message.sendID );
         return CustomTypeInfo(view);
       } else if (viewType == CustomMessageType.deletedByFriend ||
           viewType == CustomMessageType.blockedByFriend) {

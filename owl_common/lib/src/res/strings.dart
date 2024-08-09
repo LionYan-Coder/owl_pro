@@ -854,8 +854,10 @@ class StrRes {
   static String get speaker => 'speaker'.tr;
 
   static String get hangUp => 'hangUp'.tr;
-
+  static String get giveUp => "giveUp".tr;
   static String get pickUp => 'pickUp'.tr;
+  static String get rejectUp => 'rejectUp'.tr;
+  static String get callAgain => 'callAgain'.tr;
 
   static String get waitingCallHint => 'waitingCallHint'.tr;
 

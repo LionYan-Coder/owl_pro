@@ -861,21 +861,26 @@ class IMUtils {
             switch (customType) {
               case CustomMessageType.callingAccept:
               case CustomMessageType.callingHungup:
+                final duration = map['duration'] ??  map['data']['duration'] ?? 0;
+                final type = map['data']['mediaType'];
+                return {
+                  'viewType': CustomMessageType.callingHungup,
+                  'type': type,
+                  'content': sprintf(StrRes.callDuration, [seconds2HMS(duration)]),
+                };
               case CustomMessageType.callingCancel:
                 var type = map['data']['mediaType'];
                 return {
-                  'viewType': CustomMessageType.call,
+                  'viewType': CustomMessageType.callingCancel,
                   'type': type,
                   'content': StrRes.cancelled,
                 };
               case CustomMessageType.callingReject:
                 var type = map['data']['mediaType'];
-                final content =
-                    type == 'video' ? StrRes.callVideo : StrRes.callVoice;
                 return {
-                  'viewType': CustomMessageType.call,
+                  'viewType': CustomMessageType.callingReject,
                   'type': type,
-                  'content': content,
+                  'content': StrRes.rejectedByCaller,
                 };
               case CustomMessageType.call:
                 {
